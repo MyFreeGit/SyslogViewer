@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2iCbkC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ide.application" bindingContexts="_2iCbmS-rEeORA68YRw1xzQ">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_2iCbkS-rEeORA68YRw1xzQ" label="SyslogViewer" iconURI="platform:/plugin/com.roland.syslogviewer/icons/application_icon_32.gif" width="500" height="400">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_2iDCoC-rEeORA68YRw1xzQ">
+      <children xsi:type="advanced:Perspective" xmi:id="_2iDCoS-rEeORA68YRw1xzQ">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_2iDCoi-rEeORA68YRw1xzQ">
+          <children xsi:type="basic:PartStack" xmi:id="_2iDCoy-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.partstack.main">
+            <children xsi:type="basic:Part" xmi:id="_2iDCpC-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.part.logfile" visible="false" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.LogfilePart" label="Logfile Part" closeable="true"/>
+          </children>
+        </children>
+      </children>
+    </children>
+    <mainMenu xmi:id="_2iCbqS-rEeORA68YRw1xzQ" elementId="menu:org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_2iCbqi-rEeORA68YRw1xzQ" label="File">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbqy-rEeORA68YRw1xzQ" label="Open" iconURI="platform:/plugin/com.roland.syslogviewer/icons/sample.gif" command="_2iCboC-rEeORA68YRw1xzQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrC-rEeORA68YRw1xzQ" label="Save" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrS-rEeORA68YRw1xzQ" label="Quit" command="_2iCbnC-rEeORA68YRw1xzQ"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_2iCbri-rEeORA68YRw1xzQ" label="Help">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbry-rEeORA68YRw1xzQ" label="About" command="_2iCbpi-rEeORA68YRw1xzQ"/>
+      </children>
+    </mainMenu>
+    <trimBars xmi:id="_2iDCpS-rEeORA68YRw1xzQ">
+      <children xsi:type="menu:ToolBar" xmi:id="_2iDCpi-rEeORA68YRw1xzQ" elementId="toolbar:org.eclipse.ui.main.toolbar">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCpy-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/sample.gif" command="_2iCboC-rEeORA68YRw1xzQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCqC-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
+      </children>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_2iCbnS-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.quitCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.QuitHandler" command="_2iCbnC-rEeORA68YRw1xzQ"/>
+  <handlers xmi:id="_2iCboS-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.openCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.OpenHandler" command="_2iCboC-rEeORA68YRw1xzQ"/>
+  <handlers xmi:id="_2iCbpC-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.saveCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SaveHandler" command="_2iCboy-rEeORA68YRw1xzQ"/>
+  <handlers xmi:id="_2iCbpy-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.aboutCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.AboutHandler" command="_2iCbpi-rEeORA68YRw1xzQ"/>
+  <bindingTables xmi:id="_2iCbni-rEeORA68YRw1xzQ" bindingContext="_2iCbmS-rEeORA68YRw1xzQ">
+    <bindings xmi:id="_2iCbny-rEeORA68YRw1xzQ" keySequence="M1+Q" command="_2iCbnC-rEeORA68YRw1xzQ"/>
+    <bindings xmi:id="_2iCboi-rEeORA68YRw1xzQ" keySequence="M1+O" command="_2iCboC-rEeORA68YRw1xzQ"/>
+    <bindings xmi:id="_2iCbpS-rEeORA68YRw1xzQ" keySequence="M1+S" command="_2iCboy-rEeORA68YRw1xzQ"/>
+    <bindings xmi:id="_2iCbqC-rEeORA68YRw1xzQ" keySequence="M1+A" command="_2iCbpi-rEeORA68YRw1xzQ"/>
+  </bindingTables>
+  <rootContext xmi:id="_2iCbmS-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_2iCbmi-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_2iCbmy-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <commands xmi:id="_2iCbnC-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
+  <commands xmi:id="_2iCboC-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.open" commandName="openCommand"/>
+  <commands xmi:id="_2iCboy-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
+  <commands xmi:id="_2iCbpi-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
+  <addons xmi:id="_2iCbki-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_2iCbky-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_2iCblC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_2iCblS-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_2iCbli-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_2iCbly-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_2iCbmC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+</application:Application>
