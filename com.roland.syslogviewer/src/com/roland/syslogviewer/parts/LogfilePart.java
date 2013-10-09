@@ -49,15 +49,24 @@ public class LogfilePart {
 		tableViewer.setLabelProvider(new LabelProvider());
 		tableViewer.setContentProvider(new MyContentProvider());
 
-		TableViewerColumn col = createTableViewerColumn(LogItem.Field.TimeStamp.toString(), 150);
+		TableViewerColumn col = createTableViewerColumn("", 80);
+		col.setLabelProvider(new ColumnLabelProvider() {
+		      @Override public String getText(Object element) {
+		        count++;
+		        return String.valueOf(count);
+		      }
+		      private int count = 0;
+		});
+
+		col = createTableViewerColumn(LogItem.Field.TimeStamp.toString(), 100);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
 		        LogItem i = (LogItem) element;
-		        return i.getTimeStamp().toString();
+		        return i.getPureTime();
 		      }
 		});
 
-		col = createTableViewerColumn(LogItem.Field.Severity.toString(), 100);
+		col = createTableViewerColumn(LogItem.Field.Severity.toString(), 80);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
 		        LogItem i = (LogItem) element;
@@ -65,7 +74,7 @@ public class LogfilePart {
 		      }
 		});
 		
-		col = createTableViewerColumn(LogItem.Field.RU.toString(), 120);
+		col = createTableViewerColumn(LogItem.Field.RU.toString(), 100);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
 		        LogItem i = (LogItem) element;

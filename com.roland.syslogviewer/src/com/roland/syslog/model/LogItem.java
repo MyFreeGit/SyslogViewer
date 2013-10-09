@@ -36,6 +36,13 @@ public class LogItem {
     	return timeStamp;
     }
 	
+	/**
+	 * Return the XX:YY.FFFFFFF part of the DateTime. That can save the display space.*/
+	public String getPureTime(){
+		String s = timeStamp.toString();
+		return s.substring(s.indexOf(' ') + 1);
+	}
+	
 	public Severity getSeverity(){
 		return severity;
 	}
