@@ -13,8 +13,10 @@ public class SyslogFileReader {
 			BufferedReader reader = new BufferedReader(file);
 			String line = "";
 			while ((line = reader.readLine()) != null) {
-				LogItem item = new LogItem(line);
-				allItems.add(item);
+				if(!line.trim().equals("")){
+					LogItem item = new LogItem(line);
+					allItems.add(item);
+				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

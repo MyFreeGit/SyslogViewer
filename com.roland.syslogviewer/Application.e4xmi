@@ -16,6 +16,9 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrC-rEeORA68YRw1xzQ" label="Save" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrS-rEeORA68YRw1xzQ" label="Quit" command="_2iCbnC-rEeORA68YRw1xzQ"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_FQeWQDFqEeO0d5oFoN0k1Q" elementId="" label="Search">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_S2Kv4DFqEeO0d5oFoN0k1Q" elementId="com.roland.syslogviewer.handledmenuitem.0" label="Search" command="_pylmUDGAEeOpt8V61Ki92w"/>
+      </children>
       <children xsi:type="menu:Menu" xmi:id="_2iCbri-rEeORA68YRw1xzQ" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbry-rEeORA68YRw1xzQ" label="About" command="_2iCbpi-rEeORA68YRw1xzQ"/>
       </children>
@@ -31,6 +34,7 @@
   <handlers xmi:id="_2iCboS-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.openCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.OpenHandler" command="_2iCboC-rEeORA68YRw1xzQ"/>
   <handlers xmi:id="_2iCbpC-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.saveCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SaveHandler" command="_2iCboy-rEeORA68YRw1xzQ"/>
   <handlers xmi:id="_2iCbpy-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.handler.aboutCommand" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.AboutHandler" command="_2iCbpi-rEeORA68YRw1xzQ"/>
+  <handlers xmi:id="_dGoUQDGEEeOpt8V61Ki92w" elementId="com.roland.syslogviewer.handler.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchHandler" command="_pylmUDGAEeOpt8V61Ki92w"/>
   <bindingTables xmi:id="_2iCbni-rEeORA68YRw1xzQ" bindingContext="_2iCbmS-rEeORA68YRw1xzQ">
     <bindings xmi:id="_2iCbny-rEeORA68YRw1xzQ" keySequence="M1+Q" command="_2iCbnC-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCboi-rEeORA68YRw1xzQ" keySequence="M1+O" command="_2iCboC-rEeORA68YRw1xzQ"/>
@@ -45,6 +49,7 @@
   <commands xmi:id="_2iCboC-rEeORA68YRw1xzQ" elementId="com.roland.syslogviewer.open" commandName="openCommand"/>
   <commands xmi:id="_2iCboy-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_2iCbpi-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
+  <commands xmi:id="_pylmUDGAEeOpt8V61Ki92w" elementId="com.roland.syslogviewer.command.search" commandName="searchCommand"/>
   <addons xmi:id="_2iCbki-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2iCbky-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2iCblC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

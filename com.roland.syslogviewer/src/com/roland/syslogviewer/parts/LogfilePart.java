@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import com.roland.syslog.model.*;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
@@ -19,6 +21,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.*;
 
 public class LogfilePart {
 	private TableViewer tableViewer;
+	private MPart boundedPart;
 	public final static String LOG_FILE_KEY = "logfile";
 
 	@PostConstruct
@@ -28,13 +31,18 @@ public class LogfilePart {
 				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		readLogfile(part.getTransientData().get(LOG_FILE_KEY).toString());
 		tableViewer.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
+		boundedPart = part;
 	}
 
 	@Focus
 	public void setFocus() {
 		tableViewer.getTable().setFocus();
 	}
-
+	
+	public void searchString(String str){
+		System.out.println(boundedPart.getLabel() + "\tUser want to search :" + str);
+	}
+	
 	private void readLogfile(String fileName) {
 		if (!fileName.equals("")) {
 			LogItemsContainer logs = SyslogFileReader.read(fileName);
