@@ -4,17 +4,19 @@ import java.io.*;
 
 /*This file is just used for read syslog from a text based file.*/
 public class SyslogFileReader {
-	public static LogItemsContainer read(String fileName) {
+	public static LogContainer read(String fileName) {
 		FileReader file = null;
-		LogItemsContainer allItems = new LogItemsContainer();
+		LogContainer allItems = new LogContainer();
 
 		try {
 			file = new FileReader(fileName);
 			BufferedReader reader = new BufferedReader(file);
 			String line = "";
 			while ((line = reader.readLine()) != null) {
-				LogItem item = new LogItem(line);
-				allItems.add(item);
+				if(!line.trim().equals("")){
+					LogItem item = new LogItem(line);
+					allItems.add(item);
+				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

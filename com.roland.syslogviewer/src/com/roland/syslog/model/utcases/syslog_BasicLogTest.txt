@@ -1,7 +1,9 @@
+
 Jan  1 14:46:33.006819 emerg lmp-1-2-1.managementnet.localdomain dhclient: DHCPREQUEST on eth0.800 to 169.254.240.4 port 67
 Feb  29 14:46:33.029897 alert CFPU-0 dhcpd: DHCPREQUEST for 169.254.240.21 from 00:d0:c9:be:6e:00 (BCNMB-A) via xaui0
 Mar  3 14:46:33.030212 crit CFPU-11 HASClusterManag[3792]: INFO Rejecting switchover request; Operation target is not an active standby RG. Target=/CSPU-0
 Apr  4 14:46:33.110757 err EITP-1 kernel: dmxmsg: dmxmsg_print_msg: LOG_TRANS_FAIL, 352 callbacks suppressed
+
 May  5 14:46:33.798753 warn syslogd 1.4.1: restart (remote reception).
 Jun  6 14:46:33.861342 notice CSPU-0 FUnitStateAgent: RU:OMU-0|PNAME:IL_UnitStateAgent|LPID:20089|PID:0x3DA 0x1 0x0|TIME:2013-04-09 14:47:55:730326|TEXT:REAS_NOTIFY_HAND|DATA:|unit state synchronous not complete status: 69
 Jul  7 14:46:33.873048 debug lmp-1-2-1.managementnet.localdomain dhclient: bound to 169.254.240.21 -- renewal in 279 seconds.

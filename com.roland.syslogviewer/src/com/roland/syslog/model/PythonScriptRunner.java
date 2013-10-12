@@ -11,8 +11,8 @@ import javax.script.ScriptException;
 public class PythonScriptRunner {
 	public static void main(String[] args) throws ScriptException,
 			NoSuchMethodException {
-		LogItemsContainer container = readLog();
-		LogItemsContainer result = new LogItemsContainer();
+		LogContainer container = readLog();
+		LogContainer result = new LogContainer();
 		pyEngine.put("LogContainer", container);
 		pyEngine.put("result", result);
 		//pyEngine.put("LogItemsContainer", LogItemsContainer.class);
@@ -20,11 +20,11 @@ public class PythonScriptRunner {
 			File script = getScript();
 			System.out.println(script);
 			pyEngine.eval(new FileReader(script));
-			result = (LogItemsContainer) pyEngine.get("result");
+			result = (LogContainer) pyEngine.get("result");
 			System.out.println("-----The result of script is:-----");
 			System.out.printf("-----The size of result is %d-----\n", result
 					.getLogItemList().size());
-			for (LogItem item : result.getLogItemList()) {
+			for (ILogItem item : result.getLogItemList()) {
 				System.out.println(item.getLogText());
 			}
 
@@ -45,7 +45,7 @@ public class PythonScriptRunner {
 
 	}
 
-	private static LogItemsContainer readLog() {
+	private static LogContainer readLog() {
 		String fileName = System.getProperty("user.dir")
 				+ "\\src\\com\\roland\\syslog\\model\\utcases\\syslog_BasicLogTest.txt";
 		return SyslogFileReader.read(fileName);
