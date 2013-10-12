@@ -45,7 +45,7 @@ public class LogfilePart {
 	
 	private void readLogfile(String fileName) {
 		if (!fileName.equals("")) {
-			LogContainer logs = SyslogFileReader.read(fileName);
+			TableItemsContainer logs = new TableItemsContainer(SyslogFileReader.read(fileName));
 			if (!logs.getLogItemList().isEmpty()) {
 				showLogfileByTableView(logs);
 			}
@@ -69,7 +69,7 @@ public class LogfilePart {
 		col = createTableViewerColumn(LogItem.Field.TimeStamp.toString(), 100);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
-		        LogItem i = (LogItem) element;
+		        ILogItem i = (ILogItem) element;
 		        return i.getPureTime();
 		      }
 		});
@@ -77,7 +77,7 @@ public class LogfilePart {
 		col = createTableViewerColumn(LogItem.Field.Severity.toString(), 80);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
-		        LogItem i = (LogItem) element;
+		        ILogItem i = (ILogItem) element;
 		        return i.getSeverity().toString();
 		      }
 		});
@@ -85,7 +85,7 @@ public class LogfilePart {
 		col = createTableViewerColumn(LogItem.Field.RU.toString(), 100);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
-		        LogItem i = (LogItem) element;
+		        ILogItem i = (ILogItem) element;
 		        return i.getRU();
 		      }
 		});
@@ -93,7 +93,7 @@ public class LogfilePart {
 		col = createTableViewerColumn(LogItem.Field.PRB.toString(), 120);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
-		        LogItem i = (LogItem) element;
+		        ILogItem i = (ILogItem) element;
 		        return i.getPRB();
 		      }
 		});
@@ -101,12 +101,12 @@ public class LogfilePart {
 		col = createTableViewerColumn(LogItem.Field.Text.toString(), 500);
 		col.setLabelProvider(new ColumnLabelProvider() {
 		      @Override public String getText(Object element) {
-		        LogItem i = (LogItem) element;
+		        ILogItem i = (ILogItem) element;
 		        return i.getLogText();
 		      }
 		});
 		
-		LogItem items[] = logs.getLogItemList().toArray(new LogItem[0]);
+		ILogItem items[] = logs.getLogItemList().toArray(new TableRowItem[0]);
 		tableViewer.setInput(items);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -128,7 +128,7 @@ public class LogfilePart {
 	private class MyContentProvider implements IStructuredContentProvider {
 
 		@Override public Object[] getElements(Object inputElement) {
-			return (LogItem[])inputElement;
+			return (ILogItem[])inputElement;
 		}
 
 		@Override public void dispose() {
