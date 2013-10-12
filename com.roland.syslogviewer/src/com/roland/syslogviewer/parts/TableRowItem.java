@@ -2,7 +2,7 @@ package com.roland.syslogviewer.parts;
 import java.util.EnumSet;
 
 import com.roland.syslog.model.*;
-import com.roland.syslog.model.LogItem.Field;
+import com.roland.syslog.model.ILogItem.Field;
 
 public class TableRowItem {
 	enum Flag{

@@ -4,9 +4,9 @@ import java.io.*;
 
 /*This file is just used for read syslog from a text based file.*/
 public class SyslogFileReader {
-	public static LogItemsContainer read(String fileName) {
+	public static LogContainer read(String fileName) {
 		FileReader file = null;
-		LogItemsContainer allItems = new LogItemsContainer();
+		LogContainer allItems = new LogContainer();
 
 		try {
 			file = new FileReader(fileName);

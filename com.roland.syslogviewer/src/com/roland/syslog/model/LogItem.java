@@ -7,20 +7,8 @@ import hirondelle.date4j.DateTime;
  * @author DingLi
  * Class is used to record one line of syslog.
  */
-public class LogItem {
-	/**
-	 * Used to indicates the log items contains how man fields.
-	 */
-	public enum Field{
-		TimeStamp("TimeStamp"), Severity("Severity"), RU("RU"), PRB("PRB"), Text("Text");
-		private String name;
-		private Field(String str){
-			name = str;
-		}
-		@Override public String toString(){
-			return name;
-		}
-	}
+public class LogItem implements ILogItem{
+
 	public LogItem(String plainText){
 		this.originalText = plainText;
 		fields = EnumSet.noneOf(Field.class);
@@ -32,34 +20,34 @@ public class LogItem {
 		initIPALogItems();
 	}
 
-	public DateTime getTimeStamp(){
+	@Override public DateTime getTimeStamp(){
     	return timeStamp;
     }
 	
 	/**
 	 * Return the XX:YY.FFFFFFF part of the DateTime. That can save the display space.*/
-	public String getPureTime(){
+	@Override public String getPureTime(){
 		String s = timeStamp.toString();
 		return s.substring(s.indexOf(' ') + 1);
 	}
 	
-	public Severity getSeverity(){
+	@Override public Severity getSeverity(){
 		return severity;
 	}
 	
-	public String getLogText(){
+	@Override public String getLogText(){
 		return logText;
 	}
 	
-	public String getRU(){
+	@Override public String getRU(){
 		return ru;
 	}
 	
-	public String getPRB(){
+	@Override public String getPRB(){
 		return prb;
 	}
 	
-	public boolean containField(Field field){
+	@Override public boolean containField(Field field){
 		return fields.contains(field);
 	}
 		
@@ -73,9 +61,21 @@ public class LogItem {
     private String ru;
     private String prb;
     private EnumSet<Field> fields;
-    private String logText; //After all meaningful fields are chopped out, the pure text   
+    private String logText; //After all meaningful fields are chopped out, the pure text
+    
+    //This object is addition information for display the log item in different JFace viewer
+    //The Model package doesn't care for it. In UT this filed isn't covered. 
+    private Object attachedObj = null; 
+    
+    public final Object getObject() {
+		return attachedObj;
+	}
 
-    private boolean initBasicLogItems(){
+	public final void setObject(Object attachedObj) {
+		this.attachedObj = attachedObj;
+	}
+
+	private boolean initBasicLogItems(){
     	boolean result = BasicLogHelper.analyze(originalText);
     	if(result){
     		this.timeStamp = BasicLogHelper.getDataTime();

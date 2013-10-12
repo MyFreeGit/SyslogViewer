@@ -45,14 +45,14 @@ public class LogfilePart {
 	
 	private void readLogfile(String fileName) {
 		if (!fileName.equals("")) {
-			LogItemsContainer logs = SyslogFileReader.read(fileName);
+			LogContainer logs = SyslogFileReader.read(fileName);
 			if (!logs.getLogItemList().isEmpty()) {
 				showLogfileByTableView(logs);
 			}
 		}
 	}
 
-	private void showLogfileByTableView(LogItemsContainer logs) {
+	private void showLogfileByTableView(LogContainer logs) {
 		final Table table = tableViewer.getTable();
 		tableViewer.setLabelProvider(new LabelProvider());
 		tableViewer.setContentProvider(new MyContentProvider());

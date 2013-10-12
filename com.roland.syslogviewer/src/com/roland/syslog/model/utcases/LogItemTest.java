@@ -8,82 +8,94 @@ import org.junit.Test;
 import org.junit.BeforeClass;
 
 import com.roland.syslog.model.*;
-import com.roland.syslog.model.LogItem.Field;
+import com.roland.syslog.model.ILogItem.Field;
 
 import hirondelle.date4j.DateTime;
 
 public class LogItemTest {
-	private class LogItemData {
-		public DateTime timeStamp;
-		public Severity severity;
-		public String ru;
-		public String prb;
-		public EnumSet<Field> fields;
-		public String logText; // After all meaningful fields are chopped out, the pure text
-		public String pureTime;
-
-		public boolean containField(Field field) {
-			return fields.contains(field);
-		}
-
-	}
+	private static LogContainer logContainer;
+	private static List<LogItemData> targetData;
 
 	@BeforeClass
 	public static void testSetup() {
+		String fileName = System.getProperty("user.dir")
+				+ "\\src\\com\\roland\\syslog\\model\\utcases\\syslog_BasicLogTest.txt";
+		logContainer = SyslogFileReader.read(fileName);
+		targetData = initTestSyslogFileReader();
 	}
 
 	@Test
 	public void testSyslogFileReader() {
-		String fileName = System.getProperty("user.dir")
-				+ "\\src\\com\\roland\\syslog\\model\\utcases\\syslog_BasicLogTest.txt";
-		LogItemsContainer container = SyslogFileReader.read(fileName);
-		List<LogItem> items = container.getLogItemList();
+		List<ILogItem> items = logContainer.getLogItemList();
 		assertTrue(items.size() == 12);
 
-		List<LogItemData> results = initTestSyslogFileReader();
-
-		for (int i = 0; i < results.size(); i++) {
-			for (LogItem.Field field : LogItem.Field.values()) {
-				assertTrue(items.get(i).containField(field) == results.get(i).containField(field));
-				switch (field) {
-				case TimeStamp:
-					if (results.get(i).containField(field)) {
-						assertTrue(items.get(i).getTimeStamp().equals(results.get(i).timeStamp));
-						assertTrue(items.get(i).getPureTime().equals(results.get(i).pureTime));
-						System.out.println(items.get(i).getTimeStamp() + " -- " + items.get(i).getPureTime());
-					}
-					break;
-				case Severity:
-					if (results.get(i).containField(field)) {
-						assertTrue(items.get(i).getSeverity() == results.get(i).severity);
-						System.out.println(items.get(i).getSeverity());
-					}
-					break;
-				case RU:
-					if (results.get(i).containField(field)) {
-						assertTrue(items.get(i).getRU().equals(results.get(i).ru));
-						System.out.println(items.get(i).getRU());
-					}
-					break;
-				case PRB:
-					if (results.get(i).containField(field)) {
-						assertTrue(items.get(i).getPRB().equals(results.get(i).prb));
-						System.out.println(items.get(i).getPRB());
-					}
-					break;
-				case Text:
-					if (results.get(i).containField(field)) {
-						assertTrue(items.get(i).getLogText().equals(results.get(i).logText));
-						System.out.println(items.get(i).getLogText());
-					}
-					break;
-				}
-			}
-			System.out.println();
+		for (int i = 0; i < targetData.size(); i++) {
+			assertLogItem(items.get(i), targetData.get(i));
 		}
 	}
 
-	private List<LogItemData> initTestSyslogFileReader() {
+	@Test
+	public void TestLogContainer(){
+		System.out.println("============ Begin of TestLogContainer() ==============");
+		ILogItem item = logContainer.findFirst("crit");
+		assertLogItem(item, targetData.get(2));
+		
+		item = logContainer.findFirst("xyz");
+		assertTrue(item == null);
+		
+		LogContainer result = logContainer.findAll("warn");
+		assertTrue(result.getLogItemList().size() == 2);
+		assertLogItem(result.getLogItemList().get(0), targetData.get(4));
+		assertLogItem(result.getLogItemList().get(1), targetData.get(9));
+		
+		result = logContainer.findAll("xyz");
+		assertTrue(result.getLogItemList().size() == 0);
+		
+		System.out.println("============= End of TestLogContainer() ===============");
+	}
+
+	private void assertLogItem(ILogItem item, LogItemData data) {
+		System.out.println(item.toString());
+		for (LogItem.Field field : LogItem.Field.values()) {
+			assertTrue(item.containField(field) == data.containField(field));				
+			switch (field) {
+			case TimeStamp:
+				if (data.containField(field)) {
+					assertTrue(item.getTimeStamp().equals(data.timeStamp));
+					assertTrue(item.getPureTime().equals(data.pureTime));
+					System.out.println(item.getTimeStamp() + " -- " + item.getPureTime());
+				}
+				break;
+			case Severity:
+				if (data.containField(field)) {
+					assertTrue(item.getSeverity() == data.severity);
+					System.out.println(item.getSeverity());
+				}
+				break;
+			case RU:
+				if (data.containField(field)) {
+					assertTrue(item.getRU().equals(data.ru));
+					System.out.println(item.getRU());
+				}
+				break;
+			case PRB:
+				if (data.containField(field)) {
+					assertTrue(item.getPRB().equals(data.prb));
+					System.out.println(item.getPRB());
+				}
+				break;
+			case Text:
+				if (data.containField(field)) {
+					assertTrue(item.getLogText().equals(data.logText));
+					System.out.println(item.getLogText());
+				}
+				break;
+			}
+		}
+		System.out.println("");
+	}
+	
+	private static List<LogItemData> initTestSyslogFileReader() {
 		LinkedList<LogItemData> list = new LinkedList<LogItemData>();
 		LogItemData item;
 		item = new LogItemData();
