@@ -10,6 +10,7 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -30,9 +31,14 @@ public class SearchHandler {
 	
 	
 	@CanExecute
-	public boolean canExecute(@Optional @Active MPart part) {
+	public boolean canExecute(@Optional @Active MPart part, @Optional MToolControl edit) {
 		//TODO Your code goes here
-		return !(part == null);
+		if(part == null || edit == null){
+			return false;
+		}
+		SearchToolItem item = (SearchToolItem)edit.getObject();
+		System.out.print("User input : " + item.getText());
+		return true;
 	}
 		
 }
