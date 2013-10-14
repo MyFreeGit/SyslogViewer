@@ -16,9 +16,6 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrC-rEeORA68YRw1xzQ" label="Save" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrS-rEeORA68YRw1xzQ" label="Quit" command="_2iCbnC-rEeORA68YRw1xzQ"/>
       </children>
-      <children xsi:type="menu:Menu" xmi:id="_FQeWQDFqEeO0d5oFoN0k1Q" elementId="" label="Search">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_S2Kv4DFqEeO0d5oFoN0k1Q" elementId="com.roland.syslogviewer.handledmenuitem.0" label="Search" command="_pylmUDGAEeOpt8V61Ki92w"/>
-      </children>
       <children xsi:type="menu:Menu" xmi:id="_2iCbri-rEeORA68YRw1xzQ" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbry-rEeORA68YRw1xzQ" label="About" command="_2iCbpi-rEeORA68YRw1xzQ"/>
       </children>
@@ -27,10 +24,8 @@
       <children xsi:type="menu:ToolBar" xmi:id="_2iDCpi-rEeORA68YRw1xzQ" elementId="toolbar:org.eclipse.ui.main.toolbar">
         <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCpy-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/OpenFile_16.gif" command="_2iCboC-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCqC-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
-      </children>
-      <children xsi:type="menu:ToolBar" xmi:id="_Noo7QDQAEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolbar.1">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_0ImZEDQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolbarseparator.0"/>
-        <children xsi:type="menu:ToolControl" xmi:id="_d5AyEDO2EeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolcontrol.0" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.SearchToolItem"/>
+        <children xsi:type="menu:ToolControl" xmi:id="_d5AyEDO2EeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolcontrol.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.SearchToolItem"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_7E3MIDQBEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.0" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_16.gif" command="_pylmUDGAEeOpt8V61Ki92w"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_daRnADQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.1" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_Prev_16.gif" command="_BheDMDQCEeOlRu7KLmazXw"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_rMrm8DQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.2" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_Next_16.gif" command="_jH_XwDQLEeOlRu7KLmazXw"/>
@@ -68,4 +63,5 @@
   <addons xmi:id="_2iCbli-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_2iCbly-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_2iCbmC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <addons xmi:id="_yr51gDSjEeO65e7-3AigCw" elementId="com.roland.syslogviewer.addon.0" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.ElementLocator"/>
 </application:Application>
