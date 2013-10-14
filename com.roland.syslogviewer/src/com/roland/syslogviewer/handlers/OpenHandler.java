@@ -40,7 +40,8 @@ public class OpenHandler {
 		String fileName  = dialog.open();
 		if(fileName != null && !fileName.equals("")){
 			logFile = new File(fileName);
-			createLogfilePart(application, modelService, activeWin);
+			//createLogfilePart(application, modelService, activeWin);
+			ElementLocator.createLogFilePart(logFile);
 		}
 	}
 		

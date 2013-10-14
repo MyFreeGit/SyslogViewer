@@ -1,6 +1,7 @@
  
 package com.roland.syslogviewer.handlers;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.roland.syslogviewer.parts.*;
@@ -23,25 +24,14 @@ import org.eclipse.swt.widgets.Shell;
 
 public class SearchHandler {
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,
-			MApplication application, EModelService modelService, MWindow activeWin,
-			@Optional @Active MPart part, 
-			@Optional @Active MToolControl item) {
-		List<MToolBar> objs = modelService.findElements(activeWin,
-				"", MToolBar.class, null);
-		if(objs.size() == 0){
-			System.out.println("objs.size() = 0!");
-		}else{
-			System.out.println(objs.get(0));
-		}
+	public void execute(@Optional @Active MPart part) {
 		String str="";
-		//SearchToolItem item = ElementLocator.getSearchTool();
+		SearchToolItem item = ElementLocator.getSearchTool();
 		if(item != null){
-			str =((SearchToolItem)item.getObject()).getText();
+			str =item.getText();
 		}else{
 			System.out.println("Cannot find SearchToolItem");
 		}
-		System.out.println("Search String is : " + str);
 		if(part != null){
 			//TODO: To initial search operation on active part
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
@@ -53,6 +43,7 @@ public class SearchHandler {
 	@CanExecute
 	public boolean canExecute(@Optional @Active MPart part) {
 		//TODO Your code goes here
-		return (part != null);
+		return true;
+		//return (part != null);
 	}
 }

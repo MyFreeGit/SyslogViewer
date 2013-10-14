@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2iCbkC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ide.application" bindingContexts="_2iCbmS-rEeORA68YRw1xzQ">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_2iCbkS-rEeORA68YRw1xzQ" label="SyslogViewer" iconURI="platform:/plugin/com.roland.syslogviewer/icons/application_icon_32.gif" width="500" height="400">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_2iCbkS-rEeORA68YRw1xzQ" elementId="com.roland.syslog.mainwindow" label="SyslogViewer" iconURI="platform:/plugin/com.roland.syslogviewer/icons/application_icon_32.gif" width="500" height="400">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_2iDCoC-rEeORA68YRw1xzQ">
       <children xsi:type="advanced:Perspective" xmi:id="_2iDCoS-rEeORA68YRw1xzQ">
         <children xsi:type="basic:PartSashContainer" xmi:id="_2iDCoi-rEeORA68YRw1xzQ">
