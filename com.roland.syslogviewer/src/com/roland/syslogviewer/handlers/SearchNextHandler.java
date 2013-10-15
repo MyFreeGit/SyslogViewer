@@ -11,11 +11,22 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.Shell;
 
+import com.roland.syslogviewer.parts.ElementLocator;
+import com.roland.syslogviewer.parts.LogfilePart;
+import com.roland.syslogviewer.parts.SearchToolItem;
+
 public class SearchNextHandler {
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,
-			@Optional @Active MPart part) {
-		
+	public void execute(@Optional @Active MPart part) {
+		String str="";
+		SearchToolItem item = ElementLocator.getSearchTool();
+		if(item != null){
+			str =item.getText();
+		}
+		if(part != null){
+			LogfilePart logfilePart = (LogfilePart)part.getObject();
+			logfilePart.findNext(str);
+		}	
 	}
 	
 	

@@ -39,4 +39,15 @@ public class LogfilePart {
 	public void searchString(String str){
 		logViewer.search(str);
 	}
+
+	public void findNext(String str) {
+		logViewer.findNext(str);
+		
+	}
+
+	public void findPrev(String str) {
+		logViewer.findPrev(str);
+		
+	}
+
 }

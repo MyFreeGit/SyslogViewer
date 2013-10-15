@@ -33,7 +33,6 @@ public class SearchHandler {
 			System.out.println("Cannot find SearchToolItem");
 		}
 		if(part != null){
-			//TODO: To initial search operation on active part
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
 			logfilePart.searchString(str);
 		}
@@ -42,8 +41,6 @@ public class SearchHandler {
 	
 	@CanExecute
 	public boolean canExecute(@Optional @Active MPart part) {
-		//TODO Your code goes here
-		return true;
-		//return (part != null);
+		return (part != null);
 	}
 }

@@ -1,5 +1,7 @@
 package com.roland.syslogviewer.parts;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -47,15 +49,45 @@ public class LogTableViewer implements ILogTable {
 
 	@Override
 	public void search(String str) {
-		ILogItem item = tblItems.findFirst(str);
-		if (item != null) {
-			tableViewer.reveal(item);
-			int idx[] = new int[1];
-			idx[0] = tblItems.getLogItemList().indexOf(item);
+		LogContainer result = tblItems.findAll(str);
+		List<ILogItem> items = result.getLogItemList();
+		if (items.size() != 0) {
+			tableViewer.reveal(items.get(0));
+			int idx[] = new int[items.size()];
+			int i = 0;
+			for(ILogItem item : items){
+				idx[i++] = tblItems.getLogItemList().indexOf(item);
+			}
 			tableViewer.getTable().setSelection(idx);
+			tableViewer.getTable().setFocus();
 		}
 	}
 
+
+	@Override
+	public void findNext(String str) {
+		ILogItem result = tblItems.findNext(str);
+		if(result != null){
+			int idx[] = new int[1];
+			idx[0] = tblItems.getLogItemList().indexOf(result);
+			tableViewer.reveal(result);
+			tableViewer.getTable().setSelection(idx);
+			tableViewer.getTable().setFocus();
+		}
+	}
+
+	@Override
+	public void findPrev(String str) {
+		ILogItem result = tblItems.findPrev(str);
+		if(result != null){
+			int idx[] = new int[1];
+			idx[0] = tblItems.getLogItemList().indexOf(result);
+			tableViewer.reveal(result);
+			tableViewer.getTable().setSelection(idx);
+			tableViewer.getTable().setFocus();
+		}		
+	}
+	
 	@Override
 	public void setFocus() {
 		tableViewer.getTable().setFocus();
@@ -169,4 +201,5 @@ public class LogTableViewer implements ILogTable {
 
 		}
 	}
+
 }

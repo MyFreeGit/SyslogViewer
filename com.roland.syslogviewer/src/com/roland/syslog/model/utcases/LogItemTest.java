@@ -37,10 +37,28 @@ public class LogItemTest {
 	@Test
 	public void TestLogContainer(){
 		System.out.println("============ Begin of TestLogContainer() ==============");
-		ILogItem item = logContainer.findFirst("crit");
+		ILogItem item = logContainer.findNext("CFPU");
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.findNext("CFPU");
 		assertLogItem(item, targetData.get(2));
-		
-		item = logContainer.findFirst("xyz");
+		item = logContainer.findNext("CFPU");
+		assertLogItem(item, targetData.get(10));
+		item = logContainer.findNext("CFPU");
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.findNext("CFPU");
+		assertLogItem(item, targetData.get(2));
+		item = logContainer.findNext("CFPU");
+		assertLogItem(item, targetData.get(10));
+
+		item = logContainer.findPrev("CFPU");
+		assertLogItem(item, targetData.get(2));
+		item = logContainer.findPrev("CFPU");
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.findPrev("CFPU");
+		assertLogItem(item, targetData.get(10));
+
+		item = logContainer.findNext("xyz");
+		System.out.println(item);
 		assertTrue(item == null);
 		
 		LogContainer result = logContainer.findAll("warn");
