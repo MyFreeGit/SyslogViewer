@@ -18,6 +18,7 @@ public class BasicLogHelper {
     public final static String BASIC_LOG_PATTERN = "([a-zA-Z]+)\\s*([0-9]+)\\s*([0-9]+:[0-9]+:[0-9]+\\.[0-9]+)\\s*((?i)emerg|alert|crit|err|warn|notice|info|debug)\\s*(.*)";
     
 	public static boolean analyze(String text){
+		matcher = null;
 		matcher = pattern.matcher(text);
 		return matcher.find();
 	}

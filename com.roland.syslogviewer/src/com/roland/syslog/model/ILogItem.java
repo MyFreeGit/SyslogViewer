@@ -16,6 +16,7 @@ public interface ILogItem {
 			return name;
 		}
 	}
+	public int getIndex();
 	public DateTime getTimeStamp();
 	public String getPureTime();
 	public Severity getSeverity();

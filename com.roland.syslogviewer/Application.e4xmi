@@ -26,9 +26,9 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCqC-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_0ImZEDQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolbarseparator.0"/>
         <children xsi:type="menu:ToolControl" xmi:id="_d5AyEDO2EeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolcontrol.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.SearchToolItem"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_7E3MIDQBEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.0" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_16.gif" command="_pylmUDGAEeOpt8V61Ki92w"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_daRnADQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.1" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_Prev_16.gif" command="_BheDMDQCEeOlRu7KLmazXw"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_rMrm8DQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.2" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_Next_16.gif" command="_jH_XwDQLEeOlRu7KLmazXw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_7E3MIDQBEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.0" iconURI="platform:/plugin/com.roland.syslogviewer/icons/Find_16.gif" command="_pylmUDGAEeOpt8V61Ki92w"/>
       </children>
     </trimBars>
   </children>

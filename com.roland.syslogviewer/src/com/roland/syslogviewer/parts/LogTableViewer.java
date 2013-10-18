@@ -3,8 +3,10 @@ package com.roland.syslogviewer.parts;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ILazyContentProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -23,7 +25,7 @@ import com.roland.syslog.model.SyslogFileReader;
 public class LogTableViewer implements ILogTable {
 
 	private TableViewer tableViewer = null;
-	private TableItemsContainer tblItems;
+	private LogContainer tblItems;
 	ColumnInitializer columnInitializer = new ColumnInitializer();
 
 	@Override
@@ -31,7 +33,7 @@ public class LogTableViewer implements ILogTable {
 		if (tableViewer == null) {
 			parent.setLayout(new GridLayout());
 			tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
-					| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+					| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER | SWT.VIRTUAL);
 			tableViewer.getTable().setLayoutData(
 					new GridData(GridData.FILL_BOTH));
 		}
@@ -40,7 +42,7 @@ public class LogTableViewer implements ILogTable {
 	@Override
 	public void openLogFile(String fileName) {
 		if (!fileName.equals("")) {
-			tblItems = new TableItemsContainer(SyslogFileReader.read(fileName));
+			tblItems = SyslogFileReader.read(fileName);
 			if (!tblItems.getLogItemList().isEmpty()) {
 				showLogfileByTableView(tblItems);
 			}
@@ -49,18 +51,7 @@ public class LogTableViewer implements ILogTable {
 
 	@Override
 	public void search(String str) {
-		LogContainer result = tblItems.findAll(str);
-		List<ILogItem> items = result.getLogItemList();
-		if (items.size() != 0) {
-			tableViewer.reveal(items.get(0));
-			int idx[] = new int[items.size()];
-			int i = 0;
-			for(ILogItem item : items){
-				idx[i++] = tblItems.getLogItemList().indexOf(item);
-			}
-			tableViewer.getTable().setSelection(idx);
-			tableViewer.getTable().setFocus();
-		}
+		//LogContainer result = tblItems.findAll(str);
 	}
 
 
@@ -101,8 +92,12 @@ public class LogTableViewer implements ILogTable {
 
 		columnInitializer.createColumn();
 
-		ILogItem items[] = logs.getLogItemList().toArray(new TableRowItem[0]);
+		tableViewer.setContentProvider(new MyLazyContentProvider(tableViewer));
+		tableViewer.setUseHashlookup(true);
+
+		ILogItem items[] = logs.getLogItemList().toArray(new ILogItem[0]);
 		tableViewer.setInput(items);
+		tableViewer.setItemCount(items.length); 
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
@@ -128,17 +123,40 @@ public class LogTableViewer implements ILogTable {
 		}
 	}
 
+	private class MyLazyContentProvider implements ILazyContentProvider  {
+		private TableViewer viewer;
+		private ILogItem[] items;
+
+		public MyLazyContentProvider(TableViewer viewer){
+			this.viewer = viewer;
+		}
+
+		@Override
+		public void dispose() {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			items = (ILogItem[])newInput;
+		}
+
+		@Override
+		public void updateElement(int index) {
+			 viewer.replace(items[index], index);		
+		}
+	}
+
 	private class ColumnInitializer {
 		public void createColumn() {
 			TableViewerColumn col = createTableViewerColumn("", 80);
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
-					count++;
-					return String.valueOf(count);
+					ILogItem i = (ILogItem) element;
+					return String.valueOf(i.getIndex());
 				}
-
-				private int count = 0;
 			});
 
 			col = createTableViewerColumn(LogItem.Field.TimeStamp.toString(),

@@ -16,6 +16,7 @@ public class LogItem implements ILogItem{
 		this.logText = plainText;
 		this.fields.add(Field.Text);
 
+		this.index = counter++;
 		initBasicLogItems();
 		initIPALogItems();
 	}
@@ -50,11 +51,18 @@ public class LogItem implements ILogItem{
 	@Override public boolean containField(Field field){
 		return fields.contains(field);
 	}
+
+	@Override
+	public int getIndex() {
+		return index;
+	}
 		
 	@Override public String toString(){
 		return originalText;
 	}
 	
+	private int index;
+	private static int counter = 1;
     private String originalText;
     private DateTime timeStamp;
     private Severity severity;

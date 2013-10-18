@@ -31,7 +31,12 @@ public class SyslogFileReader {
 		}
 		return allItems;
 	}
-
+	
+	public static void main(String args[]){
+		LogContainer items = SyslogFileReader.read(
+				"D:\\userdata\\rding\\Desktop\\Pronto\\cfpu_startup_fail\\debug");
+		
+	}
 	private SyslogFileReader(){
 		
 	}

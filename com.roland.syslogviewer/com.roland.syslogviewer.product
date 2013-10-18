@@ -8,10 +8,21 @@
 
    <launcherArgs>
       <programArgs>-clearPersistedState</programArgs>
+      <vmArgs>-XX:+HeapDumpOnOutOfMemoryError</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
 
    <plugins>
       <plugin id="com.ibm.icu"/>

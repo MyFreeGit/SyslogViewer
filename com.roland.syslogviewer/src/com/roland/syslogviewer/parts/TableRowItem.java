@@ -37,6 +37,10 @@ public class TableRowItem implements ILogItem{
 	@Override public boolean containField(Field field) {
 		return logItem.containField(field);
 	}
+
+	@Override public int getIndex() {
+		return logItem.getIndex();
+	}
 	
 	@Override public String toString(){
 		return logItem.toString();
