@@ -19,6 +19,8 @@ public class LogItem implements ILogItem{
 		this.index = counter++;
 		initBasicLogItems();
 		initIPALogItems();
+		
+		this.isSelected = false;
 	}
 
 	@Override public DateTime getTimeStamp(){
@@ -70,6 +72,7 @@ public class LogItem implements ILogItem{
     private String prb;
     private EnumSet<Field> fields;
     private String logText; //After all meaningful fields are chopped out, the pure text
+    private boolean isSelected;
     
     //This object is addition information for display the log item in different JFace viewer
     //The Model package doesn't care for it. In UT this filed isn't covered. 
@@ -110,4 +113,21 @@ public class LogItem implements ILogItem{
     	}
     	return result;
     }
+
+	@Override
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	@Override
+	public void select() {
+		isSelected = true;
+		
+	}
+
+	@Override
+	public void unselect() {
+		isSelected = false;
+	}
+
 }

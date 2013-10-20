@@ -16,6 +16,10 @@ public interface ILogItem {
 			return name;
 		}
 	}
+	
+	public enum Selection{
+		Selected, UnSelected;
+	}
 	public int getIndex();
 	public DateTime getTimeStamp();
 	public String getPureTime();
@@ -24,4 +28,7 @@ public interface ILogItem {
 	public String getRU();
 	public String getPRB();
 	public boolean containField(Field field);
+	public boolean isSelected();
+	public void select();
+	public void unselect();
 }

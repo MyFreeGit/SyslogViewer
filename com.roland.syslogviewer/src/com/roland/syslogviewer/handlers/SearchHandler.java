@@ -4,6 +4,7 @@ package com.roland.syslogviewer.handlers;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.roland.syslog.model.LogContainer;
 import com.roland.syslogviewer.parts.*;
 import com.roland.syslogviewer.widgets.SearchResultDialog;
 
@@ -26,11 +27,6 @@ import org.eclipse.swt.widgets.Shell;
 public class SearchHandler {
 	@Execute
 	public void execute(@Optional @Active MPart part, Shell shell) {
-		SearchResultDialog resultDlg = new SearchResultDialog(shell);
-		resultDlg.open();
-	}
-	
-	private void backup(MPart part){
 		String str="";
 		SearchToolItem item = ElementLocator.getSearchTool();
 		if(item != null){
@@ -40,13 +36,20 @@ public class SearchHandler {
 		}
 		if(part != null){
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
-			logfilePart.searchString(str);
+			LogContainer result = logfilePart.search(str);
+			SearchResultDialog dlg = new SearchResultDialog(shell);
+			dlg.setResult(result);
+			int ret = dlg.open();
+			System.out.println("dlg.open() returned " + String.valueOf(ret));
+			LogContainer selection = dlg.getSelection();
+			if(!selection.isEmpty()){
+				logfilePart.setBookmark(selection);
+			}
 		}
-		
 	}
+
 	@CanExecute
 	public boolean canExecute(@Optional @Active MPart part) {
-		return true;
-		//return (part != null);
+		return (part != null);
 	}
 }

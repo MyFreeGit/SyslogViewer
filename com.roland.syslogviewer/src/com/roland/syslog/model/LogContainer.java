@@ -8,6 +8,14 @@ public class LogContainer {
 		finder = new Finder();
 	}
 	
+	public boolean isEmpty(){
+		return !(itemList.size() > 0);
+	}
+	
+	public void clear(){
+		itemList.clear();
+	}
+	
 	public boolean add(ILogItem item){
 		return itemList.add(item);
 	}
@@ -29,7 +37,25 @@ public class LogContainer {
 	public ILogItem findPrev(String str){
 		return finder.findPrev(str);
 	}
-		
+	
+	public void selectAll(){
+		for(ILogItem item : itemList){
+			item.select();
+		}
+	}
+	
+	public void unselectAll(){
+		for(ILogItem item : itemList){
+			item.unselect();
+		}	
+	}
+	
+	public void setSelected(LogContainer logs){
+		for(ILogItem item: logs.getLogItemList()){
+			item.select();
+		}
+	}
+
 	private enum Direction{
 		PREV, NEXT;
 	}

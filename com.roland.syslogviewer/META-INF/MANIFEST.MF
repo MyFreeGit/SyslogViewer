@@ -5,6 +5,7 @@ Bundle-SymbolicName: com.roland.syslogviewer;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: ExternLibs/date4j/date4j.jar,
  .,
+ swing2swt.jar,
  swing2swt.jar
 Bundle-Vendor: ROLAND
 Require-Bundle: javax.inject;bundle-version="1.0.0",

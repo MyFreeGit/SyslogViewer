@@ -1,16 +1,14 @@
 package com.roland.syslogviewer.parts;
 
-import java.util.List;
-
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ILazyContentProvider;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -26,7 +24,9 @@ public class LogTableViewer implements ILogTable {
 
 	private TableViewer tableViewer = null;
 	private LogContainer tblItems;
+
 	ColumnInitializer columnInitializer = new ColumnInitializer();
+	static private final Image BOOKMARK = ResourceManager.getPluginImage("com.roland.syslogviewer", "icons/bookmark_obj.gif");
 
 	@Override
 	public void initializeTable(Composite parent) {
@@ -50,8 +50,8 @@ public class LogTableViewer implements ILogTable {
 	}
 
 	@Override
-	public void search(String str) {
-		//LogContainer result = tblItems.findAll(str);
+	public LogContainer search(String str) {
+		return tblItems.findAll(str);
 	}
 
 
@@ -88,7 +88,6 @@ public class LogTableViewer implements ILogTable {
 		assert (tableViewer != null);
 		final Table table = tableViewer.getTable();
 		tableViewer.setLabelProvider(new LabelProvider());
-		tableViewer.setContentProvider(new MyContentProvider());
 
 		columnInitializer.createColumn();
 
@@ -101,26 +100,6 @@ public class LogTableViewer implements ILogTable {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
-	}
-
-	private class MyContentProvider implements IStructuredContentProvider {
-
-		@Override
-		public Object[] getElements(Object inputElement) {
-			return (ILogItem[]) inputElement;
-		}
-
-		@Override
-		public void dispose() {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			// TODO Auto-generated method stub
-
-		}
 	}
 
 	private class MyLazyContentProvider implements ILazyContentProvider  {
@@ -150,7 +129,24 @@ public class LogTableViewer implements ILogTable {
 
 	private class ColumnInitializer {
 		public void createColumn() {
-			TableViewerColumn col = createTableViewerColumn("", 80);
+			TableViewerColumn col = createTableViewerColumn("", 18);
+			col.setLabelProvider(new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					return null;
+				}
+				  @Override
+			      public Image getImage(Object element) {
+			        if (((ILogItem) element).isSelected()) {
+			          return BOOKMARK;
+			        } else {
+			          return null;
+			        }
+			      }
+
+			});
+			
+			col = createTableViewerColumn("", 50);
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
@@ -159,8 +155,7 @@ public class LogTableViewer implements ILogTable {
 				}
 			});
 
-			col = createTableViewerColumn(LogItem.Field.TimeStamp.toString(),
-					100);
+			col = createTableViewerColumn(LogItem.Field.TimeStamp.toString(), 105);
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
@@ -169,7 +164,7 @@ public class LogTableViewer implements ILogTable {
 				}
 			});
 
-			col = createTableViewerColumn(LogItem.Field.Severity.toString(), 80);
+			col = createTableViewerColumn(LogItem.Field.Severity.toString(), 60);
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
@@ -196,7 +191,7 @@ public class LogTableViewer implements ILogTable {
 				}
 			});
 
-			col = createTableViewerColumn(LogItem.Field.Text.toString(), 500);
+			col = createTableViewerColumn(LogItem.Field.Text.toString(), 1000);
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
@@ -218,6 +213,16 @@ public class LogTableViewer implements ILogTable {
 			return viewerColumn;
 
 		}
+	}
+
+	@Override
+	public void setBookmark(LogContainer bookmarks) {
+		if(!bookmarks.isEmpty()){
+			tblItems.unselectAll();
+			tblItems.setSelected(bookmarks);
+			tableViewer.refresh();
+		}
+		
 	}
 
 }
