@@ -68,7 +68,78 @@ public class LogItemTest {
 		
 		result = logContainer.findAll("xyz");
 		assertTrue(result.getLogItemList().size() == 0);
+
+		System.out.println("------------ Begin test of nav selected item ------------------");
+		logContainer.unselectAll();
+		assertTrue(logContainer.getSelectCount() == 0);
 		
+		logContainer.getLogItemList().get(1).select();
+		logContainer.getLogItemList().get(2).select();
+		logContainer.getLogItemList().get(5).select();
+		logContainer.getLogItemList().get(10).select();
+		logContainer.getLogItemList().get(11).select();
+		assertTrue(logContainer.getSelectCount() == 5);
+		
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(2));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(5));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(10));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(11));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(1));
+	
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(11));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(10));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(5));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(2));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(11));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(10));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(5));
+
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(10));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(11));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(2));
+		item = logContainer.findNext("crit");
+		assertLogItem(item, targetData.get(11));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(1));
+		item = logContainer.findNext("crit");
+		assertLogItem(item, targetData.get(2));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(5));
+		item = logContainer.findPrev("alert");
+		assertLogItem(item, targetData.get(1));
+		
+		
+		logContainer.getLogItemList().get(0).select();
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(0));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(11));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(0));
+
+		logContainer.unselectAll();
+		assertTrue(logContainer.getSelectCount() == 0);
 		System.out.println("============= End of TestLogContainer() ===============");
 	}
 

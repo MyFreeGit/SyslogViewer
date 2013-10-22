@@ -31,13 +31,21 @@ public class LogContainer {
 	}
 	
 	public ILogItem findNext(String str){
-		return finder.findNext(str);
+		return finder.findNext(Comparator.FIND, str);
 	}
 	 
 	public ILogItem findPrev(String str){
-		return finder.findPrev(str);
+		return finder.findPrev(Comparator.FIND, str);
 	}
 	
+	public ILogItem navNext(){
+		return finder.findNext(Comparator.SELECT, null);
+	}
+	
+	public ILogItem navPrev(){
+		return finder.findPrev(Comparator.SELECT, null);
+	}
+
 	public void selectAll(){
 		for(ILogItem item : itemList){
 			item.select();
@@ -50,14 +58,38 @@ public class LogContainer {
 		}	
 	}
 	
+	public int getSelectCount(){
+		int count = 0;
+		for(ILogItem item : itemList){
+			if(item.isSelected()){
+				count++; 
+			}
+		}
+		return count;
+	}
+	
 	public void setSelected(LogContainer logs){
 		for(ILogItem item: logs.getLogItemList()){
 			item.select();
 		}
 	}
-
+	
 	private enum Direction{
 		PREV, NEXT;
+	}
+	
+	private enum Comparator{
+		FIND {
+			@Override
+			boolean isRightOne(Object obj, Object condit) {
+				return obj.toString().contains((String)condit);
+			}},
+		SELECT{
+			@Override
+			boolean isRightOne(Object obj, Object condit) {
+				return ((ILogItem)obj).isSelected();
+			}};
+		abstract boolean isRightOne(Object obj, Object condit);
 	}
 	
 	private class Finder{
@@ -92,12 +124,12 @@ public class LogContainer {
 			return iter;
 		}
 
-		public ILogItem findNext(String str){
+		public ILogItem findNext(Comparator cmptor, String str){
 			ILogItem result = null;
 			ListIterator<ILogItem> iter = getIterator(Direction.NEXT);
 			while(iter.hasNext()){
 				result = iter.next();
-				if(result.toString().contains(str)){
+				if(cmptor.isRightOne(result, str)){
 					pos = result;
 					return result;
 				}
@@ -106,7 +138,7 @@ public class LogContainer {
 				iter = itemList.listIterator();
 				while(iter.hasNext()){
 					result = iter.next();
-					if(result.toString().contains(str)){
+					if(cmptor.isRightOne(result, str)){
 						pos = result;
 						return result;
 					}
@@ -115,12 +147,12 @@ public class LogContainer {
 			return null;
 		}
 		
-		public ILogItem findPrev(String str){
+		public ILogItem findPrev(Comparator cmptor, String str){
 			ILogItem result = null;
 			ListIterator<ILogItem> iter = getIterator(Direction.PREV);
 			while(iter.hasPrevious()){
 				result = iter.previous();
-				if(result.toString().contains(str)){
+				if(cmptor.isRightOne(result, str)){
 					pos = result;
 					return result;
 				}
@@ -129,7 +161,7 @@ public class LogContainer {
 				iter = itemList.listIterator(itemList.size());
 				while(iter.hasPrevious()){
 					result = iter.previous();
-					if(result.toString().contains(str)){
+					if(cmptor.isRightOne(result, str)){
 						pos = result;
 						return result;
 					}
