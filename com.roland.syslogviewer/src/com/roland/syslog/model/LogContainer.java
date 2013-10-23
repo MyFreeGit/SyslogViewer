@@ -52,6 +52,10 @@ public class LogContainer {
 		}
 	}
 	
+	public void setPosition(ILogItem pos){
+		finder.setPosition(pos);
+	}
+	
 	public void unselectAll(){
 		for(ILogItem item : itemList){
 			item.unselect();
@@ -95,6 +99,9 @@ public class LogContainer {
 	private class Finder{
 		private ILogItem pos = null;
 
+		public void setPosition(ILogItem pos){
+			this.pos = pos;
+		}
 
 		public LogContainer findAll(String str){
 			LogContainer result = new LogContainer();

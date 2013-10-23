@@ -8,8 +8,6 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.swt.widgets.Shell;
 
 import com.roland.syslogviewer.parts.ElementLocator;
 import com.roland.syslogviewer.parts.LogfilePart;
@@ -17,7 +15,8 @@ import com.roland.syslogviewer.parts.SearchToolItem;
 
 public class SearchNextHandler {
 	@Execute
-	public void execute(@Optional @Active MPart part) {
+	public void execute(@Optional @Active MPart part,
+		 @Optional @Named("com.roland.syslogviewer.commandparameter.searchnext")String param) {
 		String str="";
 		SearchToolItem item = ElementLocator.getSearchTool();
 		if(item != null){
@@ -25,14 +24,19 @@ public class SearchNextHandler {
 		}
 		if(part != null){
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
-			logfilePart.findNext(str);
+			if(param != null){
+				if(param.equalsIgnoreCase("SEARCH")){
+					logfilePart.findNext(str);
+				}else if(param.equalsIgnoreCase("BOOKMARK")){
+					logfilePart.nextBookmark();
+				}
+			}
 		}	
 	}
 	
 	
 	@CanExecute
 	public boolean canExecute(@Optional @Active MPart part) {
-		//TODO Your code goes here
 		return (part != null);
 	}
 		

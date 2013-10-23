@@ -138,6 +138,14 @@ public class LogItemTest {
 		item = logContainer.navNext();
 		assertLogItem(item, targetData.get(0));
 
+		logContainer.setPosition(logContainer.getLogItemList().get(1));
+		item = logContainer.navNext();
+		assertLogItem(item, targetData.get(2));
+		logContainer.setPosition(logContainer.getLogItemList().get(6));
+		item = logContainer.navPrev();
+		assertLogItem(item, targetData.get(5));
+
+		logContainer.setPosition(null);
 		logContainer.unselectAll();
 		assertTrue(logContainer.getSelectCount() == 0);
 		System.out.println("============= End of TestLogContainer() ===============");
@@ -303,6 +311,4 @@ public class LogItemTest {
 
 		return list;
 	}
-	
-	
 }

@@ -12,4 +12,6 @@ public interface ILogTable {
 	public void findPrev(String str);
 	public void setFocus();
 	public void setBookmark(LogContainer bookmarks);
+	public void nextBookmark();
+	public void prevBookmark();
 }

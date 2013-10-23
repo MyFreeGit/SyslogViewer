@@ -57,31 +57,48 @@ public class LogTableViewer implements ILogTable {
 
 	@Override
 	public void findNext(String str) {
-		ILogItem result = tblItems.findNext(str);
-		if(result != null){
-			int idx[] = new int[1];
-			idx[0] = tblItems.getLogItemList().indexOf(result);
-			tableViewer.reveal(result);
-			tableViewer.getTable().setSelection(idx);
-			tableViewer.getTable().setFocus();
-		}
+		setSelectionToItem(tblItems.findNext(str));
 	}
 
 	@Override
 	public void findPrev(String str) {
-		ILogItem result = tblItems.findPrev(str);
-		if(result != null){
-			int idx[] = new int[1];
-			idx[0] = tblItems.getLogItemList().indexOf(result);
-			tableViewer.reveal(result);
-			tableViewer.getTable().setSelection(idx);
-			tableViewer.getTable().setFocus();
-		}		
+		setSelectionToItem(tblItems.findPrev(str));		
 	}
-	
+
+	@Override
+	public void setBookmark(LogContainer bookmarks) {
+		if(!bookmarks.isEmpty()){
+			tblItems.unselectAll();
+			tblItems.setSelected(bookmarks);
+			tableViewer.refresh();
+		}
+		
+	}
+
+	@Override
+	public void nextBookmark() {
+		setSelectionToItem(tblItems.navNext());
+	}
+
+	@Override
+	public void prevBookmark() {
+		setSelectionToItem(tblItems.navPrev());
+	}
+
+
 	@Override
 	public void setFocus() {
 		tableViewer.getTable().setFocus();
+	}
+
+	private void setSelectionToItem(ILogItem item) {
+		if(item != null){
+			int idx[] = new int[1];
+			idx[0] = tblItems.getLogItemList().indexOf(item);
+			tableViewer.reveal(item);
+			tableViewer.getTable().setSelection(idx);
+			tableViewer.getTable().setFocus();
+		}
 	}
 
 	private void showLogfileByTableView(LogContainer logs) {
@@ -213,16 +230,6 @@ public class LogTableViewer implements ILogTable {
 			return viewerColumn;
 
 		}
-	}
-
-	@Override
-	public void setBookmark(LogContainer bookmarks) {
-		if(!bookmarks.isEmpty()){
-			tblItems.unselectAll();
-			tblItems.setSelected(bookmarks);
-			tableViewer.refresh();
-		}
-		
 	}
 
 }

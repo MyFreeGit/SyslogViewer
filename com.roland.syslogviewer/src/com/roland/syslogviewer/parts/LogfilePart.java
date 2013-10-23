@@ -39,5 +39,12 @@ public class LogfilePart {
 	public void setBookmark(LogContainer bookmarks){
 		logViewer.setBookmark(bookmarks);
 	}
+	public void nextBookmark() {
+		logViewer.nextBookmark();
+	}
+
+	public void prevBookmark() {
+		logViewer.prevBookmark();
+	}
 
 }

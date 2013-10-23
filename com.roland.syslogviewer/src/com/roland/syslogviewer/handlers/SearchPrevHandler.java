@@ -1,6 +1,8 @@
  
 package com.roland.syslogviewer.handlers;
 
+import javax.inject.Named;
+
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.CanExecute;
@@ -13,7 +15,8 @@ import com.roland.syslogviewer.parts.SearchToolItem;
 
 public class SearchPrevHandler {
 	@Execute
-	public void execute(@Optional @Active MPart part) {
+	public void execute(@Optional @Active MPart part,
+		 @Optional @Named("com.roland.syslogviewer.commandparameter.searchprev")String param) {
 		String str="";
 		SearchToolItem item = ElementLocator.getSearchTool();
 		if(item != null){
@@ -21,13 +24,18 @@ public class SearchPrevHandler {
 		}
 		if(part != null){
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
-			logfilePart.findPrev(str);
+			if(param != null){
+				if(param.equalsIgnoreCase("SEARCH")){
+					logfilePart.findPrev(str);
+				}else if(param.equalsIgnoreCase("BOOKMARK")){
+					logfilePart.prevBookmark();
+				}
+			}
 		}	
 	}
 		
 	@CanExecute
 	public boolean canExecute(@Optional @Active MPart part) {
-		//TODO Your code goes here
 		return (part != null);
 	}
 		
