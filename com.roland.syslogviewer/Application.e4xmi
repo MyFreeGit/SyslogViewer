@@ -50,11 +50,13 @@
   <handlers xmi:id="_dGoUQDGEEeOpt8V61Ki92w" elementId="com.roland.syslogviewer.handler.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchHandler" command="_pylmUDGAEeOpt8V61Ki92w"/>
   <handlers xmi:id="_B6jtEDQMEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handler.0" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchPrevHandler" command="_BheDMDQCEeOlRu7KLmazXw"/>
   <handlers xmi:id="_cQ8K8DQMEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handler.1" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchNextHandler" command="_jH_XwDQLEeOlRu7KLmazXw"/>
+  <handlers xmi:id="_QRC0ED0YEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.handler.copy" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.CopyHandler" command="_8SgpED0XEeOB3O-DtOeQdA"/>
   <bindingTables xmi:id="_2iCbni-rEeORA68YRw1xzQ" bindingContext="_2iCbmS-rEeORA68YRw1xzQ">
     <bindings xmi:id="_2iCbny-rEeORA68YRw1xzQ" keySequence="M1+Q" command="_2iCbnC-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCboi-rEeORA68YRw1xzQ" keySequence="M1+O" command="_2iCboC-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCbpS-rEeORA68YRw1xzQ" keySequence="M1+S" command="_2iCboy-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCbqC-rEeORA68YRw1xzQ" keySequence="M1+A" command="_2iCbpi-rEeORA68YRw1xzQ"/>
+    <bindings xmi:id="_kLT_kD0XEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.keybinding.0" keySequence="M1+C" command="_8SgpED0XEeOB3O-DtOeQdA"/>
   </bindingTables>
   <rootContext xmi:id="_2iCbmS-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_2iCbmi-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
@@ -71,6 +73,7 @@
   <commands xmi:id="_jH_XwDQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.command.searchnext" commandName="searchNextCommand">
     <parameters xmi:id="_tberEDuxEeO25_iIWhowag" elementId="com.roland.syslogviewer.commandparameter.searchnext" name="com.roland.syslogviewer.commandparameter.searchnext"/>
   </commands>
+  <commands xmi:id="_8SgpED0XEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.command.copy" commandName="copyCommand"/>
   <addons xmi:id="_2iCbki-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2iCbky-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2iCblC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

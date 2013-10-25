@@ -14,4 +14,5 @@ public interface ILogTable {
 	public void setBookmark(LogContainer bookmarks);
 	public void nextBookmark();
 	public void prevBookmark();
+	public void copySelectionToClipboard();
 }

@@ -130,20 +130,7 @@ public class SearchResultDialog extends Dialog {
 
 	private void copySelectionToClipboard(){
 		int[] idx = listViewer.getList().getSelectionIndices();
-		if(idx.length != 0){
-			Display display = Display.getCurrent();
-			Clipboard clipboard = new Clipboard(display);
-			StringBuilder sb = new StringBuilder();
-			for(int i: idx){
-				sb.append(result.getLogItemList().get(i).toString());
-				sb.append("\n");
-			}
-	        TextTransfer textTransfer = TextTransfer.getInstance();
-	        Transfer[] transfers = new Transfer[]{textTransfer};
-	        Object[] data = new Object[]{sb.toString()};
-	        clipboard.setContents(data, transfers);
-	        clipboard.dispose();	
-		}
+		WidgetsUtil.copyLogitemsToClipboard(result, idx);
 	}
 	
 	private class MyContentProvider implements IStructuredContentProvider {

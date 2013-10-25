@@ -2,7 +2,10 @@ package com.roland.syslogviewer.parts;
 
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILazyContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -19,6 +22,7 @@ import com.roland.syslog.model.ILogItem;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.LogItem;
 import com.roland.syslog.model.SyslogFileReader;
+import com.roland.syslogviewer.widgets.WidgetsUtil;
 
 public class LogTableViewer implements ILogTable {
 
@@ -68,7 +72,7 @@ public class LogTableViewer implements ILogTable {
 	@Override
 	public void setBookmark(LogContainer bookmarks) {
 		if(!bookmarks.isEmpty()){
-			tblItems.unselectAll();
+			//tblItems.unselectAll();
 			tblItems.setSelected(bookmarks);
 			tableViewer.refresh();
 		}
@@ -85,6 +89,13 @@ public class LogTableViewer implements ILogTable {
 		setSelectionToItem(tblItems.navPrev());
 	}
 
+
+	@Override
+	public void copySelectionToClipboard() {
+		int[] idx = tableViewer.getTable().getSelectionIndices();
+		WidgetsUtil.copyLogitemsToClipboard(tblItems, idx);
+		
+	}
 
 	@Override
 	public void setFocus() {
@@ -116,7 +127,8 @@ public class LogTableViewer implements ILogTable {
 		tableViewer.setItemCount(items.length); 
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-
+		
+		tableViewer.addDoubleClickListener(new DoubleClickLinster());
 	}
 
 	private class MyLazyContentProvider implements ILazyContentProvider  {
@@ -143,7 +155,24 @@ public class LogTableViewer implements ILogTable {
 			 viewer.replace(items[index], index);		
 		}
 	}
-
+	
+	private class DoubleClickLinster implements IDoubleClickListener{
+		@Override
+		public void doubleClick(DoubleClickEvent event) {
+			IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+			ILogItem item = (ILogItem)selection.getFirstElement();
+			if(item != null){
+				if(item.isSelected()){
+					item.unselect();
+				}else{
+					item.select();
+				}
+				setSelectionToItem(item);
+			}
+		}
+		
+	}
+	
 	private class ColumnInitializer {
 		public void createColumn() {
 			TableViewerColumn col = createTableViewerColumn("", 18);

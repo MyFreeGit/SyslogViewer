@@ -46,5 +46,9 @@ public class LogfilePart {
 	public void prevBookmark() {
 		logViewer.prevBookmark();
 	}
+	
+	public void copySelectionToClipboard() {
+		logViewer.copySelectionToClipboard();
+	}
 
 }

@@ -12,18 +12,15 @@ package com.roland.syslogviewer.handlers;
 
 import com.roland.syslogviewer.parts.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.io.*;
 import java.util.*;
 
 import javax.inject.*;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.SWT.*;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.eclipse.e4.ui.model.application.*;
