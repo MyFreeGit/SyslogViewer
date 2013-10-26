@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import com.roland.syslog.model.ILogItem;
+import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.LogItem;
 import com.roland.syslog.model.SyslogFileReader;
@@ -54,7 +55,7 @@ public class LogTableViewer implements ILogTable {
 	}
 
 	@Override
-	public LogContainer search(String str) {
+	public ILogSet search(String str) {
 		return tblItems.findAll(str);
 	}
 
@@ -70,7 +71,7 @@ public class LogTableViewer implements ILogTable {
 	}
 
 	@Override
-	public void setBookmark(LogContainer bookmarks) {
+	public void setBookmark(ILogSet bookmarks) {
 		if(!bookmarks.isEmpty()){
 			//tblItems.unselectAll();
 			tblItems.setSelected(bookmarks);

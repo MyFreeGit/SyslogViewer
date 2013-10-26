@@ -2,6 +2,7 @@
 package com.roland.syslogviewer.handlers;
 
 
+import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslogviewer.parts.*;
 import com.roland.syslogviewer.widgets.SearchResultDialog;
@@ -25,12 +26,12 @@ public class SearchHandler {
 		}
 		if(part != null){
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
-			LogContainer result = logfilePart.search(str);
+			ILogSet result = logfilePart.search(str);
 			SearchResultDialog dlg = new SearchResultDialog(shell);
 			dlg.setResult(result);
 			int ret = dlg.open();
 			System.out.println("dlg.open() returned " + String.valueOf(ret));
-			LogContainer selection = dlg.getSelection();
+			ILogSet selection = dlg.getSelection();
 			if(!selection.isEmpty()){
 				logfilePart.setBookmark(selection);
 			}

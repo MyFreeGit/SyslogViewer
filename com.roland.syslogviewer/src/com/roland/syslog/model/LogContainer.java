@@ -2,80 +2,38 @@ package com.roland.syslog.model;
 
 import java.util.*;
 
-public class LogContainer {
+public class LogContainer extends AbstractLogSet implements ILogNavigator {
 	public LogContainer(){
-		itemList = new LinkedList<ILogItem>();
+		super();
 		finder = new Finder();
 	}
 	
-	public boolean isEmpty(){
-		return !(itemList.size() > 0);
+	@Override protected List<ILogItem> createLogList(){
+		return new LinkedList<ILogItem>();
 	}
 	
-	public void clear(){
-		itemList.clear();
-	}
-	
-	public boolean add(ILogItem item){
-		return itemList.add(item);
-	}
-	
-	public List<ILogItem> getLogItemList(){
-		return itemList;
-	}
-
-	private List<ILogItem> itemList;
-	
-	public LogContainer findAll(String str){
+	@Override public ILogSet findAll(String str){
 		return finder.findAll(str);
 	}
 	
-	public ILogItem findNext(String str){
+	@Override  public ILogItem findNext(String str){
 		return finder.findNext(Comparator.FIND, str);
 	}
 	 
-	public ILogItem findPrev(String str){
+	@Override public ILogItem findPrev(String str){
 		return finder.findPrev(Comparator.FIND, str);
 	}
 	
-	public ILogItem navNext(){
+	@Override public ILogItem navNext(){
 		return finder.findNext(Comparator.SELECT, null);
 	}
 	
-	public ILogItem navPrev(){
+	@Override public ILogItem navPrev(){
 		return finder.findPrev(Comparator.SELECT, null);
 	}
 
-	public void selectAll(){
-		for(ILogItem item : itemList){
-			item.select();
-		}
-	}
-	
-	public void setPosition(ILogItem pos){
+	@Override public void setPosition(ILogItem pos){
 		finder.setPosition(pos);
-	}
-	
-	public void unselectAll(){
-		for(ILogItem item : itemList){
-			item.unselect();
-		}	
-	}
-	
-	public int getSelectCount(){
-		int count = 0;
-		for(ILogItem item : itemList){
-			if(item.isSelected()){
-				count++; 
-			}
-		}
-		return count;
-	}
-	
-	public void setSelected(LogContainer logs){
-		for(ILogItem item: logs.getLogItemList()){
-			item.select();
-		}
 	}
 	
 	private enum Direction{
@@ -103,8 +61,8 @@ public class LogContainer {
 			this.pos = pos;
 		}
 
-		public LogContainer findAll(String str){
-			LogContainer result = new LogContainer();
+		public ILogSet findAll(String str){
+			ResultLogList result = new ResultLogList();
 			pos = null;
 			for(ILogItem item : itemList){
 				if(item.toString().contains(str)){

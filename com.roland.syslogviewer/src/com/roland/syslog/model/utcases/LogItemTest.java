@@ -61,7 +61,7 @@ public class LogItemTest {
 		System.out.println(item);
 		assertTrue(item == null);
 		
-		LogContainer result = logContainer.findAll("warn");
+		ILogSet result = logContainer.findAll("warn");
 		assertTrue(result.getLogItemList().size() == 2);
 		assertLogItem(result.getLogItemList().get(0), targetData.get(4));
 		assertLogItem(result.getLogItemList().get(1), targetData.get(9));

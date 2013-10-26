@@ -5,10 +5,10 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 
-import com.roland.syslog.model.LogContainer;
+import com.roland.syslog.model.ILogSet;
 
 public class WidgetsUtil {
-	public static void copyLogitemsToClipboard(LogContainer logs, int[] idx){
+	public static void copyLogitemsToClipboard(ILogSet logs, int[] idx){
 		if(idx.length != 0){
 			Display display = Display.getCurrent();
 			Clipboard clipboard = new Clipboard(display);

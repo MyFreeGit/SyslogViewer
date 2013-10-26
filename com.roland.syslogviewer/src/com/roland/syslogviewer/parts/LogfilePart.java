@@ -24,7 +24,7 @@ public class LogfilePart {
 		logViewer.setFocus();
 	}
 	
-	public LogContainer search(String str){
+	public ILogSet search(String str){
 		return logViewer.search(str);
 	}
 
@@ -36,7 +36,7 @@ public class LogfilePart {
 		logViewer.findPrev(str);		
 	}
 		
-	public void setBookmark(LogContainer bookmarks){
+	public void setBookmark(ILogSet bookmarks){
 		logViewer.setBookmark(bookmarks);
 	}
 	public void nextBookmark() {

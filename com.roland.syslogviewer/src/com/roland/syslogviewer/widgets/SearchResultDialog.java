@@ -11,26 +11,23 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.roland.syslog.model.ILogItem;
+import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 public class SearchResultDialog extends Dialog {
-	private LogContainer result;
+	private ILogSet result;
 	private ListViewer listViewer;
-	private LogContainer selection;
+	private ILogSet selection;
 	private final static int ID_BTN_CLIPBOARD = 10;
 
-	public void setResult(LogContainer result) {
+	public void setResult(ILogSet result) {
 		this.result = result;
 	}
 
@@ -39,7 +36,7 @@ public class SearchResultDialog extends Dialog {
 		selection = new LogContainer();
 	}
 	
-	public LogContainer getSelection(){
+	public ILogSet getSelection(){
 		return selection;
 	}
 
@@ -149,7 +146,7 @@ public class SearchResultDialog extends Dialog {
 
 		@Override
 		public Object[] getElements(Object inputElement) {
-			return ((LogContainer) inputElement).getLogItemList().toArray();
+			return ((ILogSet) inputElement).getLogItemList().toArray();
 		}
 	}
 
