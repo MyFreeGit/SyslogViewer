@@ -2,6 +2,7 @@ package com.roland.syslog.model;
 
 import hirondelle.date4j.DateTime;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -72,8 +73,6 @@ public abstract class AbstractLogSet implements ILogSet {
 	}
 	
 	public ILogSet betweenTime(String begin, String end, int format){
-		ILogSet result = new ResultLogList();
-		
 		if(format == DATETIME_ORGINAL_FORMAT){
 			if(BasicLogHelper.analyzeDateTime(begin)){
 				DateTime dt1 = BasicLogHelper.getDataTime();
@@ -81,7 +80,11 @@ public abstract class AbstractLogSet implements ILogSet {
 				if(BasicLogHelper.analyzeDateTime(end)){
 					dt2 = BasicLogHelper.getDataTime();
 					return betweenTime(dt1, dt2);
+				}else{
+					throw new IllegalArgumentException("DateTime format isn't correct for end = \"" + end + "\"");
 				}
+			}else{
+				throw new IllegalArgumentException("DateTime format isn't correct for begin = \"" + begin + "\"");
 			}
 		}
 		if(format == DATETIME_DIGITAL_FORMAT){
@@ -89,11 +92,14 @@ public abstract class AbstractLogSet implements ILogSet {
 			DateTime dt2 = new DateTime(BasicLogHelper.DEFAULT_YEAR + "-" + end);
 			return betweenTime(dt1, dt2);
 		}
-		return result;
+		throw new IllegalArgumentException("Unrecognize format = " + String.valueOf(format));
 	}
 
 	public ILogSet filterWithSeverity(EnumSet<Severity> severities){
 		ILogSet result = new ResultLogList();
+		if(severities.isEmpty()){
+			return result;
+		}
 		for(ILogItem item : itemList){
 			if(severities.contains(item.getSeverity())){
 				result.add(item);
@@ -102,4 +108,61 @@ public abstract class AbstractLogSet implements ILogSet {
 		return result;
 	}
 
+	public ILogSet filterWithSeverity(String ...strings){
+		return filterWithStringOr(EnumSet.of(ILogItem.Field.Severity), strings);
+	}
+
+	public ILogSet filterWithStringOr(EnumSet<ILogItem.Field> fields, String[] strings){
+		ILogSet result = new ResultLogList();
+		if(strings.length == 0){
+			return result;
+		}
+		for(ILogItem item : itemList){
+			for(ILogItem.Field field : fields){
+				if(containsOneString(item.getFieldValue(field), strings)){
+					result.add(item);
+					break;
+				}
+			}
+		}
+		return result;				
+	}
+	
+	private boolean containsOneString(String target, String[] strings){
+		for(String s: strings){
+			if(target.contains(s)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ILogSet filterWithStringAnd(ILogItem.Field field, String[] strings){
+		ILogSet result = new ResultLogList();
+		for(ILogItem item : itemList){
+			if(containsAllStrings(item.getFieldValue(field), strings)){
+				result.add(item);
+			}
+		}
+		return result;		
+	}
+
+	private boolean containsAllStrings(String target, String[] strings){
+		for(String s : strings){
+			if(!target.contains(s)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private String[] combineStringWithArray(String string, String[] strings){
+		String[] result = new String[1 + strings.length];
+		int idx = 0;
+		result[idx++] = string;
+		for(String s: strings){
+			result[idx++] = s;
+		}
+		return result;
+	}
 }

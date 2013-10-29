@@ -131,4 +131,30 @@ public class LogItem implements ILogItem{
 		isSelected = false;
 	}
 
+	@Override
+	public String getFieldValue(Field field) {
+		String emptyString = "";
+		switch(field){
+		case TimeStamp:
+			return getTimeStamp().toString();
+		case Severity:
+			return getSeverity().toString();
+		case RU:
+			if(containField(Field.RU)){
+				return getRU();
+			}else{
+				return emptyString;
+			}
+		case PRB:
+			if(containField(Field.PRB)){
+				return getPRB();
+			}else{
+				return emptyString;
+			}
+		case Text:
+			return getLogText();
+		}
+		return emptyString;
+	}
+
 }

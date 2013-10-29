@@ -21,6 +21,7 @@ public interface ILogItem {
 		Selected, UnSelected;
 	}
 	public int getIndex();
+	public String getFieldValue(Field field);
 	public DateTime getTimeStamp();
 	public String getPureTime();
 	public Severity getSeverity();

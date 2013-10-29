@@ -77,19 +77,30 @@ public class LogItemFilterTest {
 
 	@Test
 	public void testSeverityFilter(){
-		ILogSet result = logs.filterWithSeverity(EnumSet.of(Severity.info));
+		ILogSet result = logs.filterWithSeverity(EnumSet.noneOf(Severity.class));
+		assertTrue(result.isEmpty());
+		result = logs.filterWithSeverity();
+		assertTrue(result.isEmpty());
+
+		result = logs.filterWithSeverity(EnumSet.of(Severity.info));
 		int[] target_idx = {1, 2, 4, 6, 7, 10, 12, 13, 14, 15, 18,
 	            19, 20, 21, 27, 29, 30, 31, 32, 33, 34};
 		assertResult(result, target_idx);
-	
+		result = logs.filterWithSeverity("info");
+		assertResult(result, target_idx);
+		
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err));
 		target_idx = new int[]{1, 2, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 18,
 	            19, 20, 21, 24, 27, 29, 30, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithSeverity("info", "err");
 		assertResult(result, target_idx);
 
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err, Severity.warn));
 		target_idx = new int[]{1, 2, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 	            19, 20, 21, 24, 25, 27, 29, 30, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithSeverity("info", "err", "warn");
 		assertResult(result, target_idx);
 
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err, 
@@ -97,17 +108,23 @@ public class LogItemFilterTest {
 		target_idx = new int[]{1, 2, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 	            19, 20, 21, 22, 24, 25, 27, 29, 30, 31, 32, 33, 34, 35};
 		assertResult(result, target_idx);
+		result = logs.filterWithSeverity("info", "err", "warn", "alert");
+		assertResult(result, target_idx);
 
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err, 
 			      Severity.warn, Severity.alert, Severity.crit));
 		target_idx = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 				19, 20, 21, 22, 24, 25, 27, 29, 30, 31, 32, 33, 34, 35};
 		assertResult(result, target_idx);
+		result = logs.filterWithSeverity("info", "err", "warn", "alert", "crit");
+		assertResult(result, target_idx);
 
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err, 
 			      Severity.warn, Severity.alert, Severity.crit, Severity.emerg));
 		target_idx = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 				19, 20, 21, 22, 23, 24, 25, 27, 29, 30, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithSeverity("info", "err", "warn", "alert", "crit", "emerg");
 		assertResult(result, target_idx);
 
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err, 
@@ -116,6 +133,8 @@ public class LogItemFilterTest {
 		target_idx = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 				19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35};
 		assertResult(result, target_idx);
+		result = logs.filterWithSeverity("info", "err", "warn", "alert", "crit", "emerg", "debug");
+		assertResult(result, target_idx);
 
 		result = logs.filterWithSeverity(EnumSet.of(Severity.info, Severity.err, 
 			      Severity.warn, Severity.alert, Severity.crit, Severity.emerg,
@@ -123,8 +142,33 @@ public class LogItemFilterTest {
 		target_idx = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 				19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35};
 		assertResult(result, target_idx);
-}
+		result = logs.filterWithSeverity("info", "err", "warn", "alert", "crit", "emerg", "debug", "notice");
+		assertResult(result, target_idx);
+	}
 
+	@Test
+	public void testFieldFilter(){
+		ILogSet result = null;
+		int[] target_idx = null;
+		
+		result = logs.filterWithStringOr(EnumSet.of(ILogItem.Field.Severity),
+				                         new String[] {"info", "err"});
+		target_idx = new int[]{1, 2, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 18,
+	            19, 20, 21, 24, 27, 29, 30, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+
+		result = logs.filterWithStringAnd(ILogItem.Field.Text,
+                new String[] {"Your", "PC", "World"});
+		target_idx = new int[]{2, 5};
+		assertResult(result, target_idx);
+
+		result = logs.filterWithStringAnd(ILogItem.Field.Text,
+                new String[] {"Your", "PC", "World"})
+                     .filterWithStringAnd(ILogItem.Field.Severity, new String[] {"crit"});
+		target_idx = new int[]{5};
+		assertResult(result, target_idx);
+	}
+	
 	private void assertResult(ILogSet result, int[] target_idx){
 		int[] result_idx = new int[target_idx.length];
 		int idx = 0;

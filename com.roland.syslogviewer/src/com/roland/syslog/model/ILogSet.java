@@ -13,25 +13,52 @@ public interface ILogSet {
 	public void clear();
 
 	public boolean add(ILogItem item);
-	
+
 	public List<ILogItem> getLogItemList();
-	
+
 	public void selectAll();
-	
+
 	public void unselectAll();
-	
+
 	public int getSelectCount();
-	
+
 	public void setSelected(ILogSet logs);
-	
-	/*The range is [begin ... end], The item's timestamp is equal to begin or end is selected.*/
+
+	/**
+	 * The range is [begin ... end], The item's timestamp is equal to begin or
+	 * end is selected.
+	 */
 	public ILogSet betweenTime(DateTime begin, DateTime end);
-	
-	/*The DateTime string is directly get from syslog the format is "Sep 23 13:39:57.000324"*/
+
 	public final static int DATETIME_ORGINAL_FORMAT = 100;
-	/*The DateTime string is "MM:DD HH:MM:SS.XXXXXX" the year information isn't needed here.*/
 	public final static int DATETIME_DIGITAL_FORMAT = 101;
+
+	/**
+	 * When parameter format == DATETIME_ORGINAL_FORMAT 
+	 * <P>The DateTime string is directly get from syslog the format is "Sep 23 13:39:57.000324"</P>
+	 * When parameter format == DATETIME_DIGITAL_FORMAT  
+	 * <P>The DateTime string is "MM:DD HH:MM:SS.XXXXXX" (year information isn't needed here.</p>
+	 * 
+	 * @throws IllegalStateException
+	 *             when DateTime format isn't correct
+	 */
 	public ILogSet betweenTime(String begin, String end, int format);
-	
+
+	/**
+	 * Filter all LogItems with one of given severities.*/
 	public ILogSet filterWithSeverity(EnumSet<Severity> severities);
+	/**
+	 * Filter all LogItems with one of given severities.*/
+	public ILogSet filterWithSeverity(String ...strings);
+
+	/**
+	 * Filter all LogItems the given String based field contains all the strings 
+	 * which listed in String[] strings.*/
+	public ILogSet filterWithStringAnd(ILogItem.Field field, String[] strings);
+
+	/**
+	 * Filter all LogItems the given String based fields contains one string 
+	 * which listed in String[] strings.*/
+	public ILogSet filterWithStringOr(EnumSet<ILogItem.Field> fields, String[] strings);
+
 }
