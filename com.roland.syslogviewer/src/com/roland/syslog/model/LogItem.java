@@ -6,6 +6,7 @@ import hirondelle.date4j.DateTime;
 /**
  * @author DingLi
  * Class is used to record one line of syslog.
+ * Notice this class isn't synchronized!
  */
 public class LogItem implements ILogItem{
 

@@ -13,9 +13,10 @@ import java.util.regex.Pattern;
  * is every line of log has. The LogText is passed for IPALogHelper to have further check.
  */
 public class BasicLogHelper {
-	/*Syslog isn't contains year information, so all year information is set to 2012 for simplicity*/
-	public final static String defaultYear = "2012"; 
-    public final static String BASIC_LOG_PATTERN = "([a-zA-Z]+)\\s*([0-9]+)\\s*([0-9]+:[0-9]+:[0-9]+\\.[0-9]+)\\s*((?i)emerg|alert|crit|err|warn|notice|info|debug)\\s*(.*)";
+	/*Syslog isn't contains year information, so all year information is set to 2012 for simplicity (2012 is leap year :-)*/
+	public final static String DEFAULT_YEAR = "2012";
+	public final static String DATETIME_PATTERN = "([a-zA-Z]+)\\s*([0-9]+)\\s*([0-9]+:[0-9]+:[0-9]+\\.[0-9]+)";
+    public final static String BASIC_LOG_PATTERN = DATETIME_PATTERN + "\\s*((?i)emerg|alert|crit|err|warn|notice|info|debug)\\s*(.*)";
     
 	public static boolean analyze(String text){
 		matcher = null;
@@ -23,10 +24,16 @@ public class BasicLogHelper {
 		return matcher.find();
 	}
 
+	public static final boolean analyzeDateTime(String text){
+		matcher = null;
+		matcher = dtPattern.matcher(text);
+		return matcher.find();
+	}
+
 	public static DateTime getDataTime(){
 		StringBuilder sb = new StringBuilder(64);
 		String month = monthAbbrToNumber(matcher.group(1));
-		sb.append("2012-").append(month).append("-");
+		sb.append(DEFAULT_YEAR).append("-").append(month).append("-");
 		if(matcher.group(2).length() == 1){
 			sb.append("0");
 		}
@@ -45,6 +52,7 @@ public class BasicLogHelper {
     static private Map<String, String> lookupTable;
 	static private Pattern pattern;
 	static private Matcher matcher;
+	static private Pattern dtPattern;
 	
 	static {
 		lookupTable = new HashMap<String, String>();
@@ -62,6 +70,7 @@ public class BasicLogHelper {
 		lookupTable.put("DEC", "12");
 
 		pattern = Pattern.compile(BASIC_LOG_PATTERN);
+		dtPattern = Pattern.compile(DATETIME_PATTERN);
 	}
 	
 	public static final String monthAbbrToNumber(String month){
