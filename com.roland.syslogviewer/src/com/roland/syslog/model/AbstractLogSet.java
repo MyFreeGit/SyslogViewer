@@ -2,9 +2,10 @@ package com.roland.syslog.model;
 
 import hirondelle.date4j.DateTime;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+
+import com.roland.syslog.model.ILogItem.Field;
 
 public abstract class AbstractLogSet implements ILogSet {
 	
@@ -109,16 +110,32 @@ public abstract class AbstractLogSet implements ILogSet {
 	}
 
 	public ILogSet filterWithSeverity(String ...strings){
-		return filterWithStringOr(EnumSet.of(ILogItem.Field.Severity), strings);
+		return filterWithStringOr(EnumSet.of(Field.Severity), strings);
 	}
 
-	public ILogSet filterWithStringOr(EnumSet<ILogItem.Field> fields, String[] strings){
+	public ILogSet filterWithRU(String ...RUs){
+		return filterWithStringOr(EnumSet.of(Field.RU), RUs);
+	}
+	
+	public ILogSet filterWithPRB(String ...PRBs){
+		return filterWithStringOr(EnumSet.of(Field.PRB), PRBs);		
+	}
+	
+	public ILogSet textContainsOneOfStrings(String ...strings){
+		return filterWithStringOr(EnumSet.of(Field.Text), strings);
+	}
+	
+	public ILogSet textContainsAllStrings(String ...strings){
+		return filterWithStringAnd(Field.Text, strings);
+	}
+
+	public ILogSet filterWithStringOr(EnumSet<Field> fields, String[] strings){
 		ILogSet result = new ResultLogList();
 		if(strings.length == 0){
 			return result;
 		}
 		for(ILogItem item : itemList){
-			for(ILogItem.Field field : fields){
+			for(Field field : fields){
 				if(containsOneString(item.getFieldValue(field), strings)){
 					result.add(item);
 					break;
@@ -137,8 +154,11 @@ public abstract class AbstractLogSet implements ILogSet {
 		return false;
 	}
 
-	public ILogSet filterWithStringAnd(ILogItem.Field field, String[] strings){
+	public ILogSet filterWithStringAnd(Field field, String[] strings){
 		ILogSet result = new ResultLogList();
+		if(strings.length == 0){
+			return result;
+		}
 		for(ILogItem item : itemList){
 			if(containsAllStrings(item.getFieldValue(field), strings)){
 				result.add(item);
@@ -154,15 +174,5 @@ public abstract class AbstractLogSet implements ILogSet {
 			}
 		}
 		return true;
-	}
-
-	private String[] combineStringWithArray(String string, String[] strings){
-		String[] result = new String[1 + strings.length];
-		int idx = 0;
-		result[idx++] = string;
-		for(String s: strings){
-			result[idx++] = s;
-		}
-		return result;
 	}
 }

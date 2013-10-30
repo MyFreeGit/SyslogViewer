@@ -45,12 +45,34 @@ public interface ILogSet {
 	public ILogSet betweenTime(String begin, String end, int format);
 
 	/**
-	 * Filter all LogItems with one of given severities.*/
+	 * Filter all LogItems with one of given severities. 
+	 * If parameter is null, empty LogSet is returned.*/
 	public ILogSet filterWithSeverity(EnumSet<Severity> severities);
 	/**
-	 * Filter all LogItems with one of given severities.*/
+	 * Filter all LogItems with one of given severities.
+	 * If parameter is null, empty LogSet is returned.*/
 	public ILogSet filterWithSeverity(String ...strings);
 
+	/**
+	 * Filter all LogItems writes on one of given RUs.
+	 * If parameter is null, empty LogSet is returned.*/
+	public ILogSet filterWithRU(String ...RUs);
+	
+	/**
+	 * Filter all LogItems written by one of given PRBs. 
+	 * If parameter is null, empty LogSet is returned.*/
+	public ILogSet filterWithPRB(String ...PRBs);
+	
+	/**
+	 * Get all LogItems whose log text contains one of given string.
+	 * If parameter is null, empty LogSet is returned.*/
+	public ILogSet textContainsOneOfStrings(String ...strings);
+	
+	/**
+	 * Get all LogItems whose log text contains all of given string.
+	 * If parameter is null, empty LogSet is returned. */
+	public ILogSet textContainsAllStrings(String ...strings);
+	
 	/**
 	 * Filter all LogItems the given String based field contains all the strings 
 	 * which listed in String[] strings.*/

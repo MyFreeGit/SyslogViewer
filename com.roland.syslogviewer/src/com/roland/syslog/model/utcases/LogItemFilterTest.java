@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.roland.syslog.model.ILogItem;
+import com.roland.syslog.model.ILogItem.Field;
 import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.Severity;
@@ -151,22 +152,122 @@ public class LogItemFilterTest {
 		ILogSet result = null;
 		int[] target_idx = null;
 		
-		result = logs.filterWithStringOr(EnumSet.of(ILogItem.Field.Severity),
+		result = logs.filterWithStringOr(EnumSet.of(Field.Severity),
 				                         new String[] {"info", "err"});
 		target_idx = new int[]{1, 2, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 18,
 	            19, 20, 21, 24, 27, 29, 30, 31, 32, 33, 34, 35};
 		assertResult(result, target_idx);
 
-		result = logs.filterWithStringAnd(ILogItem.Field.Text,
-                new String[] {"Your", "PC", "World"});
+		result = logs.filterWithStringAnd(Field.Text, new String[] {"Your", "PC", "World"});
 		target_idx = new int[]{2, 5};
 		assertResult(result, target_idx);
-
-		result = logs.filterWithStringAnd(ILogItem.Field.Text,
+		result = logs.textContainsAllStrings("Your", "PC", "World");
+		assertResult(result, target_idx);
+		result = logs.textContainsAllStrings("Your", "PC", "sings", "World");
+		assertResult(result, new int[]{5});		
+		
+		result = logs.filterWithStringAnd(Field.Text,
                 new String[] {"Your", "PC", "World"})
-                     .filterWithStringAnd(ILogItem.Field.Severity, new String[] {"crit"});
+                     .filterWithStringAnd(Field.Severity, new String[] {"crit"});
 		target_idx = new int[]{5};
 		assertResult(result, target_idx);
+		result = logs.textContainsAllStrings("Your", "PC", "World")
+				     .filterWithSeverity("crit");
+		assertResult(result, target_idx);
+	}
+	
+	@Test
+	public void testLogTextFilter(){
+		ILogSet result = null;
+		
+		result = logs.textContainsAllStrings();
+		assertTrue(result.isEmpty());
+		result = logs.textContainsOneOfStrings();
+		assertTrue(result.isEmpty());
+		
+		result = logs.textContainsAllStrings("sings", "Your PC");
+		assertResult(result, new int[]{5, 13, 14});
+		result = logs.textContainsAllStrings("sings", "Your PC", "Goodbye");
+		assertResult(result, new int[]{5});
+		result = logs.textContainsAllStrings("HAS", "err", "log");
+		assertResult(result, new int[]{8});
+		result = logs.textContainsAllStrings("System", "info");
+		assertResult(result, new int[]{24});
+		result = logs.textContainsAllStrings("sings", "Your PC", "Hello", "Rock");
+		assertTrue(result.isEmpty());
+		
+		result = logs.textContainsOneOfStrings("sings", "Your PC");
+		assertResult(result, new int[]{2, 5, 13, 14, 30});
+		
+		result = logs.textContainsOneOfStrings("OS", "kill", "PRB1", "PRB2");
+		assertResult(result, new int[]{6});
+
+		result = logs.textContainsOneOfStrings("sings", "Your PC", "says");
+		assertResult(result, new int[]{2, 5, 13, 14, 29, 30});
+		
+		result = logs.textContainsOneOfStrings("sings", "Your PC", "says", "HAS");
+		assertResult(result, new int[]{2, 5, 8, 13, 14, 19, 29, 30});
+
+		result = logs.textContainsOneOfStrings("sings", "Your PC", "says", "HAS", "System Error");
+		assertResult(result, new int[]{2, 5, 8, 13, 14, 19, 24, 29, 30});	
+	}
+	
+	@Test
+	public void testPRB_RU_Filter(){
+		ILogSet result = null;
+		int[] target_idx = null;
+				
+		result = logs.filterWithRU("RU-1");
+		target_idx = new int[]{1, 2, 4, 5, 9, 10, 11, 12, 15, 16, 18, 21, 22, 23, 25, 27, 28, 31, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithRU("RU-1", "RU-2");
+		target_idx = new int[]{1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 15, 16, 18, 21,
+				         22, 23, 25, 26, 27, 28, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithRU("RU-1", "RU-2", "RU-3");
+		target_idx = new int[]{1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21,
+				         22, 23, 25, 26, 27, 28, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithRU();
+		assertTrue(result.isEmpty());
+		result = logs.filterWithRU("RU-5");
+		assertTrue(result.isEmpty());
+		
+		result = logs.filterWithPRB("PRB1");
+		target_idx = new int[]{3, 4, 7, 9, 10, 11, 12, 14, 18, 20, 22, 23, 25, 26, 27, 31, 32, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithPRB("PRB1", "PRB2");
+		target_idx = new int[]{2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 17, 18, 20, 22, 23, 
+				        25, 26, 27, 28, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithPRB("PRB1", "PRB2", "PRB3");
+		target_idx = new int[]{1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 17, 18, 20, 21, 22, 23, 
+				        25, 26, 27, 28, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithPRB("PRB1", "PRB2", "PRB3", "PRB4");
+		target_idx = new int[]{1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21, 22, 23, 
+				        25, 26, 27, 28, 31, 32, 33, 34, 35};
+		assertResult(result, target_idx);
+		result = logs.filterWithPRB();
+		assertTrue(result.isEmpty());
+		result = logs.filterWithPRB("PRB-5");
+		assertTrue(result.isEmpty());
+		
+		result = logs.filterWithRU("RU-1").filterWithPRB("PRB1");
+		assertResult(result, new int[]{4, 9, 10, 11, 12, 18, 22, 23, 25, 27, 31, 34, 35});
+		result = logs.filterWithRU("RU-1").filterWithPRB("PRB1")
+				     .textContainsAllStrings("working");
+		assertResult(result, new int[]{18, 34});
+		result = logs.filterWithRU("RU-1").filterWithPRB("PRB1")
+				     .textContainsOneOfStrings("working", "rest", "burbling");
+		assertResult(result, new int[]{10, 18, 23, 34});
+		result = logs.filterWithRU("RU-1").filterWithPRB("PRB2", "PRB3");
+		assertResult(result, new int[]{1, 2, 5, 15, 21, 28, 33});
+		result = logs.filterWithPRB("PRB3").filterWithRU("RU-1");
+		assertResult(result, new int[]{1, 15, 21});
+		result = logs.filterWithPRB("PRB3").filterWithPRB("PRB1");
+		assertTrue(result.isEmpty());
+		
 	}
 	
 	private void assertResult(ILogSet result, int[] target_idx){

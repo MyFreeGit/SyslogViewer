@@ -6,7 +6,7 @@ public interface ILogItem {
 	/**
 	 * Used to indicates the log items contains how man fields.
 	 */
-	public enum Field{
+	public static enum Field{
 		TimeStamp("TimeStamp"), Severity("Severity"), RU("RU"), PRB("PRB"), Text("Text");
 		private String name;
 		private Field(String str){
