@@ -76,11 +76,11 @@ public interface ILogSet {
 	/**
 	 * Filter all LogItems the given String based field contains all the strings 
 	 * which listed in String[] strings.*/
-	public ILogSet filterWithStringAnd(ILogItem.Field field, String[] strings);
+	public ILogSet filterWithStringAnd(Field field, String[] strings);
 
 	/**
 	 * Filter all LogItems the given String based fields contains one string 
 	 * which listed in String[] strings.*/
-	public ILogSet filterWithStringOr(EnumSet<ILogItem.Field> fields, String[] strings);
+	public ILogSet filterWithStringOr(EnumSet<Field> fields, String[] strings);
 
 }

@@ -1,7 +1,5 @@
 package com.roland.syslog.model;
 
-import java.util.List;
-
 public interface ILogNavigator {
 
 	public void setPosition(ILogItem pos);
