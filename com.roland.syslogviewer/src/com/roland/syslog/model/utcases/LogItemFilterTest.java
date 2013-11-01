@@ -284,7 +284,7 @@ public class LogItemFilterTest {
 		assertResult(result, new int[]{3, 26, 7, 32});
 
 		result = logs.filterWithPRB("PRB1").sort(Field.RU);
-		//assertResult(result, new int[]{3, 26, 7, 32});
+		assertResult(result, new int[]{4, 9, 10, 11, 12, 18, 22, 31, 34, 35, 23, 25, 27, 3, 7, 32, 26, 14, 20});
 		displayLogset(result);
 	}
 
