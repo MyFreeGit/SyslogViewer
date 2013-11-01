@@ -26,7 +26,7 @@ Sep 29 23:59:01.083656 warn RU-1 PRB1: LogText
 Sep 29 23:59:59.983656 notice RU-2 PRB1: LogText
 Sep 30 00:00:00.083656 info RU-1 PRB1: LogText
 Sep 30 23:59:01.083656 debug RU-1 PRB2: LogText
-Oct 1 00:00:00.083656 info One client says "Hello world!"
+Oct 1 00:00:00.083656 info One client says "Hello World!"
 Oct 1 12:00:00.883656 info System says "Your PC is tired, let it have a good rest"
 Sep 29 13:40:01.443539 info RU-1 PRB1: LogText
 Sep 29 13:40:16.999999 info RU-2 PRB1: LogText
