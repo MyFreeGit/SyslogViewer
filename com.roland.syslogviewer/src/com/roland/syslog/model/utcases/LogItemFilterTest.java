@@ -152,7 +152,7 @@ public class LogItemFilterTest {
 		ILogSet result = null;
 		int[] target_idx = null;
 		
-		result = logs.filterWithStringOr(EnumSet.of(Field.Severity),
+/*		result = logs.filterWithStringOr(EnumSet.of(Field.Severity),
 				                         new String[] {"info", "err"});
 		target_idx = new int[]{1, 2, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 18,
 	            19, 20, 21, 24, 27, 29, 30, 31, 32, 33, 34, 35};
@@ -161,19 +161,18 @@ public class LogItemFilterTest {
 		result = logs.filterWithStringAnd(Field.Text, new String[] {"Your", "PC", "World"});
 		target_idx = new int[]{2, 5};
 		assertResult(result, target_idx);
-		result = logs.textContainsAllStrings("Your", "PC", "World");
-		assertResult(result, target_idx);
+*/		result = logs.textContainsAllStrings("Your", "PC", "World");
+		assertResult(result, new int[]{2, 5});
 		result = logs.textContainsAllStrings("Your", "PC", "sings", "World");
 		assertResult(result, new int[]{5});		
 		
-		result = logs.filterWithStringAnd(Field.Text,
+/*		result = logs.filterWithStringAnd(Field.Text,
                 new String[] {"Your", "PC", "World"})
                      .filterWithStringAnd(Field.Severity, new String[] {"crit"});
-		target_idx = new int[]{5};
-		assertResult(result, target_idx);
-		result = logs.textContainsAllStrings("Your", "PC", "World")
+		assertResult(result, new int[]{5});
+*/		result = logs.textContainsAllStrings("Your", "PC", "World")
 				     .filterWithSeverity("crit");
-		assertResult(result, target_idx);
+		assertResult(result, new int[]{5});
 	}
 	
 	@Test
@@ -266,9 +265,29 @@ public class LogItemFilterTest {
 		result = logs.filterWithPRB("PRB3").filterWithRU("RU-1");
 		assertResult(result, new int[]{1, 15, 21});
 		result = logs.filterWithPRB("PRB3").filterWithPRB("PRB1");
-		assertTrue(result.isEmpty());
-		
+		assertTrue(result.isEmpty());	
 	}
+	
+	@Test
+	public void testSorter(){
+		ILogSet result = null;
+		int[] target_idx = null;
+		
+		result = logs.filterWithRU("RU-2").sort(Field.PRB);
+		assertResult(result, new int[]{3, 7, 32, 26});
+
+		result = logs.filterWithRU("RU-1").sort(Field.PRB);
+		target_idx = new int[]{4, 9, 10, 11, 12, 18, 22, 31, 34, 35, 23, 25, 27, 2, 5, 33, 28, 1, 15, 21, 16};
+		assertResult(result, target_idx);
+
+		result = logs.filterWithRU("RU-2").sort(Field.Severity);
+		assertResult(result, new int[]{3, 26, 7, 32});
+
+		result = logs.filterWithPRB("PRB1").sort(Field.RU);
+		//assertResult(result, new int[]{3, 26, 7, 32});
+		displayLogset(result);
+	}
+
 	
 	private void assertResult(ILogSet result, int[] target_idx){
 		int[] result_idx = new int[target_idx.length];
@@ -279,4 +298,11 @@ public class LogItemFilterTest {
 		System.out.println(Arrays.toString(result_idx));
 		assertArrayEquals(target_idx, result_idx);
 	}
+
+	private void displayLogset(ILogSet logs) {
+		for(ILogItem item : logs.getLogItemList()){
+			System.out.println(String.valueOf(item.getIndex()) + ": " + item.toString());
+		}
+	}
+
 }

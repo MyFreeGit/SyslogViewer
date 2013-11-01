@@ -74,13 +74,9 @@ public interface ILogSet {
 	public ILogSet textContainsAllStrings(String ...strings);
 	
 	/**
-	 * Filter all LogItems the given String based field contains all the strings 
-	 * which listed in String[] strings.*/
-	public ILogSet filterWithStringAnd(ILogItem.Field field, String[] strings);
-
-	/**
-	 * Filter all LogItems the given String based fields contains one string 
-	 * which listed in String[] strings.*/
-	public ILogSet filterWithStringOr(EnumSet<ILogItem.Field> fields, String[] strings);
-
+	 * Sort the ILogSet by selected field as first level compare field. If the 
+	 * two logs are equal with the given field, then compare them with TimeStamp
+	 * field.
+	 * It doesn't recommend to sort on LogContainer when is contains million of logs.*/
+	public ILogSet sort(Field sortBy);
 }

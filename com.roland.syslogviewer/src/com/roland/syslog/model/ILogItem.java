@@ -1,5 +1,7 @@
 package com.roland.syslog.model;
 
+import java.util.Comparator;
+
 import hirondelle.date4j.DateTime;
 
 public interface ILogItem {
@@ -17,6 +19,33 @@ public interface ILogItem {
 		}
 	}
 	
+	static class LogComparator implements Comparator<ILogItem>{
+		public LogComparator(Field firstCompareField){
+			firstCmpField = firstCompareField;
+		}
+		public LogComparator(){
+			firstCmpField = Field.TimeStamp;
+		}
+		
+		@Override
+		public int compare(ILogItem arg0, ILogItem arg1) {
+			int result = 0;
+			if(firstCmpField == Field.Severity){
+				result = arg0.getSeverity().compareTo(arg1.getSeverity());
+			}else if(firstCmpField != Field.TimeStamp){
+				result = arg0.getFieldValue(firstCmpField).compareTo(
+						           arg1.getFieldValue(firstCmpField));
+			}
+			if(result != 0){
+				return result;
+			}else{
+				return arg0.getTimeStamp().compareTo(arg1.getTimeStamp());
+			}
+		}
+		
+		private Field firstCmpField;
+
+	}
 	public enum Selection{
 		Selected, UnSelected;
 	}

@@ -2,6 +2,7 @@ package com.roland.syslog.model;
 
 import hirondelle.date4j.DateTime;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -129,7 +130,10 @@ public abstract class AbstractLogSet implements ILogSet {
 		return filterWithStringAnd(Field.Text, strings);
 	}
 
-	public ILogSet filterWithStringOr(EnumSet<Field> fields, String[] strings){
+	/**
+	 * Filter all LogItems the given String based fields contains one string 
+	 * which listed in String[] strings.*/
+	private ILogSet filterWithStringOr(EnumSet<Field> fields, String[] strings){
 		ILogSet result = new ResultLogList();
 		if(strings.length == 0){
 			return result;
@@ -154,7 +158,10 @@ public abstract class AbstractLogSet implements ILogSet {
 		return false;
 	}
 
-	public ILogSet filterWithStringAnd(Field field, String[] strings){
+	/**
+	 * Filter all LogItems the given String based field contains all the strings 
+	 * which listed in String[] strings.*/
+	private ILogSet filterWithStringAnd(Field field, String[] strings){
 		ILogSet result = new ResultLogList();
 		if(strings.length == 0){
 			return result;
@@ -175,4 +182,10 @@ public abstract class AbstractLogSet implements ILogSet {
 		}
 		return true;
 	}
+	
+	public ILogSet sort(Field sortBy){
+		Collections.sort(getLogItemList(), new ILogItem.LogComparator(sortBy));
+		return this;
+	}
+
 }
