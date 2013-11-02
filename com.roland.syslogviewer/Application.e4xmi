@@ -42,6 +42,7 @@
         </children>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="__Ka28D6vEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.toolbarseparator.2"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_AcCP0D6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.handledtoolitem.5" iconURI="platform:/plugin/com.roland.syslogviewer/icons/advanceSearch.gif" tooltip="Advanced Search Options" command="_G8PNcD6wEeOz-7_pbqLF4g"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_GckEgEO2EeOYz5z3pyfs2g" elementId="com.roland.syslogviewer.handledtoolitem.6" iconURI="platform:/plugin/com.roland.syslogviewer/icons/script_wiz.gif" tooltip="Run Python Script"/>
       </children>
     </trimBars>
   </children>
@@ -54,6 +55,7 @@
   <handlers xmi:id="_cQ8K8DQMEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handler.1" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchNextHandler" command="_jH_XwDQLEeOlRu7KLmazXw"/>
   <handlers xmi:id="_QRC0ED0YEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.handler.copy" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.CopyHandler" command="_8SgpED0XEeOB3O-DtOeQdA"/>
   <handlers xmi:id="_woMuMD6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.handler.2" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.AdvancedSearch" command="_G8PNcD6wEeOz-7_pbqLF4g"/>
+  <handlers xmi:id="_oRcoYEPDEeOYz5z3pyfs2g" elementId="com.roland.syslogviewer.handler.3" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.RunScript" command="_jggo8EPDEeOYz5z3pyfs2g"/>
   <bindingTables xmi:id="_2iCbni-rEeORA68YRw1xzQ" bindingContext="_2iCbmS-rEeORA68YRw1xzQ">
     <bindings xmi:id="_2iCbny-rEeORA68YRw1xzQ" keySequence="M1+Q" command="_2iCbnC-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCboi-rEeORA68YRw1xzQ" keySequence="M1+O" command="_2iCboC-rEeORA68YRw1xzQ"/>
@@ -78,6 +80,7 @@
   </commands>
   <commands xmi:id="_8SgpED0XEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.command.copy" commandName="copyCommand"/>
   <commands xmi:id="_G8PNcD6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.command.0" commandName="advancedSearch"/>
+  <commands xmi:id="_jggo8EPDEeOYz5z3pyfs2g" elementId="com.roland.syslogviewer.command.1" commandName="runScript"/>
   <addons xmi:id="_2iCbki-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2iCbky-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2iCblC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

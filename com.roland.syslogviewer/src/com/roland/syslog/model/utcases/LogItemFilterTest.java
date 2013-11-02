@@ -10,12 +10,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import com.roland.syslog.model.ILogItem;
 import com.roland.syslog.model.ILogItem.Field;
 import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.Severity;
 import com.roland.syslog.model.SyslogFileReader;
+import static com.roland.syslog.model.utcases.UTHelper.*;
 
 public class LogItemFilterTest {
 	private static LogContainer logs;
@@ -286,23 +286,6 @@ public class LogItemFilterTest {
 		result = logs.filterWithPRB("PRB1").sort(Field.RU);
 		assertResult(result, new int[]{4, 9, 10, 11, 12, 18, 22, 31, 34, 35, 23, 25, 27, 3, 7, 32, 26, 14, 20});
 		//displayLogset(result);
-	}
-
-	
-	private void assertResult(ILogSet result, int[] target_idx){
-		int[] result_idx = new int[target_idx.length];
-		int idx = 0;
-		for(ILogItem item : result.getLogItemList()){
-			result_idx[idx++] = item.getIndex();
-		}
-		System.out.println(Arrays.toString(result_idx));
-		assertArrayEquals(target_idx, result_idx);
-	}
-
-	private void displayLogset(ILogSet logs) {
-		for(ILogItem item : logs.getLogItemList()){
-			System.out.println(String.valueOf(item.getIndex()) + ": " + item.toString());
-		}
 	}
 
 }
