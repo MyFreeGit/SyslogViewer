@@ -17,7 +17,10 @@ import java.util.*;
 
 import javax.inject.*;
 
+import org.eclipse.e4.core.contexts.Active;
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -41,17 +44,13 @@ public class OpenHandler {
 			ElementLocator.createLogFilePart(logFile);
 		}
 	}
-		
-	final static private void createLogfilePart(MApplication application,EModelService modelService, MWindow activeWin){
-		MPart part = MBasicFactory.INSTANCE.createPart();
-		part.setLabel(logFile.getName());
-		part.setContributionURI("bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.LogfilePart");
-		part.getTransientData().put(LogfilePart.LOG_FILE_KEY, logFile);
-		List<MPartStack> stacks = modelService.findElements(application, null,
-	            MPartStack.class, null);
-	    stacks.get(0).getChildren().add(part);
-	    EPartService ps = activeWin.getContext().get(EPartService.class);
-	    ps.showPart(part, EPartService.PartState.ACTIVATE);
-
+	
+	/* Todo: due to opening a big syslog consumes much memory, to simplify the implementation
+	 * only allow open the syslog once. User want open another syslog, he shall close it and
+	 * open is again.*/
+	@CanExecute
+	public boolean canExecute(@Optional @Active MPart part) {
+		return (part == null);
 	}
+
 }

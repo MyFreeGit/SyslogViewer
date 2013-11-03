@@ -48,12 +48,14 @@ public class AdvancedSearchDialog extends Dialog {
 		btnCheckButton.setBounds(8, 18, 57, 16);
 		btnCheckButton.setText("Select");
 		
-		text = new Text(grpBetweenTime, SWT.BORDER);
-		text.setBounds(185, 17, 210, 18);
+		DateTime dateTime = new DateTime(grpBetweenTime, SWT.BORDER | SWT.TIME);
+		dateTime.setBounds(105, 40, 94, 23);
 		
-		Spinner spinner = new Spinner(grpBetweenTime, SWT.BORDER);
-		spinner.setMaximum(23);
-		spinner.setBounds(90, 39, 40, 21);
+		DateTime dateTime_1 = new DateTime(grpBetweenTime, SWT.BORDER);
+		dateTime_1.setBounds(8, 40, 91, 23);
+		
+		text = new Text(grpBetweenTime, SWT.BORDER);
+		text.setBounds(208, 40, 94, 23);
 
 		return container;
 	}

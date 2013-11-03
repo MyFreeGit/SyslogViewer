@@ -2,10 +2,6 @@ package com.roland.syslogviewer.widgets;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
@@ -13,9 +9,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import com.roland.syslog.model.ILogItem;
 import com.roland.syslog.model.ILogSet;
-import com.roland.syslog.model.LogContainer;
+import com.roland.syslog.model.ResultLogList;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.events.MouseAdapter;
@@ -23,7 +18,7 @@ import org.eclipse.swt.events.MouseEvent;
 
 public class SearchResultDialog extends Dialog {
 	private ILogSet result;
-	private ListViewer listViewer;
+	private SyslogListViewer listViewer;
 	private ILogSet selection;
 	private final static int ID_BTN_CLIPBOARD = 10;
 
@@ -33,7 +28,7 @@ public class SearchResultDialog extends Dialog {
 
 	public SearchResultDialog(Shell parentShell) {
 		super(parentShell);
-		selection = new LogContainer();
+		selection = new ResultLogList();
 	}
 	
 	public ILogSet getSelection(){
@@ -45,18 +40,8 @@ public class SearchResultDialog extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		listViewer = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL
-				| SWT.MULTI | SWT.VIRTUAL);
-		listViewer.setContentProvider(new MyContentProvider());
-		listViewer.setUseHashlookup(true);
-
+		listViewer = new SyslogListViewer(container);
 		listViewer.setInput(result);
-		listViewer.setLabelProvider(new LabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((ILogItem) element).toString();
-			}
-		});
 		return container;
 	}
 
@@ -74,7 +59,7 @@ public class SearchResultDialog extends Dialog {
 		btnCopy.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				copySelectionToClipboard();
+				listViewer.copySelectionToClipboard();
 			}
 		});
 		btnCopy.setText("Clipboard");
@@ -84,7 +69,7 @@ public class SearchResultDialog extends Dialog {
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				setSelection();
+				selection = listViewer.getSelection();
 			}
 		});
 
@@ -113,41 +98,6 @@ public class SearchResultDialog extends Dialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText("Find Result");
-	}
-
-	private void setSelection(){
-		int[] idx = listViewer.getList().getSelectionIndices();
-		if(selection.isEmpty() != true){
-			selection.clear();
-		}
-		for(int i: idx){
-			selection.add(result.getLogItemList().get(i));
-		}
-	}
-
-	private void copySelectionToClipboard(){
-		int[] idx = listViewer.getList().getSelectionIndices();
-		WidgetsUtil.copyLogitemsToClipboard(result, idx);
-	}
-	
-	private class MyContentProvider implements IStructuredContentProvider {
-
-		@Override
-		public void dispose() {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public Object[] getElements(Object inputElement) {
-			return ((ILogSet) inputElement).getLogItemList().toArray();
-		}
 	}
 
 }

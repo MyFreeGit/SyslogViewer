@@ -1,16 +1,16 @@
 package com.roland.syslog.model;
-import com.roland.syslog.model.utcases.UTHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.CharBuffer;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.script.SimpleScriptContext;
 
 /**
  * This class is not designed for executing in concurrent environment!*/
@@ -70,13 +70,42 @@ public class PythonScriptRunner {
 	static {
 		scriptEngineMgr = new ScriptEngineManager();
 		pyEngine = scriptEngineMgr.getEngineByName("python");
-		output = new StringWriter();
-		ScriptContext ctx = pyEngine.getContext();
-		ctx.setWriter(output);
 		result = new ResultLogList();
 		if (pyEngine == null) {
 			System.out.println("No script engine found for python");
+		}else{
+			output = new StringWriter();
+			ScriptContext ctx = pyEngine.getContext();
+			ctx.setWriter(output);
 		}
 	}
 
+	public static String readScript(String fileName){
+		FileReader reader = null;
+		File file = new File(fileName);
+		int fileLength = (int)(file.length());
+		if(fileLength == 0){
+			return "";
+		}
+
+		CharBuffer cb = CharBuffer.allocate(fileLength + 1);
+		try {
+			reader = new FileReader(fileName);
+			reader.read(cb);
+			cb.flip();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					// Ignore issues during closing
+				}
+			}
+		}
+		return cb.toString();
+	}
+	
+	
 }

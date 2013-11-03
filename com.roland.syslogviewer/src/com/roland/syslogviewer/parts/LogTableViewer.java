@@ -22,7 +22,6 @@ import com.roland.syslog.model.ILogItem;
 import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.LogItem;
-import com.roland.syslog.model.SyslogFileReader;
 import com.roland.syslogviewer.widgets.WidgetsUtil;
 
 public class LogTableViewer implements ILogTable {
@@ -47,7 +46,7 @@ public class LogTableViewer implements ILogTable {
 	@Override
 	public void openLogFile(String fileName) {
 		if (!fileName.equals("")) {
-			tblItems = SyslogFileReader.read(fileName);
+			tblItems = ElementLocator.createLogContainer(fileName);
 			if (!tblItems.getLogItemList().isEmpty()) {
 				showLogfileByTableView(tblItems);
 			}

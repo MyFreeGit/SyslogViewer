@@ -1,6 +1,7 @@
 package com.roland.syslog.model;
 
 import java.io.*;
+import java.nio.CharBuffer;
 
 /*This file is just used for read syslog from a text based file.*/
 public class SyslogFileReader {
@@ -18,6 +19,7 @@ public class SyslogFileReader {
 					allItems.add(item);
 				}
 			}
+			reader.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {

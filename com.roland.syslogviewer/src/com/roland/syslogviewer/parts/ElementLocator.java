@@ -15,6 +15,9 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
+import com.roland.syslog.model.LogContainer;
+import com.roland.syslog.model.SyslogFileReader;
+
 public class ElementLocator {
 	@Inject
 	static MApplication application;
@@ -22,10 +25,12 @@ public class ElementLocator {
 	static EModelService modelService;
 
 	static Map<String, Object> lookupTable = null;
+	static private LogContainer ActiveSyslog = null;
+
 	static final String SEARCH_SEARCH_TOOL_ID = "com.roland.syslogviewer.toolcontrol.search";
 	static final String SEARCH_LOGFILE_PART_ID = "com.roland.syslogviewer.part.logfile.";
 	static int partIndex = 0;
-		
+				
 	@PostConstruct
 	static void initLocator() {
 		System.out.println("ElementLocator::initLocator() is called!");
@@ -69,6 +74,7 @@ public class ElementLocator {
 		}
 	}
 
+	
 	public static LogfilePart getActiveLogfilePart(){
 		List<MPart> parts = modelService.findElements(application, "",
 	            MPart.class, null);
@@ -89,5 +95,21 @@ public class ElementLocator {
 			return null;
 		}
 		return (LogfilePart)part.getObject();
+	}
+	
+	public static void registerActiveSysLog(LogContainer logs){
+		ActiveSyslog = logs;
+	}
+	
+	public static LogContainer getActiveSysLog(){
+		return ActiveSyslog;
+	}
+	
+	public static LogContainer createLogContainer(String fileName){
+		if(fileName != null && !fileName.equals("")){
+			ActiveSyslog = SyslogFileReader.read(fileName);
+			return ActiveSyslog;
+		}
+		return null;
 	}
 }
