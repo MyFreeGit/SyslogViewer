@@ -31,6 +31,7 @@ public class RunScriptDialog extends Dialog {
 	private Button btnBookmark;
 	private SyslogListViewer listViewer;
 	private final static int BUTTON_ID_OPEN_SCRIPT = 100;
+	private final static int BUTTON_ID_CLIPBOARD = 100;
 	private final static int BUTTON_ID_EXECUTE_SCRIPT = 101;
 	private ILogSet selection = null;
 	private LogContainer logs = null;
@@ -103,7 +104,13 @@ public class RunScriptDialog extends Dialog {
 				openPythonScript();
 			}
 		});
-		createButton(parent, 0, "New button", false);
+		Button button = createButton(parent, BUTTON_ID_CLIPBOARD, "Clipboard", false);
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				listViewer.copySelectionToClipboard();
+			}
+		});
 		btnRun = createButton(parent, BUTTON_ID_EXECUTE_SCRIPT, "Run", false);
 		btnRun.addMouseListener(new MouseAdapter() {
 			@Override
