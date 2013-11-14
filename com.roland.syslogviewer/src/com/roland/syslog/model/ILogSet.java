@@ -23,6 +23,9 @@ public interface ILogSet {
 	public int getSelectCount();
 
 	public void setSelected(ILogSet logs);
+	
+	/**Copy a LogSet's content*/
+	public boolean addAll(ILogSet logs);
 
 	/**
 	 * The range is [begin ... end], The item's timestamp is equal to begin or

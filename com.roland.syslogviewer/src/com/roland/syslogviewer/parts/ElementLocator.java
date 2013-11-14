@@ -1,12 +1,18 @@
 package com.roland.syslogviewer.parts;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -18,7 +24,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.SyslogFileReader;
 
-public class ElementLocator {
+public class ElementLocator{
 	@Inject
 	static MApplication application;
 	@Inject
@@ -26,15 +32,29 @@ public class ElementLocator {
 
 	static Map<String, Object> lookupTable = null;
 	static private LogContainer ActiveSyslog = null;
-
+	static private PersistedBuffer persistService = null;
+	
 	static final String SEARCH_SEARCH_TOOL_ID = "com.roland.syslogviewer.toolcontrol.search";
 	static final String SEARCH_LOGFILE_PART_ID = "com.roland.syslogviewer.part.logfile.";
 	static int partIndex = 0;
+	
 				
 	@PostConstruct
 	static void initLocator() {
 		System.out.println("ElementLocator::initLocator() is called!");
 		initLookupTable();
+		if(persistService == null){
+			persistService = new PersistedBuffer();
+		}
+	}
+
+	@PreDestroy
+	public static void persistState() {
+		persistService.save();
+	} 
+	
+	public static IPersistServiceProvider getPersistService(){
+		return persistService;
 	}
 
 	private static void initLookupTable() {
@@ -112,4 +132,113 @@ public class ElementLocator {
 		}
 		return null;
 	}
+
+	private static class PersistedBuffer implements IPersistServiceProvider{
+		static private final int MAX_BUFFER_COUNT = 10;
+		static private final String KEY_HISTORY_HEAD = "SearchHistory";
+		static private final String PROPERTY_FILE_NAME = "history.property";
+		static private final String KEY_SCRIPT_PATH = "ScriptPath";
+		private static List<String> history = null;
+		private static String scriptPath = null;
+		
+		public PersistedBuffer(){
+			history = new LinkedList<String>();
+			Properties prop = new Properties();
+			File file = getPropertyFile();
+			if(file == null){
+				return;
+			}
+			try{
+		   		prop.load(new FileInputStream(PROPERTY_FILE_NAME));
+		   		readSearchHistory(prop);
+		   		scriptPath = prop.getProperty(KEY_SCRIPT_PATH);
+			}catch(IOException ex) {
+	    		ex.printStackTrace();
+	        }	 
+		}
+				
+		@Override
+		public List<String> getSearchHistory() {
+			return history;
+		}
+
+		@Override
+		public void addSearchText(String text) {
+			if(!history.contains(text)){
+				if(history.size() == MAX_BUFFER_COUNT){
+					history.remove(0);
+				}
+				history.add(text);
+			}			
+		}
+		@Override
+		public void setScriptPath(String text) {
+			scriptPath = text;
+		}
+
+		@Override
+		public String getScriptPath() {
+			return scriptPath;
+		}
+
+		void save() {
+			if(history.size() == 0){
+				return;
+			}
+			File file = getPropertyFile();
+			if(file == null){
+				return;
+			}
+			Properties prop = new Properties();
+			saveSearchHistory(prop);
+			if(scriptPath != null){
+				prop.setProperty(KEY_SCRIPT_PATH, scriptPath);
+			}
+			try {
+				prop.store(new FileOutputStream(file), null);
+			}catch (IOException ex) {
+	    		ex.printStackTrace();
+	        }
+
+		}
+
+		private void saveSearchHistory(Properties prop) {
+			for(int idx = 0; idx < history.size(); idx++){
+				String value = history.get(idx);
+				String key = getKey(idx);
+				prop.setProperty(key, value);
+			}
+		}
+
+		private void readSearchHistory(Properties prop) {
+			for(int i = 0; i < MAX_BUFFER_COUNT; i++){
+				String val = prop.getProperty(getKey(i));
+				if (val != null){
+					history.add(val);
+				}else{
+					break;
+				}
+			}
+		}
+
+		private File getPropertyFile(){
+			File file = new File(PROPERTY_FILE_NAME);
+			if(file.exists()){
+				return file;				
+			}
+			try{
+				file.createNewFile();
+			}catch(IOException ex) {
+				System.out.println("Creating property file failed!");
+	    		ex.printStackTrace();
+	        }	
+			return file;
+		}
+		
+		private String getKey(int idx) {
+			return KEY_HISTORY_HEAD + String.valueOf(idx);
+		}
+		
+	}
+	
 }

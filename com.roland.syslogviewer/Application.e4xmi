@@ -25,7 +25,9 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCpy-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/OpenFile_16.gif" tooltip="Open the syslog file" command="_2iCboC-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_2iDCqC-rEeORA68YRw1xzQ" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_0ImZEDQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolbarseparator.0"/>
-        <children xsi:type="menu:ToolControl" xmi:id="_d5AyEDO2EeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolcontrol.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.SearchToolItem"/>
+        <children xsi:type="menu:ToolControl" xmi:id="_d5AyEDO2EeOlRu7KLmazXw" elementId="com.roland.syslogviewer.toolcontrol.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.SearchToolItem">
+          <persistedState key="Item0"/>
+        </children>
         <children xsi:type="menu:HandledToolItem" xmi:id="_daRnADQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handledtoolitem.1" iconURI="platform:/plugin/com.roland.syslogviewer/icons/backward_nav.gif" tooltip="Goto previous matched log" command="_BheDMDQCEeOlRu7KLmazXw">
           <parameters xmi:id="_jp5uMDuvEeO25_iIWhowag" elementId="com.roland.syslogviewer.parameter.2" name="com.roland.syslogviewer.commandparameter.searchprev" value="SEARCH"/>
         </children>

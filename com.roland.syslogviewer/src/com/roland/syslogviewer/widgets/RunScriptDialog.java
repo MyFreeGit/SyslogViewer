@@ -15,10 +15,11 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+
 import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.PythonScriptRunner;
-import com.roland.syslog.model.ResultLogList;
+import com.roland.syslogviewer.parts.ElementLocator;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseAdapter;
@@ -68,6 +69,7 @@ public class RunScriptDialog extends Dialog {
 		child1.setLayout(new FillLayout());
 		
 		txtScript = new Text(child1, SWT.BORDER | SWT.MULTI);
+		txtScript.setText(PythonScriptRunner.getScriptTemplate());
 		
 		Composite child2 = new Composite(sashForm, SWT.NONE);
 		child2.setLayout(new FillLayout());
@@ -118,7 +120,7 @@ public class RunScriptDialog extends Dialog {
 				runPythonScript();
 			}
 		});
-		btnRun.setEnabled(false);
+
 		btnBookmark = createButton(parent, IDialogConstants.OK_ID, "Bookmark", 	false);
 		btnBookmark.addMouseListener(new MouseAdapter() {
 			@Override
@@ -137,14 +139,14 @@ public class RunScriptDialog extends Dialog {
 		String [] filterExtensions = new String [] {"*.py", "*"};
 		dialog.setFilterNames (filterNames);
 		dialog.setFilterExtensions (filterExtensions);
+		dialog.setFilterPath(ElementLocator.getPersistService().getScriptPath());
 		
 		String fileName = dialog.open();
 		if(fileName != null){
 			String script = PythonScriptRunner.readScript(fileName);
 			txtScript.setText(script);
-			if(script.length() > 0){
-				btnRun.setEnabled(true);
-			}
+			File file = new File(fileName);
+			ElementLocator.getPersistService().setScriptPath(file.getPath());
 		}
 	}
 

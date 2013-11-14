@@ -56,6 +56,16 @@ public class JythonScriptTest {
 		assertTrue(output.equals("Hello World!\n"));
 		UTHelper.assertResult(result, target_idx);
 	
+		scriptString = PythonScriptRunner.getScriptTemplate();
+		System.out.print(scriptString);
+		result = PythonScriptRunner.runScript(logs, scriptString);
+		output = PythonScriptRunner.getOutput();
+		System.out.println(output);
+		assertTrue(output.equals("Hello World!\n"));
+		for(int i = 0; i < result.getLogItemList().size(); i++){
+			target_idx[i] = i+1;
+		}		
+		UTHelper.assertResult(result, target_idx);
 
 	}
 }

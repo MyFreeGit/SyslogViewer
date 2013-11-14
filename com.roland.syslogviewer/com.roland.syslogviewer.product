@@ -7,21 +7,25 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-clearPersistedState</programArgs>
       <vmArgs>-XX:+HeapDumpOnOutOfMemoryError</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
 
-   <launcher>
+   <launcher name="SyslogViewer">
       <solaris/>
       <win useIco="false">
-         <bmp/>
+         <bmp
+            winSmallHigh="/com.roland.syslogviewer/icons/Application_16.bmp"
+            winSmallLow="/com.roland.syslogviewer/icons/Application_16_8.bmp"
+            winMediumHigh="/com.roland.syslogviewer/icons/Application_32_24bit.bmp"
+            winMediumLow="/com.roland.syslogviewer/icons/Application_32_8bit.bmp"/>
       </win>
    </launcher>
 
    <vm>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
 
    <plugins>

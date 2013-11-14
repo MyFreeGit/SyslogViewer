@@ -51,6 +51,9 @@ public class PythonScriptRunner {
 		return result;
 	}
 	
+	public static String getScriptTemplate(){
+		return SCRIPT_TEMPLATE;
+	}
 
 	public static String getOutput(){
 		output.flush();
@@ -67,6 +70,16 @@ public class PythonScriptRunner {
 	private static ScriptEngine pyEngine = null;
 	private static StringWriter output = null;
 	private static ILogSet result = null;
+	private static final String SCRIPT_TEMPLATE = 
+		     "# Script can refer to current opened syslog via global variable SYSLOG\n"
+		   + "# The script result can be added into global variable RESULT. The \n"
+		   + "# content in RESULT are displayed in result table. Script also can\n"
+		   + "# use print function to print information to Output tab\n"
+		   + "# Here is template code to output \"Hello World!\" to Output tab.\n"
+		   + "# and just output the current opened syslog to Result tab.\n"
+		   + "RESULT.addAll(SYSLOG)\n"
+		   + "print \"Hello World!\"\n";
+
 	static {
 		scriptEngineMgr = new ScriptEngineManager();
 		pyEngine = scriptEngineMgr.getEngineByName("python");

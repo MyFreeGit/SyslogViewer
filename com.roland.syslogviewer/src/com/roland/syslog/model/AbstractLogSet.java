@@ -187,5 +187,10 @@ public abstract class AbstractLogSet implements ILogSet {
 		Collections.sort(getLogItemList(), new ILogItem.LogComparator(sortBy));
 		return this;
 	}
+	
+	public boolean addAll(ILogSet logs){
+		return itemList.addAll(logs.getLogItemList());
+	}
+
 
 }

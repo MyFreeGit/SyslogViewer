@@ -49,6 +49,7 @@ public interface ILogItem {
 	public enum Selection{
 		Selected, UnSelected;
 	}
+	/**The index is start from 1!*/
 	public int getIndex();
 	public String getFieldValue(Field field);
 	public DateTime getTimeStamp();
