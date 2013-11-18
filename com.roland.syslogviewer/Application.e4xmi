@@ -63,7 +63,18 @@
     <bindings xmi:id="_2iCboi-rEeORA68YRw1xzQ" keySequence="M1+O" command="_2iCboC-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCbpS-rEeORA68YRw1xzQ" keySequence="M1+S" command="_2iCboy-rEeORA68YRw1xzQ"/>
     <bindings xmi:id="_2iCbqC-rEeORA68YRw1xzQ" keySequence="M1+A" command="_2iCbpi-rEeORA68YRw1xzQ"/>
-    <bindings xmi:id="_kLT_kD0XEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.keybinding.0" keySequence="M1+C" command="_8SgpED0XEeOB3O-DtOeQdA"/>
+    <bindings xmi:id="_eRTNwFAnEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.keybinding.0" keySequence="F3" command="_jH_XwDQLEeOlRu7KLmazXw">
+      <parameters xmi:id="_IFhdMFApEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.parameter.4" name="com.roland.syslogviewer.commandparameter.searchnext" value="SEARCH"/>
+    </bindings>
+    <bindings xmi:id="_l3yzIFApEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.keybinding.1" keySequence="M1+F3" command="_BheDMDQCEeOlRu7KLmazXw">
+      <parameters xmi:id="_onFD4FApEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.parameter.5" name="com.roland.syslogviewer.commandparameter.searchprev" value="SEARCH"/>
+    </bindings>
+    <bindings xmi:id="_B0VWgFAqEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.keybinding.2" keySequence="F2" command="_jH_XwDQLEeOlRu7KLmazXw">
+      <parameters xmi:id="_EMgHwFAqEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.parameter.6" name="com.roland.syslogviewer.commandparameter.searchnext" value="BOOKMARK"/>
+    </bindings>
+    <bindings xmi:id="_LjN2oFAqEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.keybinding.3" keySequence="M3+F2" command="_BheDMDQCEeOlRu7KLmazXw">
+      <parameters xmi:id="_igu7QFAqEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.parameter.7" name="com.roland.syslogviewer.commandparameter.searchprev" value="BOOKMARK"/>
+    </bindings>
   </bindingTables>
   <rootContext xmi:id="_2iCbmS-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_2iCbmi-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>

@@ -1,16 +1,22 @@
 package com.roland.syslogviewer.parts;
 
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILazyContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,6 +46,23 @@ public class LogTableViewer implements ILogTable {
 					| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER | SWT.VIRTUAL);
 			tableViewer.getTable().setLayoutData(
 					new GridData(GridData.FILL_BOTH));
+			tableViewer.getTable().addKeyListener(new KeyListener(){
+
+		        @Override
+		        public void keyReleased(KeyEvent ke) {
+		            /*if CTRL-C pressed*/
+		        	if( (ke.keyCode == 'c') && (ke.stateMask ==  SWT.CTRL)) {
+		        		copySelectionToClipboard();
+		            } 
+		        }
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+		    });
 		}
 	}
 
@@ -156,6 +179,31 @@ public class LogTableViewer implements ILogTable {
 		}
 	}
 	
+	private abstract class AbstractEditingSupport extends EditingSupport{
+		private CellEditor  editor;
+		
+		public AbstractEditingSupport(TableViewer viewer) {
+			super(viewer);
+			this.editor = new TextCellEditor(viewer.getTable());
+		}
+
+		@Override
+		protected CellEditor getCellEditor(Object element) {
+			return editor;
+		}
+
+		@Override
+		protected boolean canEdit(Object element) {
+			return true;
+		}
+
+		@Override
+		protected void setValue(Object element, Object value) {
+			// TODO Auto-generated method stub		
+		}
+		
+	}
+	
 	private class DoubleClickLinster implements IDoubleClickListener{
 		@Override
 		public void doubleClick(DoubleClickEvent event) {
@@ -244,6 +292,12 @@ public class LogTableViewer implements ILogTable {
 					ILogItem i = (ILogItem) element;
 					return i.getLogText();
 				}
+			});
+			col.setEditingSupport(new AbstractEditingSupport(tableViewer){
+				@Override
+				protected Object getValue(Object element) {
+					return ((ILogItem)element).getLogText();
+				}		
 			});
 		}
 
