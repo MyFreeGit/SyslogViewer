@@ -43,6 +43,7 @@ public class RunScriptDialog extends Dialog {
 	 */
 	public RunScriptDialog(Shell parentShell) {
 		super(parentShell);
+		setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
 	}
 
 	public void setLogContainer(LogContainer logs){

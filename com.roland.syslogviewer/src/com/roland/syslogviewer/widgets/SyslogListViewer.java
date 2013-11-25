@@ -18,7 +18,7 @@ public class SyslogListViewer {
 
 	
 	public SyslogListViewer(Composite container){
-		listViewer = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL
+		listViewer = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL
 				| SWT.MULTI | SWT.VIRTUAL);
 		listViewer.setContentProvider(new LogListViewerContentProvider());
 		listViewer.setUseHashlookup(true);

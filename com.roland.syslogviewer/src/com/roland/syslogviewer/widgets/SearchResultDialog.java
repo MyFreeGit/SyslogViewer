@@ -28,6 +28,7 @@ public class SearchResultDialog extends Dialog {
 
 	public SearchResultDialog(Shell parentShell) {
 		super(parentShell);
+		setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
 		selection = new ResultLogList();
 	}
 	

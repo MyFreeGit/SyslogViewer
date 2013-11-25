@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2iCbkC-rEeORA68YRw1xzQ" elementId="org.eclipse.e4.ide.application" bindingContexts="_2iCbmS-rEeORA68YRw1xzQ">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_2iCbkS-rEeORA68YRw1xzQ" elementId="com.roland.syslog.mainwindow" label="SyslogViewer" iconURI="platform:/plugin/com.roland.syslogviewer/icons/application_icon_32.gif" width="500" height="400">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_2iCbkS-rEeORA68YRw1xzQ" elementId="com.roland.syslog.mainwindow" label="SyslogViewer" iconURI="platform:/plugin/com.roland.syslogviewer/icons/application_icon_32.gif" width="800" height="600">
+    <tags>shellMaximized</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_2iDCoC-rEeORA68YRw1xzQ">
       <children xsi:type="advanced:Perspective" xmi:id="_2iDCoS-rEeORA68YRw1xzQ">
         <children xsi:type="basic:PartSashContainer" xmi:id="_2iDCoi-rEeORA68YRw1xzQ">
@@ -15,6 +16,22 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbqy-rEeORA68YRw1xzQ" label="Open" iconURI="platform:/plugin/com.roland.syslogviewer/icons/sample.gif" command="_2iCboC-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrC-rEeORA68YRw1xzQ" label="Save" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrS-rEeORA68YRw1xzQ" label="Quit" command="_2iCbnC-rEeORA68YRw1xzQ"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_HG8u8FV1EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.menu.0" label="Search">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_JUHKEFV1EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.handledmenuitem.0" label="&amp;Find..." iconURI="platform:/plugin/com.roland.syslogviewer/icons/insp_sbook.gif" command="_pylmUDGAEeOpt8V61Ki92w"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_XZ4gAFV3EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.handledmenuitem.2" label="Find Prev" iconURI="platform:/plugin/com.roland.syslogviewer/icons/backward_nav.gif" command="_BheDMDQCEeOlRu7KLmazXw">
+          <parameters xmi:id="_fFuKUFV3EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.parameter.9" name="com.roland.syslogviewer.commandparameter.searchprev" value="SEARCH"/>
+        </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_DtqNAFV3EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.handledmenuitem.1" label="Find Next" iconURI="platform:/plugin/com.roland.syslogviewer/icons/forward_nav.gif" command="_jH_XwDQLEeOlRu7KLmazXw">
+          <parameters xmi:id="_NIgW0FV3EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.parameter.8" name="com.roland.syslogviewer.commandparameter.searchnext" value="SEARCH"/>
+        </children>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_l6QZMFV3EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.menuseparator.0"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_m02ZMFV3EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.handledmenuitem.3" label="Prev Bookmark" iconURI="platform:/plugin/com.roland.syslogviewer/icons/prev_nav.gif" command="_BheDMDQCEeOlRu7KLmazXw">
+          <parameters xmi:id="_F_aXwFV4EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.parameter.10" name="com.roland.syslogviewer.commandparameter.searchprev" value="BOOKMARK"/>
+        </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ijO0MFWREeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.handledmenuitem.4" label="Next Bookmark" iconURI="platform:/plugin/com.roland.syslogviewer/icons/next_nav.gif" command="_jH_XwDQLEeOlRu7KLmazXw">
+          <parameters xmi:id="_qN7PAFWREeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.parameter.11" name="com.roland.syslogviewer.commandparameter.searchnext" value="BOOKMARK"/>
+        </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_2iCbri-rEeORA68YRw1xzQ" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbry-rEeORA68YRw1xzQ" label="About" command="_2iCbpi-rEeORA68YRw1xzQ"/>
@@ -43,7 +60,7 @@
           <parameters xmi:id="_uZrqoDuvEeO25_iIWhowag" elementId="com.roland.syslogviewer.parameter.3" name="com.roland.syslogviewer.commandparameter.searchnext" value="BOOKMARK"/>
         </children>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="__Ka28D6vEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.toolbarseparator.2"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_AcCP0D6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.handledtoolitem.5" iconURI="platform:/plugin/com.roland.syslogviewer/icons/advanceSearch.gif" tooltip="Advanced Search Options" command="_G8PNcD6wEeOz-7_pbqLF4g"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_AcCP0D6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.handledtoolitem.5" visible="false" iconURI="platform:/plugin/com.roland.syslogviewer/icons/advanceSearch.gif" tooltip="Advanced Search Options" command="_G8PNcD6wEeOz-7_pbqLF4g"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_GckEgEO2EeOYz5z3pyfs2g" elementId="com.roland.syslogviewer.handledtoolitem.6" iconURI="platform:/plugin/com.roland.syslogviewer/icons/script_wiz.gif" tooltip="Run Python Script" command="_jggo8EPDEeOYz5z3pyfs2g"/>
       </children>
     </trimBars>
@@ -75,6 +92,7 @@
     <bindings xmi:id="_LjN2oFAqEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.keybinding.3" keySequence="M3+F2" command="_BheDMDQCEeOlRu7KLmazXw">
       <parameters xmi:id="_igu7QFAqEeOxZI2WbhH6zA" elementId="com.roland.syslogviewer.parameter.7" name="com.roland.syslogviewer.commandparameter.searchprev" value="BOOKMARK"/>
     </bindings>
+    <bindings xmi:id="_iSgr4FV2EeO8PcE8J5GdWg" elementId="com.roland.syslogviewer.keybinding.4" keySequence="M1+F" command="_pylmUDGAEeOpt8V61Ki92w"/>
   </bindingTables>
   <rootContext xmi:id="_2iCbmS-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_2iCbmi-rEeORA68YRw1xzQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
