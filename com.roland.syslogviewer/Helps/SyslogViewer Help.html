@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SyslogViewer Help</title></head><body>
+  
+<h1>Introduction to UI</h1>
+<div style="margin-left: 40px;"><img style="width: 598px; height: 391px;" alt="UI" src="Images/UI.gif"><br>
+User can input a "search string" in the combo box where in the toolbar. In this picture, the "search string" is "RU-1".<br>
+Below the toolbar is a tab, the tab title is the syslog file name which user opened.<br>
+The syslog items are displayed in a table. User can resize the each column to a proper size to read the log.<br>
+The table contains those fields (list from left to right)<br>
+<ol>
+  <li>The first column indicates the bookmark. User can double click on
+the log items to toggle the bookmark. Or user can mark bookmarks in
+find result (refer to Find.. chapter for the details.) User also can
+mark bookmarks in the result fo <a href="#Running_a_python_script">running a python script</a> for the details). In the picture, user bookmarked item 4 and 8.<br>
+  </li>
+  <li>The second column indicates the line number of each log item in syslog.</li>
+  <li>"TimeStamp" indicates the when the syslog is written. To save the
+display space, the date information (for example: Oct 9) are not
+displayed.</li>
+  <li>"Severity" indicates the severity field.</li>
+  <li>"RU" indicates the RU field. <br>
+  </li>
+  <li>"PRB" indciates the PRB field.</li>
+  <li>"Text" indicates the log text filed. User can copy part of text to clipboard.<br>
+  </li>
+</ol>
+(Note: if the syslog item is wriiten by system or FP, the column "RU" and "PRB" are empty.)<br>
+User can copy the selected log items by Ctrl+C to clipboard. And user can select multi-items in the table.<br>
+</div>
+<h2 style="margin-left: 40px;">Menus</h2>
+<div style="margin-left: 40px;">In File Menu.<br>
+</div>
+
+<div style="margin-left: 80px;">User can open a syslog by click "Open" item.<br>
+
+User  can close the application by click "Close" item<br>
+</div>
+<div style="margin-left: 40px;">
+In Search Menu<br>
+<img style="width: 191px; height: 129px;" alt="Menu Search" src="Images/Menu_Search.gif"><br>
+</div>
+
+
+<div style="margin-left: 80px;">"Find..."&nbsp;&nbsp;&nbsp; User can refer to <a href="SyslogViewer%20Help.html#Find">Find</a> chapter for the details<br>
+"Find Prev"&nbsp;&nbsp;&nbsp; User can jump to the previous location of the "search
+string". If the begin point of syslog is met, the search is continued
+from the end of the syslog.<br>
+"Find Next"&nbsp;&nbsp;&nbsp; User can jump to the next location of the "search
+string". If the end point of syslog is met, the search is continued
+from the begin of the
+syslog.<br>
+"Prev Bookmark"&nbsp;&nbsp;&nbsp; User can jump to the previous location of the bookmark. If the end point of
+syslog is met, the search is continued from the begin of the
+syslog.<br>
+"Next Bookmark"&nbsp;&nbsp;&nbsp; User can jump to the next location of the bookmark. If the end point of
+syslog is met, the search is continued from the begin of the
+syslog.<br>
+</div>
+
+<h2 style="margin-left: 40px;">Toolbar</h2>
+<div style="margin-left: 40px;"><img style="width: 571px; height: 24px;" alt="Toolbar" src="Images/Toolbar.gif"><br>
+The functions of button of toolbar are listed from left to right:<br>
+<ol>
+  <li>User can open a syslog by clicking the first button. Due to
+syslog is often big and the application isn't optimized, to avoid the
+unexpected crash, the first version of this application only allow user
+to only open a syslog. After the user open a syslog, this button is
+disabled. User need to run another instance of this application to open another syslog.</li>
+  <li>This "save" button isn't functioal, due to this application is readonly. This button is added by eclipse wizard :-)</li>
+  <li>User can enter a string to search which log items contain this
+string. The combobox can save 10 history "search string". User can
+select each of those history "seach string".</li>
+  <li>Refer to "Find Prev" in menu chapter for the details.</li>
+  <li>Refer to "Find Next" in menu chapter for the details.</li>
+  <li>Refer to "<a href="#Find">Find...</a>" chapter for the details.</li>
+  <li>Refer to "Prev Bookmark" in menu chapter for the details.</li>
+  <li>Refer to "Next Bookmark" in menu chapter for the details.</li>
+  <li>Refer to "<a href="SyslogViewer%20Help.html#Running_a_python_script">running a python script</a>" chapter for the details.<br>
+  </li>
+</ol>
+</div>
+<h1><a name="Find"></a>Find...</h1>
+<div style="margin-left: 40px;">If the user input "RU-1" in the combo
+box in the toolbar, then press the "find..." in the meun or toolbar.
+The "Find Result" dialog pops up:<br>
+<img style="width: 507px; height: 333px;" alt="Find Result" src="Images/Find_Result.gif"><br>
+The "Find Result" dialog is resizable. The log items that contains
+"RU-1" are listed in the list. User can select one or multiple log
+items. User can perform those functions by clicks the buttons on the
+bottom (list for left to right):<br>
+<ol>
+  <li>"Go to" button: Close the dialog and jump to first item that user selected.</li>
+  <li>"Clipboard" button: Copy the selected items to clipboard.</li>
+  <li>"Bookmark" button: Close the dialog and mark the log items that user selected.</li>
+  <li>"Bookmark All" button: Close the dialog and bookmark all the find results.</li>
+  <li>"Cancel" button: Close the dialog and do nothing.<br>
+  </li>
+</ol>
+</div>
+<br>
+<h1><a name="Running_a_python_script"></a>Running a python script</h1>
+<div style="margin-left: 40px;">User can run a python script by click <img style="width: 16px; height: 16px;" alt="Script" src="Images/script_wiz.gif"> button in toolbar. This dialog pops up:<br>
+<img style="width: 529px; height: 427px;" alt="Run a python script" src="Images/Run_Script.gif"><br>
+In the upper textbox, user can enter a python script or edit the
+default script. User can refer to "How to write a runnable python
+script"&nbsp; sub-chapter.<br>
+User can press "Open Script..." to open a pre-written python script on the disk.<br>
+User can press "Run"&nbsp; button to run the python script which
+displayed in the textbox. The result of the script is listed in
+"Result" tab, and the output (which is strings that python script print
+via "Print" statement) is displayed in "Output" tab.<br>
+User can copy the selected log items to clipboard by clicking "Clipboard" button.<br>
+User can close the dialog and bookmark selected log items by clicking "Bookmark" button.<br>
+</div>
+<br>
+<h2 style="margin-left: 40px;">How to write a runnable python script</h2>
+<div style="margin-left: 40px;">To make application simple, the editing for a complex python script isn't provided.<br>
+But user can edit a python in a the PyDev or Jython GUI.<br>
+Application using the Jython as python script interpretor, the default
+application package has included the Jython, so you needed to install
+the Jython to sun the python script in the application. But if you want
+to develop a powerful python script which can parse the syslog, you'd
+better install a Jython and PyDev and ask me to get jar file that
+support the parse the syslog file. (Due to there is no much user yet,
+the help doesn't contains the information on how to setup script
+development environment.) This charpter only introduce what
+functionalities that global variable SYSLOG contains.<br>
+<br>
+</div>
+<br>
+<h1>Further Development idea</h1>
+<br>
+<br>
+
+
+
+</body></html>
