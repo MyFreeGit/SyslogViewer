@@ -28,10 +28,14 @@ public class SearchHandler {
 			ILogSet result = logfilePart.search(str);
 			SearchResultDialog dlg = new SearchResultDialog(shell);
 			dlg.setResult(result);
-			dlg.open();
+			int buttonID = dlg.open();
 			ILogSet selection = dlg.getSelection();
 			if(!selection.isEmpty()){
-				logfilePart.setBookmark(selection);
+				if(buttonID == SearchResultDialog.ID_BTN_GOTO){
+					logfilePart.gotoPosition(selection);
+				}else{
+					logfilePart.setBookmark(selection);
+				}
 			}
 		}
 	}

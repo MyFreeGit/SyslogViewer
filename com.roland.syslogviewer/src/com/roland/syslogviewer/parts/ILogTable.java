@@ -14,5 +14,5 @@ public interface ILogTable {
 	public void setBookmark(ILogSet bookmarks);
 	public void nextBookmark();
 	public void prevBookmark();
-	public void copySelectionToClipboard();
+	public void gotoPosition(ILogSet logs);
 }

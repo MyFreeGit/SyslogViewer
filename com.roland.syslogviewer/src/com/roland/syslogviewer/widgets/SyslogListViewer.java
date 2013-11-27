@@ -5,6 +5,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -29,6 +31,24 @@ public class SyslogListViewer {
 				return ((ILogItem) element).toString();
 			}
 		});
+		listViewer.getList().addKeyListener(new KeyListener(){
+
+	        @Override
+	        public void keyReleased(KeyEvent ke) {
+	            /*if CTRL-C pressed*/
+	        	if( (ke.keyCode == 'c') && (ke.stateMask ==  SWT.CTRL)) {
+	        		copySelectionToClipboard();
+	            } 
+	        }
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+	    });
+
 	}
 	
 	public void setInput(ILogSet logs){

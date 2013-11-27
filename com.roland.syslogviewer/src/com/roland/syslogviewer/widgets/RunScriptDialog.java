@@ -1,6 +1,9 @@
 package com.roland.syslogviewer.widgets;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -29,11 +32,13 @@ public class RunScriptDialog extends Dialog {
 	private Text txtScript;
 	private Text txtOutput;
 	private Button btnRun;
+	private Button btnGoto;
 	private Button btnBookmark;
 	private SyslogListViewer listViewer;
-	private final static int BUTTON_ID_OPEN_SCRIPT = 100;
-	private final static int BUTTON_ID_CLIPBOARD = 100;
+	public final static int BUTTON_ID_GOTO = 100;
 	private final static int BUTTON_ID_EXECUTE_SCRIPT = 101;
+	private final static int BUTTON_ID_OPEN_SCRIPT = 102;
+	private final static int BUTTON_ID_SAVE_SCRIPT = 103;
 	private ILogSet selection = null;
 	private LogContainer logs = null;
 
@@ -107,18 +112,30 @@ public class RunScriptDialog extends Dialog {
 				openPythonScript();
 			}
 		});
-		Button button = createButton(parent, BUTTON_ID_CLIPBOARD, "Clipboard", false);
-		button.addMouseListener(new MouseAdapter() {
+		Button btnSave = createButton(parent, BUTTON_ID_SAVE_SCRIPT, "Save Script...", false);
+		btnSave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				listViewer.copySelectionToClipboard();
+				savePythonScript();
 			}
 		});
+
 		btnRun = createButton(parent, BUTTON_ID_EXECUTE_SCRIPT, "Run", false);
 		btnRun.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				runPythonScript();
+			}
+		});
+
+		btnGoto = createButton(parent, BUTTON_ID_GOTO, "Goto", false);
+		btnGoto.setEnabled(false);
+		btnGoto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				selection = listViewer.getSelection();
+				setReturnCode(BUTTON_ID_GOTO);
+				close();
 			}
 		});
 
@@ -151,16 +168,52 @@ public class RunScriptDialog extends Dialog {
 		}
 	}
 
+	private void savePythonScript(){
+		FileDialog dialog = new FileDialog(getParentShell(), SWT.SAVE);
+		String [] filterNames = new String [] {"Python Script", "All Files (*)"};
+		String [] filterExtensions = new String [] {"*.py", "*"};
+		dialog.setFilterNames (filterNames);
+		dialog.setFilterExtensions (filterExtensions);
+		dialog.setFilterPath(ElementLocator.getPersistService().getScriptPath());
+
+		String fileName = dialog.open();
+		FileWriter output = null;
+		try {
+			output = new FileWriter(fileName);
+			BufferedWriter writer = new BufferedWriter(output);
+			writer.write(txtScript.getText());
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
 	private void runPythonScript(){
 		String script = txtScript.getText();
 		ILogSet result = PythonScriptRunner.runScript(logs, script);
 		String output = PythonScriptRunner.getOutput();
 		txtOutput.setText(output);
 
+		if(result.isEmpty()){
+			btnBookmark.setEnabled(false);
+			btnGoto.setEnabled(false);
+			
+		}else{
+			btnBookmark.setEnabled(true);
+			btnGoto.setEnabled(true);
+		}
 		listViewer.setInput(result);
 		listViewer.refresh();
 		
-		btnBookmark.setEnabled(true);
 	}
 	
 	// overriding this methods allows you to set the

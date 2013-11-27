@@ -112,12 +112,17 @@ public class LogTableViewer implements ILogTable {
 		setSelectionToItem(tblItems.navPrev());
 	}
 
-
 	@Override
-	public void copySelectionToClipboard() {
+	public void gotoPosition(ILogSet logs) {
+		if(logs.isEmpty())
+			return;
+		setSelectionToItem(logs.getLogItemList().get(0));
+	}
+
+
+	private void copySelectionToClipboard() {
 		int[] idx = tableViewer.getTable().getSelectionIndices();
 		WidgetsUtil.copyLogitemsToClipboard(tblItems, idx);
-		
 	}
 
 	@Override

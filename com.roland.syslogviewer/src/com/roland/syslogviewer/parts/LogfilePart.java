@@ -47,8 +47,7 @@ public class LogfilePart {
 		logViewer.prevBookmark();
 	}
 	
-	public void copySelectionToClipboard() {
-		logViewer.copySelectionToClipboard();
+	public void gotoPosition(ILogSet logs){
+		logViewer.gotoPosition(logs);
 	}
-
 }

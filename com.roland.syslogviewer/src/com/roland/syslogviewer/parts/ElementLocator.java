@@ -41,7 +41,6 @@ public class ElementLocator{
 				
 	@PostConstruct
 	static void initLocator() {
-		System.out.println("ElementLocator::initLocator() is called!");
 		initLookupTable();
 		if(persistService == null){
 			persistService = new PersistedBuffer();

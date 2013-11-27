@@ -73,7 +73,6 @@
   <handlers xmi:id="_dGoUQDGEEeOpt8V61Ki92w" elementId="com.roland.syslogviewer.handler.search" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchHandler" command="_pylmUDGAEeOpt8V61Ki92w"/>
   <handlers xmi:id="_B6jtEDQMEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handler.0" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchPrevHandler" command="_BheDMDQCEeOlRu7KLmazXw"/>
   <handlers xmi:id="_cQ8K8DQMEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.handler.1" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.SearchNextHandler" command="_jH_XwDQLEeOlRu7KLmazXw"/>
-  <handlers xmi:id="_QRC0ED0YEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.handler.copy" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.CopyHandler" command="_8SgpED0XEeOB3O-DtOeQdA"/>
   <handlers xmi:id="_woMuMD6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.handler.2" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.AdvancedSearch" command="_G8PNcD6wEeOz-7_pbqLF4g"/>
   <handlers xmi:id="_oRcoYEPDEeOYz5z3pyfs2g" elementId="com.roland.syslogviewer.handler.runscript" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.RunScriptHandler" command="_jggo8EPDEeOYz5z3pyfs2g"/>
   <handlers xmi:id="_xOChUFXJEeOyKe3rW6E75w" elementId="com.roland.syslogviewer.handler.3" contributionURI="bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.handlers.HelpHandler" command="_vU_xgFXIEeOyKe3rW6E75w"/>
@@ -111,7 +110,6 @@
   <commands xmi:id="_jH_XwDQLEeOlRu7KLmazXw" elementId="com.roland.syslogviewer.command.searchnext" commandName="searchNextCommand">
     <parameters xmi:id="_tberEDuxEeO25_iIWhowag" elementId="com.roland.syslogviewer.commandparameter.searchnext" name="com.roland.syslogviewer.commandparameter.searchnext"/>
   </commands>
-  <commands xmi:id="_8SgpED0XEeOB3O-DtOeQdA" elementId="com.roland.syslogviewer.command.copy" commandName="copyCommand"/>
   <commands xmi:id="_G8PNcD6wEeOz-7_pbqLF4g" elementId="com.roland.syslogviewer.command.0" commandName="advancedSearch"/>
   <commands xmi:id="_jggo8EPDEeOYz5z3pyfs2g" elementId="com.roland.syslogviewer.command.runscript" commandName="runScript"/>
   <commands xmi:id="_vU_xgFXIEeOyKe3rW6E75w" elementId="com.roland.syslogviewer.command.1" commandName="helpCommand"/>

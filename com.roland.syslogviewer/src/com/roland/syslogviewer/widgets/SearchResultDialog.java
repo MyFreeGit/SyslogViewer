@@ -21,6 +21,7 @@ public class SearchResultDialog extends Dialog {
 	private SyslogListViewer listViewer;
 	private ILogSet selection;
 	private final static int ID_BTN_CLIPBOARD = 10;
+	public final static int ID_BTN_GOTO = 100;
 
 	public void setResult(ILogSet result) {
 		this.result = result;
@@ -53,7 +54,15 @@ public class SearchResultDialog extends Dialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		Button btnGoto = createButton(parent, 0, "Go To", false);
+		Button btnGoto = createButton(parent, ID_BTN_GOTO, "Go To", false);
+		btnGoto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				selection = listViewer.getSelection();
+				setReturnCode(ID_BTN_GOTO);
+				close();
+			}
+		});
 		btnGoto.setText("Go To");
 
 		Button btnCopy = createButton(parent, ID_BTN_CLIPBOARD, "Clipboard", false);

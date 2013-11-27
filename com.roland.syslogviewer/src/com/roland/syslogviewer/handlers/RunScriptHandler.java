@@ -18,11 +18,15 @@ public class RunScriptHandler {
 	public void execute(@Optional @Active MPart part, Shell shell) {
 		RunScriptDialog dlg = new RunScriptDialog(shell);
 		dlg.setLogContainer(ElementLocator.getActiveSysLog());
-		dlg.open();
-		ILogSet bookmarks = dlg.getSelection();
-		if( bookmarks != null && !bookmarks.isEmpty()){
+		int result = dlg.open();
+		ILogSet selection = dlg.getSelection();
+		if( selection != null && !selection.isEmpty()){
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
-			logfilePart.setBookmark(bookmarks);
+			if(result == RunScriptDialog.BUTTON_ID_GOTO){
+				logfilePart.gotoPosition(selection);
+			}else{
+				logfilePart.setBookmark(selection);
+			}
 		}
 	}
 	
