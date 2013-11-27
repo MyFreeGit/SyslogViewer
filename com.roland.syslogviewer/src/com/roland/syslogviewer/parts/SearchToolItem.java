@@ -1,5 +1,7 @@
 package com.roland.syslogviewer.parts;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +27,10 @@ public class SearchToolItem {
 
 	public String getText() {
 		String text = combo.getText();
-		combo.add(text);
+		if(!Arrays.asList(combo.getItems()).contains(text)){
+			combo.add(text);		
+		}
+		System.out.println();
 		ElementLocator.getPersistService().addSearchText(text);
 		return text;
 	}

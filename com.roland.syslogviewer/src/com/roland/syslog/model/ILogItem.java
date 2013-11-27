@@ -4,9 +4,13 @@ import java.util.Comparator;
 
 import hirondelle.date4j.DateTime;
 
+/**
+ * Present each line of log in syslog.
+ *
+ */
 public interface ILogItem {
 	/**
-	 * Used to indicates the log items contains how man fields.
+	 * Used to indicates the log items contains how many fields.
 	 */
 	public static enum Field{
 		TimeStamp("TimeStamp"), Severity("Severity"), RU("RU"), PRB("PRB"), Text("Text");
@@ -51,6 +55,7 @@ public interface ILogItem {
 	}
 	/**The index is start from 1!*/
 	public int getIndex();
+	/**Get give filed's value.*/
 	public String getFieldValue(Field field);
 	public DateTime getTimeStamp();
 	public String getPureTime();

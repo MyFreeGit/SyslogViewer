@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
+
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SyslogViewer Help</title></head><body>
   
 <h1>Introduction to UI</h1>
@@ -132,10 +133,22 @@ functionalities that global variable SYSLOG contains.<br>
 <br>
 Script can refer to current opened syslog via global variable SYSLOG. Script can use SYSLOG as an integrated gobal
 variable. If script want to pass the result to application, the script need to add the result to a pre-defined 
-gobal variable RESULT
+gobal variable RESULT.<br>
+<br>
+Please refer to the <a href="doc/index.html">javadoc</a> for the details.&nbsp; User can get some basic example in the ILogSet's javadoc.<br>
+
 </div>
 <br>
-<h1>Further Development idea</h1>
+<h1>Future Development idea</h1>
+<ol>
+  <li>Support SCP functionality, that can get syslog from remote server.</li>
+  <li>Replace the table SWT control&nbsp; in main window with some high performance third-party's table.</li>
+  <li>Add filtering and sorting functionality to table.</li>
+  <li>Add more powerful and specified filtering method in ILogSet (such as filtering syslog which written between RU restart).</li>
+  <li>Performance improvement.<br>
+  </li>
+</ol>
+
 <br>
 <br>
 
