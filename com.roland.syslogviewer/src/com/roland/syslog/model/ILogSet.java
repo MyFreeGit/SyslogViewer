@@ -7,17 +7,26 @@ import java.util.List;
 
 import com.roland.syslog.model.ILogItem.Field;
 
+/**
+ * 
+ *
+ */
 public interface ILogSet {
 	public boolean isEmpty();
 
 	public void clear();
 
+	/**
+	 * @param item The item needs to be added to current set.
+	 */
 	public boolean add(ILogItem item);
 
 	public List<ILogItem> getLogItemList();
 
+	/**Bookmark all log items in the LogSet. Not suggest to be used in script.*/
 	public void selectAll();
 
+	/**Unbookmark all log items in the LogSet. Not suggest to be used in script.*/
 	public void unselectAll();
 
 	public int getSelectCount();

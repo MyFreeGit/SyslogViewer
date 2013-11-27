@@ -11,8 +11,8 @@ The table contains those fields (list from left to right)<br>
 <ol>
   <li>The first column indicates the bookmark. User can double click on
 the log items to toggle the bookmark. Or user can mark bookmarks in
-find result (refer to Find.. chapter for the details.) User also can
-mark bookmarks in the result fo <a href="#Running_a_python_script">running a python script</a> for the details). In the picture, user bookmarked item 4 and 8.<br>
+find result (refer to <a href="SyslogViewer%20Help.html#Find">Find...</a> chapter for the details.) User also can
+mark bookmarks in the result of python script(refer to <a href="#Running_a_python_script">running a python script</a> for the details). In the picture, user bookmarked item 4 and 8.<br>
   </li>
   <li>The second column indicates the line number of each log item in syslog.</li>
   <li>"TimeStamp" indicates the when the syslog is written. To save the
@@ -25,16 +25,16 @@ displayed.</li>
   <li>"Text" indicates the log text filed. User can copy part of text to clipboard.<br>
   </li>
 </ol>
-(Note: if the syslog item is wriiten by system or FP, the column "RU" and "PRB" are empty.)<br>
+(Note: if the syslog item is written by system or FP, the column "RU" and "PRB" are empty.)<br>
 User can copy the selected log items by Ctrl+C to clipboard. And user can select multi-items in the table.<br>
 </div>
 <h2 style="margin-left: 40px;">Menus</h2>
-<div style="margin-left: 40px;">In File Menu.<br>
+<div style="margin-left: 40px;">In File Menu:<br>
 </div>
 
 <div style="margin-left: 80px;">User can open a syslog by click "Open" item.<br>
 
-User  can close the application by click "Close" item<br>
+User can close the application by click "Close" item<br>
 </div>
 <div style="margin-left: 40px;">
 In Search Menu<br>
@@ -65,12 +65,12 @@ The functions of button of toolbar are listed from left to right:<br>
   <li>User can open a syslog by clicking the first button. Due to
 syslog is often big and the application isn't optimized, to avoid the
 unexpected crash, the first version of this application only allow user
-to only open a syslog. After the user open a syslog, this button is
+to only open a syslog. After the user opens a syslog, this button is
 disabled. User need to run another instance of this application to open another syslog.</li>
-  <li>This "save" button isn't functioal, due to this application is readonly. This button is added by eclipse wizard :-)</li>
+  <li>This "save" button isn't functional, due to this application is readonly. This button is added by eclipse wizard :-)</li>
   <li>User can enter a string to search which log items contain this
 string. The combobox can save 10 history "search string". User can
-select each of those history "seach string".</li>
+select one of those history "search string".</li>
   <li>Refer to "Find Prev" in menu chapter for the details.</li>
   <li>Refer to "Find Next" in menu chapter for the details.</li>
   <li>Refer to "<a href="#Find">Find...</a>" chapter for the details.</li>
@@ -82,10 +82,10 @@ select each of those history "seach string".</li>
 </div>
 <h1><a name="Find"></a>Find...</h1>
 <div style="margin-left: 40px;">If the user input "RU-1" in the combo
-box in the toolbar, then press the "find..." in the meun or toolbar.
+box in the toolbar, then press the "find..." in the menu or toolbar.
 The "Find Result" dialog pops up:<br>
 <img style="width: 507px; height: 333px;" alt="Find Result" src="Images/Find_Result.gif"><br>
-The "Find Result" dialog is resizable. The log items that contains
+The "Find Result" dialog is resizable. The log items that contain
 "RU-1" are listed in the list. User can select one or multiple log
 items. User can perform those functions by clicks the buttons on the
 bottom (list for left to right):<br>
@@ -97,6 +97,7 @@ bottom (list for left to right):<br>
   <li>"Cancel" button: Close the dialog and do nothing.<br>
   </li>
 </ol>
+(Note: User can also use Ctrl+C to copy selected items to clipboard.)<br>
 </div>
 <br>
 <h1><a name="Running_a_python_script"></a>Running a python script</h1>
@@ -104,29 +105,34 @@ bottom (list for left to right):<br>
 <img style="width: 529px; height: 427px;" alt="Run a python script" src="Images/Run_Script.gif"><br>
 In the upper textbox, user can enter a python script or edit the
 default script. User can refer to "How to write a runnable python
-script"&nbsp; sub-chapter.<br>
+script" sub-chapter.<br>
 User can press "Open Script..." to open a pre-written python script on the disk.<br>
+User can press "Save Script..." to save the current script which is displayed in textbox to the disk.<br>
 User can press "Run"&nbsp; button to run the python script which
 displayed in the textbox. The result of the script is listed in
 "Result" tab, and the output (which is strings that python script print
 via "Print" statement) is displayed in "Output" tab.<br>
-User can copy the selected log items to clipboard by clicking "Clipboard" button.<br>
+User can close the dialog and jump to first item that user selected by clicking "Goto" button.<br>
+User can copy the selected log items to clipboard by Ctrl+C.<br>
 User can close the dialog and bookmark selected log items by clicking "Bookmark" button.<br>
 </div>
 <br>
 <h2 style="margin-left: 40px;">How to write a runnable python script</h2>
 <div style="margin-left: 40px;">To make application simple, the editing for a complex python script isn't provided.<br>
-But user can edit a python in a the PyDev or Jython GUI.<br>
-Application using the Jython as python script interpretor, the default
+But user can edit a python in the PyDev or Jython GUI.<br>
+Application using the Jython as python script interpreter, the default
 application package has included the Jython, so you needed to install
 the Jython to sun the python script in the application. But if you want
 to develop a powerful python script which can parse the syslog, you'd
 better install a Jython and PyDev and ask me to get jar file that
 support the parse the syslog file. (Due to there is no much user yet,
 the help doesn't contains the information on how to setup script
-development environment.) This charpter only introduce what
+development environment.) This chapter only introduce what
 functionalities that global variable SYSLOG contains.<br>
 <br>
+Script can refer to current opened syslog via global variable SYSLOG. Script can use SYSLOG as an integrated gobal
+variable. If script want to pass the result to application, the script need to add the result to a pre-defined 
+gobal variable RESULT
 </div>
 <br>
 <h1>Further Development idea</h1>
