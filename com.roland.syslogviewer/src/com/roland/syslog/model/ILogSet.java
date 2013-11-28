@@ -33,9 +33,9 @@ import com.roland.syslog.model.ILogItem.Field;
  * 
  * <p>User can use below python code to go through the ILogSet based variable.</p>
  * <code>
- * from com.roland.syslog.model.ILogItem import *
- * for item in SYSLOG.getLogItemList():
- *     print item.getFieldValue(Field.TimeStamp)
+ * from com.roland.syslog.model.ILogItem import *<br>
+ * for item in SYSLOG.getLogItemList():<br>
+ * &nbsp;&nbsp;&nbsp;print item.getFieldValue(Field.TimeStamp)<br>
  * </code>
  */
 public interface ILogSet {
