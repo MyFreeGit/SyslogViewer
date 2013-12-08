@@ -99,12 +99,16 @@ public interface ILogSet {
 	public ILogSet filterWithSeverity(String ...strings);
 
 	/**
-	 * Filter all LogItems writes on one of given RUs.
+	 * Filter all LogItems writes on one of given RUs. User can specified one
+	 * target RU for example RUA-1, or just specified a RU type RUA as a 
+	 * parameter. All LogItems with RU field contains one of parameters are
+	 * returned.
 	 * If parameter is null, empty LogSet is returned.*/
 	public ILogSet filterWithRU(String ...RUs);
 	
 	/**
-	 * Filter all LogItems written by one of given PRBs. 
+	 * Filter all LogItems written by one of given PRBs. All LogItems with PRB
+	 * field contains one of parameters are returned.
 	 * If parameter is null, empty LogSet is returned.*/
 	public ILogSet filterWithPRB(String ...PRBs);
 	

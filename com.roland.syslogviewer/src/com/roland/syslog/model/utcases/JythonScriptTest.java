@@ -6,6 +6,9 @@ import javax.script.ScriptException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+
 
 import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
@@ -66,6 +69,43 @@ public class JythonScriptTest {
 			target_idx[i] = i+1;
 		}		
 		UTHelper.assertResult(result, target_idx);
-
 	}
+		
+	@Test
+	public void testLogContainerReadOnly(){
+		ILogSet result;
+		String output, scriptString;
+		final String exception = "java.lang.UnsupportedOperationException";
+		int []target_idx = new int[logs.getLogItemList().size()];
+		for(int i = 0; i < logs.getLogItemList().size(); i++){
+			target_idx[i] = i + 1;
+		}
+
+		scriptString = "list = SYSLOG.clear();\n";
+		result = PythonScriptRunner.runScript(logs, scriptString);
+		output = PythonScriptRunner.getOutput();
+		assertTrue(output.contains(exception));
+		UTHelper.assertResult(logs, target_idx);
+		
+		scriptString = "list = SYSLOG.addAll(SYSLOG);\n";
+		result = PythonScriptRunner.runScript(logs, scriptString);
+		output = PythonScriptRunner.getOutput();
+		assertTrue(output.contains(exception));
+		UTHelper.assertResult(logs, target_idx);
+		
+		scriptString = "from com.roland.syslog.model import ILogItem;\n"
+				+ "list = SYSLOG.sort(ILogItem.Field.TimeStamp);\n";
+		result = PythonScriptRunner.runScript(logs, scriptString);
+		output = PythonScriptRunner.getOutput();
+		assertTrue(output.contains(exception));
+		UTHelper.assertResult(logs, target_idx);
+		
+		scriptString = "SYSLOG.add(SYSLOG.getLogItemList().get(0));\n";
+		result = PythonScriptRunner.runScript(logs, scriptString);
+		output = PythonScriptRunner.getOutput();
+		System.out.println(output);
+	    assertTrue(output.contains(exception));
+		UTHelper.assertResult(logs, target_idx);
+
+}
 }

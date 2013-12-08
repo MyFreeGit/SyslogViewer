@@ -2,12 +2,32 @@ package com.roland.syslog.model;
 
 import java.util.*;
 
+import com.roland.syslog.model.ILogItem.Field;
+
+
+/**
+ * LogContainer is only for contains the log that is read-only after being 
+ * created. And it implements ILogNavigator interface, that allows the user GUI
+ * to navigate Log position.
+ */
 public class LogContainer extends AbstractLogSet implements ILogNavigator {
+	private final static String UNSUPPORTED_OPERATION_MSG = "Modification on SYSLOG isn't allowed!";
 	public LogContainer(){
 		super();
 		finder = new Finder();
 	}
+
+	/*When user calls the routine that modified the inner data, just throw 
+	 *runtime exception makes the execution failure!*/
+	@Override public void clear(){throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG);}
+
+	@Override public boolean add(ILogItem item){throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG);}
 	
+	@Override public boolean addAll(ILogSet logs){throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG);}
+	
+	@Override public ILogSet sort(Field sortBy){throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG);}
+	
+
 	@Override protected List<ILogItem> createLogList(){
 		return new LinkedList<ILogItem>();
 	}

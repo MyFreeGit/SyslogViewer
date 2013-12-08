@@ -7,7 +7,7 @@ import java.nio.CharBuffer;
 public class SyslogFileReader {
 	public static LogContainer read(String fileName) {
 		FileReader file = null;
-		LogContainer allItems = new LogContainer();
+		SyslogContainer allItems = new SyslogContainer();
 
 		try {
 			file = new FileReader(fileName);
@@ -16,7 +16,7 @@ public class SyslogFileReader {
 			while ((line = reader.readLine()) != null) {
 				if(!line.trim().equals("")){
 					LogItem item = new LogItem(line);
-					allItems.add(item);
+					allItems.addLogItem(item);
 				}
 			}
 			reader.close();
