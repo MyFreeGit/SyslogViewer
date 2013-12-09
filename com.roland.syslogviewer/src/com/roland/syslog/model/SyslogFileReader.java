@@ -6,20 +6,13 @@ import java.nio.CharBuffer;
 /*This file is just used for read syslog from a text based file.*/
 public class SyslogFileReader {
 	public static LogContainer read(String fileName) {
+		LogContainer allItems;
 		FileReader file = null;
-		SyslogContainer allItems = new SyslogContainer();
 
 		try {
 			file = new FileReader(fileName);
 			BufferedReader reader = new BufferedReader(file);
-			String line = "";
-			while ((line = reader.readLine()) != null) {
-				if(!line.trim().equals("")){
-					LogItem item = new LogItem(line);
-					allItems.addLogItem(item);
-				}
-			}
-			reader.close();
+			allItems = readFromStream(reader);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -32,6 +25,24 @@ public class SyslogFileReader {
 			}
 		}
 		return allItems;
+	}
+	
+	public static LogContainer readFromStream(BufferedReader reader){
+		SyslogContainer allItems = new SyslogContainer();
+		String line = "";
+		try {
+			while ((line = reader.readLine()) != null) {
+				if(!line.trim().equals("")){
+					LogItem item = new LogItem(line);
+					allItems.addLogItem(item);
+				}
+			}
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allItems;	
 	}
 	
 	private SyslogFileReader(){
