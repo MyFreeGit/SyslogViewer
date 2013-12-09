@@ -51,6 +51,10 @@ public class OpenRemoteFileDialog extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(null);
 		
+		btnSaveToLocal = new Button(container, SWT.CHECK);
+		btnSaveToLocal.setBounds(222, 370, 99, 16);
+		btnSaveToLocal.setText("Save To Local");
+		
 		List lstAccount = new List(container, SWT.BORDER);
 		lstAccount.setBounds(10, 10, 194, 351);
 		
@@ -112,24 +116,20 @@ public class OpenRemoteFileDialog extends Dialog {
 		txtPassword = new Text(container, SWT.BORDER);
 		txtPassword.setBounds(221, 332, 263, 19);
 		
-		Group group = new Group(container, SWT.NONE);
-		group.setBounds(222, 374, 262, 79);
-		
-		Label lblLocalFile = new Label(group, SWT.NONE);
-		lblLocalFile.setBounds(10, 22, 49, 13);
-		lblLocalFile.setText("Local File:");
-		
-		txtLocalFile = new Text(group, SWT.BORDER);
-		txtLocalFile.setBounds(10, 41, 242, 19);
-		
-		btnSaveToLocal = new Button(container, SWT.CHECK);
-		btnSaveToLocal.setBounds(222, 370, 99, 16);
-		btnSaveToLocal.setText("Save To Local");
-		
 		btnSaveAccount = new Button(container, SWT.NONE);
 		btnSaveAccount.setEnabled(false);
 		btnSaveAccount.setBounds(10, 396, 194, 23);
 		btnSaveAccount.setText("Save Account");
+		
+		Group group = new Group(container, SWT.NONE);
+		group.setBounds(222, 374, 262, 79);
+		
+		Label lblLocalFile = new Label(group, SWT.NONE);
+		lblLocalFile.setBounds(10, 22, 78, 13);
+		lblLocalFile.setText("Local File:");
+		
+		txtLocalFile = new Text(group, SWT.BORDER);
+		txtLocalFile.setBounds(10, 41, 242, 19);
 
 		return container;
 	}

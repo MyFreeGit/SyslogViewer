@@ -6,6 +6,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="ExternLibs/jython.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rding/git/SyslogViewer/com.roland.syslogviewer/ExternLibs/jsch-0.1.50.jar"/>
+	<classpathentry kind="lib" path="ExternLibs/jsch-0.1.50.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

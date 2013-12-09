@@ -1,10 +1,12 @@
 package com.roland.syslogviewer.remote;
 
+import java.io.Serializable;
+
 /**
  * RemoteFileDescriptor is used for describe a syslog file which located on 
  * remote side. The transfer protocol can be sftp. 
  */
-public class RemoteFileDescriptor {
+public class RemoteFileDescriptor implements Serializable{
 	public static final String DEFAULT_USER = "root";
 	public static final String DEFAULT_PASSWORD = "root";
 	public static final String DEFAULT_REMOTE_FILE = "/srv/Log/log/syslog";
@@ -28,7 +30,7 @@ public class RemoteFileDescriptor {
 	private String user = null;
 	private String password = null;
 	private String remoteFile = null;
-	private boolean isSaveToLocal = false;
+	private Boolean isSaveToLocal = false;
 	private String localFile = null;
 	private String name = null;
 	
