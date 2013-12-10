@@ -23,6 +23,8 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.SyslogFileReader;
+import com.roland.syslogviewer.remote.RemoteFileDescriptor;
+import com.roland.syslogviewer.remote.RemoteSyslog;
 
 public class ElementLocator{
 	@Inject
@@ -79,7 +81,7 @@ public class ElementLocator{
 		return null;
 	}
 	
-	public static void createLogFilePart(File logFile){		
+	public static void createLogFilePart(){		
 		List<MWindow> wins = modelService.findElements(application, "com.roland.syslog.mainwindow",
 	            MWindow.class, null);
 		if(wins.size() != 0){
@@ -87,8 +89,6 @@ public class ElementLocator{
 			MPart part = modelService.createModelElement(MPart.class);
 			part.setContributionURI("bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.LogfilePart");
 		    EPartService ps = activeWin.getContext().get(EPartService.class);
-			part.getTransientData().put(LogfilePart.LOG_FILE_KEY, logFile);
-			part.setLabel(logFile.getName());
 		    ps.showPart(part, EPartService.PartState.ACTIVATE);
 		}
 	}
@@ -130,6 +130,11 @@ public class ElementLocator{
 			return ActiveSyslog;
 		}
 		return null;
+	}
+
+	public static LogContainer createLogContainer(RemoteFileDescriptor dptr){
+		ActiveSyslog = RemoteSyslog.read(dptr);
+		return ActiveSyslog;		
 	}
 
 	private static class PersistedBuffer implements IPersistServiceProvider{

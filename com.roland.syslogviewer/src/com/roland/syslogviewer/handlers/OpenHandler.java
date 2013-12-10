@@ -39,9 +39,9 @@ public class OpenHandler {
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 		String fileName  = dialog.open();
 		if(fileName != null && !fileName.equals("")){
-			logFile = new File(fileName);
 			//createLogfilePart(application, modelService, activeWin);
-			ElementLocator.createLogFilePart(logFile);
+			ElementLocator.createLogContainer(fileName);
+			ElementLocator.createLogFilePart();
 		}
 	}
 	

@@ -6,7 +6,8 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: ExternLibs/date4j/date4j.jar,
  ExternLibs/jython.jar,
  .,
- swing2swt.jar
+ swing2swt.jar,
+ ExternLibs/jsch-0.1.50.jar
 Bundle-Vendor: ROLAND
 Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.core.runtime;bundle-version="3.9.0",

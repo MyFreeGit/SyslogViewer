@@ -67,12 +67,10 @@ public class LogTableViewer implements ILogTable {
 	}
 
 	@Override
-	public void openLogFile(String fileName) {
-		if (!fileName.equals("")) {
-			tblItems = ElementLocator.createLogContainer(fileName);
-			if (!tblItems.getLogItemList().isEmpty()) {
-				showLogfileByTableView(tblItems);
-			}
+	public void showSyslog() {
+		tblItems = ElementLocator.getActiveSysLog();
+		if (!tblItems.getLogItemList().isEmpty()) {
+			showLogfileByTableView(tblItems);
 		}
 	}
 

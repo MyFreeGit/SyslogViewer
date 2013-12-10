@@ -16,7 +16,7 @@ public class LogfilePart {
 	@PostConstruct
 	public void createComposite(Composite parent, MPart part) {
 		logViewer.initializeTable(parent);
-		logViewer.openLogFile(part.getTransientData().get(LOG_FILE_KEY).toString());
+		logViewer.showSyslog();
 	}
 
 	@Focus

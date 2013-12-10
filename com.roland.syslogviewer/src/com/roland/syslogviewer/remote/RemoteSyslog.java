@@ -12,22 +12,18 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import com.roland.syslog.model.LogContainer;
+import com.roland.syslog.model.SyslogFileReader;
 
 
-public class RemoteSysLog {
-
-	public static void main(String[] args) {
-		String user = "root";
-		String password = "root";
-		String host = "10.68.156.142";
-		int port = 22;
-
-		String remoteFile = "/root/DingLi/MyLog.txt";
-
+public class RemoteSyslog {
+	
+	public static LogContainer read(RemoteFileDescriptor dptr){
+		LogContainer syslog = null;
 		try {
 			JSch jsch = new JSch();
-			Session session = jsch.getSession(user, host, port);
-			session.setPassword(password);
+			Session session = jsch.getSession(dptr.getUser(), dptr.getHost(), dptr.getPort());
+			session.setPassword(dptr.getPassword());
 			session.setConfig("StrictHostKeyChecking", "no");
 			System.out.println("Establishing Connection...");
 			session.connect();
@@ -37,18 +33,24 @@ public class RemoteSysLog {
 			sftpChannel.connect();
 			System.out.println("SFTP Channel created.");
 			InputStream out = null;
-			out = sftpChannel.get(remoteFile);
+			out = sftpChannel.get(dptr.getRemoteFile());
 			BufferedReader br = new BufferedReader(new InputStreamReader(out));
-			String line;
-			while ((line = br.readLine()) != null) {
-				System.out.println(line);
-			}
-			br.close();
+			syslog = SyslogFileReader.readFromStream(br);
 			sftpChannel.disconnect();
 			session.disconnect();
-		} catch (JSchException | SftpException | IOException e) {
+		} catch (JSchException | SftpException e) {
 			System.out.println(e);
 		} 
+		return syslog;
 	}
 
+	public static void main(String[] args) {
+		RemoteFileDescriptor dptr = RemoteFileDescriptor.createDefaultDescriptor("BCN");
+		dptr.setHost("10.68.156.142").setRemoteFile("/root/DingLi/MyLog.txt");
+		//System.out.printf("user=[%s], password=[%s]\n",dptr.getUser());
+		LogContainer logs = read(dptr);
+		if(logs == null){
+			System.out.println("logs open failed!");
+		}
+	}
 }

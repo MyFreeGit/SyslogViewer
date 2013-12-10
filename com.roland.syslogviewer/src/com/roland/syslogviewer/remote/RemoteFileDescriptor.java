@@ -13,16 +13,23 @@ public class RemoteFileDescriptor implements Serializable{
 	public static final String DEFAULT_NAME = "New Acount";
 	
 	public static RemoteFileDescriptor createDefaultDescriptor(String name){
-		return new RemoteFileDescriptor(name, null, DEFAULT_USER, DEFAULT_PASSWORD, DEFAULT_REMOTE_FILE);
+		return new RemoteFileDescriptor(name, null, DEFAULT_USER, DEFAULT_PASSWORD, DEFAULT_REMOTE_FILE, Protocol.SFTP);
 	}
+
 	public enum Protocol {
-		SFTP("sftp");
+		SFTP("sftp", 22);
 		private String name;
-		private Protocol(String name){
+		private int port;
+		
+		private Protocol(String name, int port){
 			this.name = name;
+			this.port = port;
 		}
 		@Override public String toString(){
 			return name;
+		}
+		int getPort(){
+			return port;
 		}
 	}
 	
@@ -33,8 +40,9 @@ public class RemoteFileDescriptor implements Serializable{
 	private Boolean isSaveToLocal = false;
 	private String localFile = null;
 	private String name = null;
+	private Protocol protocol;
 	
-	public RemoteFileDescriptor(String name, String host, String user, String password, String remoteFile){
+	public RemoteFileDescriptor(String name, String host, String user, String password, String remoteFile, Protocol protocol){
 		this.name = name;
 		this.host = host;
 		this.user = user;
@@ -42,6 +50,7 @@ public class RemoteFileDescriptor implements Serializable{
 		this.remoteFile = remoteFile;
 		this.isSaveToLocal = false;
 		this.localFile = null;
+		this.protocol = protocol;
 	}
 	
 	public RemoteFileDescriptor(String name){
@@ -113,4 +122,15 @@ public class RemoteFileDescriptor implements Serializable{
 	public String getLocalFile(){
 		return localFile;
 	}
+
+	public RemoteFileDescriptor setProtocol(Protocol protocol){
+		this.protocol = protocol;
+		return this;
+	}
+	
+	public int getPort(){
+		return protocol.getPort();
+	}
+
+	
 }

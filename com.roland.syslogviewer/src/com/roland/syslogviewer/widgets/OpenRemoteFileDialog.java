@@ -52,6 +52,7 @@ public class OpenRemoteFileDialog extends Dialog {
 		container.setLayout(null);
 		
 		btnSaveToLocal = new Button(container, SWT.CHECK);
+		btnSaveToLocal.setEnabled(false);
 		btnSaveToLocal.setBounds(222, 370, 99, 16);
 		btnSaveToLocal.setText("Save To Local");
 		
@@ -85,8 +86,10 @@ public class OpenRemoteFileDialog extends Dialog {
 		lblProtocol.setText("Protocol:");
 		
 		Combo cmbProtocol = new Combo(container, SWT.NONE);
+		cmbProtocol.setEnabled(false);
 		cmbProtocol.setItems(new String[] {"SFTP"});
 		cmbProtocol.setBounds(222, 90, 262, 21);
+		cmbProtocol.select(0);
 		
 		Label lblHost = new Label(container, SWT.NONE);
 		lblHost.setBounds(222, 134, 49, 13);
@@ -129,6 +132,7 @@ public class OpenRemoteFileDialog extends Dialog {
 		lblLocalFile.setText("Local File:");
 		
 		txtLocalFile = new Text(group, SWT.BORDER);
+		txtLocalFile.setEnabled(false);
 		txtLocalFile.setBounds(10, 41, 242, 19);
 
 		return container;
@@ -140,8 +144,7 @@ public class OpenRemoteFileDialog extends Dialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,	true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
 	}
@@ -163,8 +166,20 @@ public class OpenRemoteFileDialog extends Dialog {
 		return new Point(500, 535);
 	}
 	
+	@Override
+	protected void okPressed() {
+		super.okPressed();
+		System.out.println("OK button pressed");
+	}
+	
 	private void addNewAccount(){
-		
+		activeDescriptor = RemoteFileDescriptor.createDefaultDescriptor("BCN");
+		activeDescriptor.setHost("10.68.156.142").setRemoteFile("/root/DingLi/MyLog.txt");
+		setDescriptorToGUI(activeDescriptor);
+	}
+	
+	public RemoteFileDescriptor getActiveDescriptor(){
+		return activeDescriptor;
 	}
 	
 	private void setDescriptorToGUI(RemoteFileDescriptor descriptor){
@@ -173,8 +188,10 @@ public class OpenRemoteFileDialog extends Dialog {
 		txtRemoteFile.setText(descriptor.getRemoteFile());
 		txtUser.setText(descriptor.getUser());
 		txtPassword.setText(descriptor.getPassword());
-		txtLocalFile.setText(descriptor.getLocalFile());
 		btnSaveToLocal.setSelection(descriptor.needSaveToLocal());
+		if(descriptor.needSaveToLocal() == true){
+			txtLocalFile.setText(descriptor.getLocalFile());
+		}
 	}
 	
 	private void setActiveDescriptor(RemoteFileDescriptor descriptor){

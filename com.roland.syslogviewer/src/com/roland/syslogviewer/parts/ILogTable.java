@@ -6,7 +6,7 @@ import com.roland.syslog.model.ILogSet;
 
 public interface ILogTable {
 	public void initializeTable(Composite parent);
-	public void openLogFile(String fileName);
+	public void showSyslog();
 	public ILogSet search(String str);
 	public void findNext(String str);
 	public void findPrev(String str);
