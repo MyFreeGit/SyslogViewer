@@ -6,7 +6,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
@@ -18,6 +17,11 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import com.roland.syslogviewer.remote.*;
+
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.Viewer;
 
 public class OpenRemoteFileDialog extends Dialog {
 	private Text txtAccount;
@@ -31,6 +35,7 @@ public class OpenRemoteFileDialog extends Dialog {
 	private Button btnSaveToLocal;
 	private Button btnSaveAccount;
 	
+	private ListViewer lvDptr;
 	private RemoteFileDescriptor activeDescriptor = null;
 	
 
@@ -55,9 +60,6 @@ public class OpenRemoteFileDialog extends Dialog {
 		btnSaveToLocal.setEnabled(false);
 		btnSaveToLocal.setBounds(222, 370, 99, 16);
 		btnSaveToLocal.setText("Save To Local");
-		
-		List lstAccount = new List(container, SWT.BORDER);
-		lstAccount.setBounds(10, 10, 194, 351);
 		
 		Button btnAddAccount = new Button(container, SWT.NONE);
 		btnAddAccount.addMouseListener(new MouseAdapter() {
@@ -134,7 +136,11 @@ public class OpenRemoteFileDialog extends Dialog {
 		txtLocalFile = new Text(group, SWT.BORDER);
 		txtLocalFile.setEnabled(false);
 		txtLocalFile.setBounds(10, 41, 242, 19);
-
+		
+		lvDptr = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+		List listCtrl = lvDptr.getList();
+		listCtrl.setBounds(10, 6, 194, 356);
+		initListViewer(lvDptr);
 		return container;
 	}
 
@@ -175,6 +181,7 @@ public class OpenRemoteFileDialog extends Dialog {
 	private void addNewAccount(){
 		activeDescriptor = RemoteFileDescriptor.createDefaultDescriptor("BCN");
 		activeDescriptor.setHost("10.68.156.142").setRemoteFile("/root/DingLi/MyLog.txt");
+		RemoteFileDescriptorSet.getInstance().addDescriptor(activeDescriptor);
 		setDescriptorToGUI(activeDescriptor);
 	}
 	
@@ -192,6 +199,7 @@ public class OpenRemoteFileDialog extends Dialog {
 		if(descriptor.needSaveToLocal() == true){
 			txtLocalFile.setText(descriptor.getLocalFile());
 		}
+		lvDptr.refresh();
 	}
 	
 	private void setActiveDescriptor(RemoteFileDescriptor descriptor){
@@ -202,5 +210,29 @@ public class OpenRemoteFileDialog extends Dialog {
 			btnSaveAccount.setEnabled(true);
 			btnRemoveAccount.setEnabled(true);			
 		}
+	}
+	
+	private void initListViewer(ListViewer listViewer){
+		listViewer.setContentProvider(new IStructuredContentProvider() {
+			@Override
+			public Object[] getElements(Object inputElement) {
+				return ((RemoteFileDescriptorSet)inputElement).getAllDescriptors().toArray();
+			}
+			@Override
+			public void dispose() {			
+			}
+			@Override
+			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			}	
+		});
+		
+		listViewer.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				return ((RemoteFileDescriptor)element).getName();
+			}
+		});
+		
+		listViewer.setInput(RemoteFileDescriptorSet.getInstance());
 	}
 }
