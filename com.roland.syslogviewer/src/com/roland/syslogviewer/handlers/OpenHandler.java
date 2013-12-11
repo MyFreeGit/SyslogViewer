@@ -41,7 +41,7 @@ public class OpenHandler {
 		if(fileName != null && !fileName.equals("")){
 			//createLogfilePart(application, modelService, activeWin);
 			ElementLocator.createLogContainer(fileName);
-			ElementLocator.createLogFilePart();
+			ElementLocator.createLogFilePart(fileName);
 		}
 	}
 	

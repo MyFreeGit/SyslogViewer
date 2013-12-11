@@ -81,12 +81,13 @@ public class ElementLocator{
 		return null;
 	}
 	
-	public static void createLogFilePart(){		
+	public static void createLogFilePart(String lable){		
 		List<MWindow> wins = modelService.findElements(application, "com.roland.syslog.mainwindow",
 	            MWindow.class, null);
 		if(wins.size() != 0){
 			MWindow activeWin = wins.get(0);
 			MPart part = modelService.createModelElement(MPart.class);
+			part.setLabel(lable);
 			part.setContributionURI("bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.LogfilePart");
 		    EPartService ps = activeWin.getContext().get(EPartService.class);
 		    ps.showPart(part, EPartService.PartState.ACTIVATE);

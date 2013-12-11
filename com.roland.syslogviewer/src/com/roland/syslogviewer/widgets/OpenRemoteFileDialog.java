@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Group;
@@ -18,9 +19,11 @@ import org.eclipse.swt.events.MouseEvent;
 
 import com.roland.syslogviewer.remote.*;
 
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 
 public class OpenRemoteFileDialog extends Dialog {
@@ -39,6 +42,10 @@ public class OpenRemoteFileDialog extends Dialog {
 	private RemoteFileDescriptor activeDescriptor = null;
 	
 
+	public RemoteFileDescriptor getActiveDescriptor(){
+		return activeDescriptor;
+	}
+	
 	/**
 	 * Create the dialog.
 	 * @param parentShell
@@ -72,6 +79,12 @@ public class OpenRemoteFileDialog extends Dialog {
 		btnAddAccount.setText("Add Account...");
 		
 		btnRemoveAccount = new Button(container, SWT.NONE);
+		btnRemoveAccount.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				removeAccount();
+			}
+		});
 		btnRemoveAccount.setEnabled(false);
 		btnRemoveAccount.setBounds(10, 426, 194, 23);
 		btnRemoveAccount.setText("Remove Account");
@@ -122,6 +135,12 @@ public class OpenRemoteFileDialog extends Dialog {
 		txtPassword.setBounds(221, 332, 263, 19);
 		
 		btnSaveAccount = new Button(container, SWT.NONE);
+		btnSaveAccount.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				saveAccounts();
+			}
+		});
 		btnSaveAccount.setEnabled(false);
 		btnSaveAccount.setBounds(10, 396, 194, 23);
 		btnSaveAccount.setText("Save Account");
@@ -178,45 +197,95 @@ public class OpenRemoteFileDialog extends Dialog {
 		System.out.println("OK button pressed");
 	}
 	
+	private void saveAccounts(){
+		setGUIToActiveDescriptor();
+		RemoteFileDescriptorSet.getInstance().serialize();
+		lvDptr.refresh();
+	}
+
 	private void addNewAccount(){
-		activeDescriptor = RemoteFileDescriptor.createDefaultDescriptor("BCN");
-		activeDescriptor.setHost("10.68.156.142").setRemoteFile("/root/DingLi/MyLog.txt");
+		activeDescriptor = RemoteFileDescriptor.createDefaultDescriptor();
 		RemoteFileDescriptorSet.getInstance().addDescriptor(activeDescriptor);
-		setDescriptorToGUI(activeDescriptor);
+		setActiveDescriptor(activeDescriptor);
 	}
 	
-	public RemoteFileDescriptor getActiveDescriptor(){
-		return activeDescriptor;
+	private void removeAccount(){
+		if(activeDescriptor != null){
+			RemoteFileDescriptorSet.getInstance().removeDescriptor(activeDescriptor);
+			setActiveDescriptor(null);
+			RemoteFileDescriptorSet.getInstance().serialize();
+		}else{
+			showErrorMsg("Error", "No Item can be removed!");
+		}
 	}
-	
+
 	private void setDescriptorToGUI(RemoteFileDescriptor descriptor){
-		txtAccount.setText(descriptor.getName());
-		txtHost.setText(descriptor.getHost());
-		txtRemoteFile.setText(descriptor.getRemoteFile());
-		txtUser.setText(descriptor.getUser());
-		txtPassword.setText(descriptor.getPassword());
-		btnSaveToLocal.setSelection(descriptor.needSaveToLocal());
-		if(descriptor.needSaveToLocal() == true){
-			txtLocalFile.setText(descriptor.getLocalFile());
+		if(descriptor != null){
+			txtAccount.setText(descriptor.getName());
+			txtHost.setText(descriptor.getHost());
+			txtRemoteFile.setText(descriptor.getRemoteFile());
+			txtUser.setText(descriptor.getUser());
+			txtPassword.setText(descriptor.getPassword());
+			btnSaveToLocal.setSelection(descriptor.needSaveToLocal());
+			if (descriptor.needSaveToLocal() == true) {
+				txtLocalFile.setText(descriptor.getLocalFile());
+			}
+		}else{
+			txtAccount.setText("");
+			txtHost.setText("");
+			txtRemoteFile.setText("");
+			txtUser.setText("");
+			txtPassword.setText("");
+			btnSaveToLocal.setSelection(false);
+			txtLocalFile.setText("");
 		}
 		lvDptr.refresh();
 	}
-	
+
+	private void showErrorMsg(String title, String msg){
+		MessageBox dialog = new MessageBox(getParentShell(), SWT.ICON_ERROR | SWT.OK);
+		dialog.setText(title);
+		dialog.setMessage(msg);
+        dialog.open(); 
+		
+	}
+	private void setGUIToActiveDescriptor(){
+		if(activeDescriptor != null){
+			activeDescriptor.setName(txtAccount.getText());
+			activeDescriptor.setHost(txtHost.getText());
+			activeDescriptor.setRemoteFile(txtRemoteFile.getText());
+			activeDescriptor.setUser(txtUser.getText());
+			activeDescriptor.setPassword(txtPassword.getText());
+			activeDescriptor.setSaveToLocal(btnSaveToLocal.getSelection());		
+			if (activeDescriptor.needSaveToLocal() == true) {
+				activeDescriptor.setLocalFile(txtLocalFile.getText());
+			}
+		}else{
+			showErrorMsg("Error", "Can not save the remote syslog information!");
+		}
+	}
+
 	private void setActiveDescriptor(RemoteFileDescriptor descriptor){
+		activeDescriptor = descriptor;
 		if(descriptor == null){
+			btnSaveAccount.setEnabled(false);
+			btnRemoveAccount.setEnabled(false);
 			btnSaveAccount.setEnabled(false);
 			btnRemoveAccount.setEnabled(false);
 		}else{
 			btnSaveAccount.setEnabled(true);
-			btnRemoveAccount.setEnabled(true);			
+			btnRemoveAccount.setEnabled(true);		
+			btnSaveAccount.setEnabled(true);
+			btnRemoveAccount.setEnabled(true);
 		}
+		setDescriptorToGUI(descriptor);
 	}
 	
 	private void initListViewer(ListViewer listViewer){
 		listViewer.setContentProvider(new IStructuredContentProvider() {
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return ((RemoteFileDescriptorSet)inputElement).getAllDescriptors().toArray();
+				return ((RemoteFileDescriptorSet)inputElement).toArray();
 			}
 			@Override
 			public void dispose() {			
@@ -233,6 +302,16 @@ public class OpenRemoteFileDialog extends Dialog {
 			}
 		});
 		
+		listViewer.addSelectionChangedListener(new ISelectionChangedListener(){
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				List listCtrl = lvDptr.getList();
+				if(listCtrl.getSelectionCount() > 0){
+					RemoteFileDescriptor dptr = (RemoteFileDescriptor)lvDptr.getElementAt(listCtrl.getSelectionIndices()[0]);
+					setActiveDescriptor(dptr);
+				}
+			}
+		});
 		listViewer.setInput(RemoteFileDescriptorSet.getInstance());
 	}
 }

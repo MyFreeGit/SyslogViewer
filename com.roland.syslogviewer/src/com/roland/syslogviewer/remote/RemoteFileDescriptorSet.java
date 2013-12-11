@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,12 +28,36 @@ public class RemoteFileDescriptorSet {
 		list.add(descriptor);
 	}
 	
-	public List<RemoteFileDescriptor> getAllDescriptors(){
-		return list;
+	public void removeDescriptor(RemoteFileDescriptor descriptor){
+		list.remove(descriptor);
+	}
+	
+	public void clear(){
+		list.clear();
+	}
+	
+	public Object[] toArray(){
+		return list.toArray();
 	}
 	
 	public static RemoteFileDescriptorSet getInstance(){
+		if(instance == null){
+			instance = new RemoteFileDescriptorSet();
+			instance.deserialize();
+		}
 		return instance;
+	}
+
+	public String generateDescriptorName(){
+		List<String> names = Arrays.asList(getAllDescriptorNames());
+		for(int i = 0; i < list.size() + 1; i++){
+			StringBuffer sb = new StringBuffer(RemoteFileDescriptor.DEFAULT_NAME);
+			sb.append(i);
+			if(!names.contains(sb.toString())){
+				return sb.toString();
+			}
+		}
+		return RemoteFileDescriptor.DEFAULT_NAME + String.valueOf(System.currentTimeMillis());
 	}
 
 	public String[] getAllDescriptorNames(){
@@ -92,10 +117,5 @@ public class RemoteFileDescriptorSet {
 			i.printStackTrace();
 			return;
 		}
-	}
-
-	static{
-		instance = new RemoteFileDescriptorSet();
-		instance.deserialize();
 	}
 }

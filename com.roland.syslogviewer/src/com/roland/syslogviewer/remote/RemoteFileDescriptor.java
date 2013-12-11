@@ -8,12 +8,14 @@ import java.io.Serializable;
  */
 public class RemoteFileDescriptor implements Serializable{
 	public static final String DEFAULT_USER = "root";
+	public static final String DEFAULT_HOST = "192.168.0.1";
 	public static final String DEFAULT_PASSWORD = "root";
 	public static final String DEFAULT_REMOTE_FILE = "/srv/Log/log/syslog";
 	public static final String DEFAULT_NAME = "New Acount";
 	
-	public static RemoteFileDescriptor createDefaultDescriptor(String name){
-		return new RemoteFileDescriptor(name, null, DEFAULT_USER, DEFAULT_PASSWORD, DEFAULT_REMOTE_FILE, Protocol.SFTP);
+	public static RemoteFileDescriptor createDefaultDescriptor(){
+		String name = RemoteFileDescriptorSet.getInstance().generateDescriptorName();
+		return new RemoteFileDescriptor(name, DEFAULT_HOST, DEFAULT_USER, DEFAULT_PASSWORD, DEFAULT_REMOTE_FILE, Protocol.SFTP);
 	}
 
 	public enum Protocol {

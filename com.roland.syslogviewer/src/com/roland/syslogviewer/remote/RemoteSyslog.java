@@ -45,7 +45,7 @@ public class RemoteSyslog {
 	}
 
 	public static void main(String[] args) {
-		RemoteFileDescriptor dptr = RemoteFileDescriptor.createDefaultDescriptor("BCN");
+		RemoteFileDescriptor dptr = RemoteFileDescriptor.createDefaultDescriptor();
 		dptr.setHost("10.68.156.142").setRemoteFile("/root/DingLi/MyLog.txt");
 		//System.out.printf("user=[%s], password=[%s]\n",dptr.getUser());
 		LogContainer logs = read(dptr);
