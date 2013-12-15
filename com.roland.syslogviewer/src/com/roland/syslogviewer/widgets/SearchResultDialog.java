@@ -20,8 +20,8 @@ public class SearchResultDialog extends Dialog {
 	private ILogSet result;
 	private SyslogListViewer listViewer;
 	private ILogSet selection;
-	private final static int ID_BTN_CLIPBOARD = 10;
-	public final static int ID_BTN_GOTO = 100;
+	public final static int ID_BTN_NEW_VIEWER = 1000;
+	public final static int ID_BTN_GOTO = 1001;
 
 	public void setResult(ILogSet result) {
 		this.result = result;
@@ -65,14 +65,8 @@ public class SearchResultDialog extends Dialog {
 		});
 		btnGoto.setText("Go To");
 
-		Button btnCopy = createButton(parent, ID_BTN_CLIPBOARD, "Clipboard", false);
-		btnCopy.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				listViewer.copySelectionToClipboard();
-			}
-		});
-		btnCopy.setText("Clipboard");
+		Button btnCopy = createButton(parent, ID_BTN_NEW_VIEWER, "New Viewer", false);
+		btnCopy.setText("New Viewer");
 
 		Button btnSelect = createButton(parent, 0, "Bookmark", false);
 		btnSelect.setText("Bookmark");
@@ -109,5 +103,12 @@ public class SearchResultDialog extends Dialog {
 		super.configureShell(newShell);
 		newShell.setText("Find Result");
 	}
-
+	
+	@Override
+	protected void buttonPressed(int buttonId){
+		super.buttonPressed(buttonId);
+		setReturnCode(buttonId);
+		close();
+	}
+	
 }

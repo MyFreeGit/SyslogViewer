@@ -45,6 +45,10 @@ public class SyslogFileReader {
 		return allItems;	
 	}
 	
+	public static LogContainer createFromLogSet(ILogSet logs){
+		return SyslogContainer.createContainerFromSet(logs);
+	}
+		
 	private SyslogFileReader(){
 		
 	}

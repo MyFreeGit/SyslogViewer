@@ -3,6 +3,7 @@ package com.roland.syslogviewer.parts;
 import org.eclipse.swt.widgets.Composite;
 
 import com.roland.syslog.model.ILogSet;
+import com.roland.syslog.model.LogContainer;
 
 public interface ILogTable {
 	public void initializeTable(Composite parent);
@@ -15,4 +16,5 @@ public interface ILogTable {
 	public void nextBookmark();
 	public void prevBookmark();
 	public void gotoPosition(ILogSet logs);
+	public LogContainer getSyslog();
 }

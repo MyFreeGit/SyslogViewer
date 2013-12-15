@@ -38,10 +38,11 @@ public class OpenHandler {
 			EModelService modelService, MApplication application, MWindow activeWin){
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 		String fileName  = dialog.open();
+		File file = new File(fileName);
 		if(fileName != null && !fileName.equals("")){
 			//createLogfilePart(application, modelService, activeWin);
 			ElementLocator.createLogContainer(fileName);
-			ElementLocator.createLogFilePart(fileName);
+			ElementLocator.createLogFilePart(file.getName());
 		}
 	}
 	

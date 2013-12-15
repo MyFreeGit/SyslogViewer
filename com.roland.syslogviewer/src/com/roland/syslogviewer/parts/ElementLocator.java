@@ -21,6 +21,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
+import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.SyslogFileReader;
 import com.roland.syslogviewer.remote.RemoteFileDescriptor;
@@ -81,7 +82,7 @@ public class ElementLocator{
 		return null;
 	}
 	
-	public static void createLogFilePart(String lable){		
+	public static MPart createLogFilePart(String lable){		
 		List<MWindow> wins = modelService.findElements(application, "com.roland.syslog.mainwindow",
 	            MWindow.class, null);
 		if(wins.size() != 0){
@@ -91,36 +92,15 @@ public class ElementLocator{
 			part.setContributionURI("bundleclass://com.roland.syslogviewer/com.roland.syslogviewer.parts.LogfilePart");
 		    EPartService ps = activeWin.getContext().get(EPartService.class);
 		    ps.showPart(part, EPartService.PartState.ACTIVATE);
-		}
-	}
-
-	
-	public static LogfilePart getActiveLogfilePart(){
-		List<MPart> parts = modelService.findElements(application, "",
-	            MPart.class, null);
-		if(parts.size() != 0){
-			for(MPart part : parts){
-				if(part.isVisible() == true){
-					return (LogfilePart)part.getObject();
-				}
-			}
-		}else{
-			System.out.println("Cannot find MPart!");
+		    return part;
 		}
 		return null;
 	}
-	
-	public static LogfilePart getActiveLogfilePart(MPart part){
-		if(part == null){
-			return null;
-		}
-		return (LogfilePart)part.getObject();
+
+	public static void setActiveSyslog(LogContainer syslog){
+		ActiveSyslog = syslog;
 	}
-	
-	public static void registerActiveSysLog(LogContainer logs){
-		ActiveSyslog = logs;
-	}
-	
+
 	public static LogContainer getActiveSysLog(){
 		return ActiveSyslog;
 	}
@@ -136,6 +116,11 @@ public class ElementLocator{
 	public static LogContainer createLogContainer(RemoteFileDescriptor dptr){
 		ActiveSyslog = RemoteSyslog.read(dptr);
 		return ActiveSyslog;		
+	}
+	
+	public static LogContainer createLogContainer(ILogSet logs){
+		ActiveSyslog = SyslogFileReader.createFromLogSet(logs);
+		return ActiveSyslog;
 	}
 
 	private static class PersistedBuffer implements IPersistServiceProvider{

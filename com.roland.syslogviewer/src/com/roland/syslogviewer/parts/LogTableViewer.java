@@ -117,6 +117,11 @@ public class LogTableViewer implements ILogTable {
 		setSelectionToItem(logs.getLogItemList().get(0));
 	}
 
+	@Override
+	public LogContainer getSyslog() {
+		return tblItems;
+	}
+
 
 	private void copySelectionToClipboard() {
 		int[] idx = tableViewer.getTable().getSelectionIndices();

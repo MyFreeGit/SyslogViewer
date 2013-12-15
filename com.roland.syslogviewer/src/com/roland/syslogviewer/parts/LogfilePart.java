@@ -10,8 +10,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.eclipse.swt.widgets.Composite;
 
 public class LogfilePart {
-	public final static String LOG_FILE_KEY = "logfile";
-	private LogTableViewer logViewer = new LogTableViewer();
+	private ILogTable logViewer = new LogTableViewer();
 
 	@PostConstruct
 	public void createComposite(Composite parent, MPart part) {
@@ -20,8 +19,9 @@ public class LogfilePart {
 	}
 
 	@Focus
-	public void setFocus() {
+	public void setFocus(MPart part) {
 		logViewer.setFocus();
+		ElementLocator.setActiveSyslog(logViewer.getSyslog());
 	}
 	
 	public ILogSet search(String str){
@@ -50,4 +50,9 @@ public class LogfilePart {
 	public void gotoPosition(ILogSet logs){
 		logViewer.gotoPosition(logs);
 	}
+	
+	public LogContainer getSyslog(){
+		return logViewer.getSyslog();
+	}
+
 }

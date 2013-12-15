@@ -26,9 +26,20 @@ public class SearchHandler {
 		if(part != null){
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
 			ILogSet result = logfilePart.search(str);
-			SearchResultDialog dlg = new SearchResultDialog(shell);
-			dlg.setResult(result);
-			int buttonID = dlg.open();
+			if(result.isEmpty() != true){
+				SearchResultDialog dlg = new SearchResultDialog(shell);
+				dlg.setResult(result);
+				int buttonID = dlg.open();
+				handleUserRequest(logfilePart, result, dlg, buttonID);
+		}
+		}
+	}
+
+	private void handleUserRequest(LogfilePart logfilePart, ILogSet result,
+			SearchResultDialog dlg, int buttonID) {
+		if(buttonID == SearchResultDialog.ID_BTN_NEW_VIEWER){
+			createLogfilePartViaLogSet(result);
+		}else{
 			ILogSet selection = dlg.getSelection();
 			if(!selection.isEmpty()){
 				if(buttonID == SearchResultDialog.ID_BTN_GOTO){
@@ -38,6 +49,15 @@ public class SearchHandler {
 				}
 			}
 		}
+	}
+	
+	private void createLogfilePartViaLogSet(ILogSet logs){
+		if(logs.isEmpty()){
+			return;
+		}
+		ElementLocator.createLogContainer(logs);
+		MPart part = ElementLocator.createLogFilePart("Result of searching \"" + ElementLocator.getSearchTool().getText() + "\"");
+		part.setDirty(true);
 	}
 
 	@CanExecute

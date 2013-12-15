@@ -56,6 +56,11 @@ public class LogContainer extends AbstractLogSet implements ILogNavigator {
 		finder.setPosition(pos);
 	}
 	
+	public boolean saveToFile(String fileName){
+		
+		return true;
+	}
+
 	private enum Direction{
 		PREV, NEXT;
 	}
