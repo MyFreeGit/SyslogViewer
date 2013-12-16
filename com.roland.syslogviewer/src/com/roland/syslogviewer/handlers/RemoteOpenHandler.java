@@ -24,6 +24,7 @@ public class RemoteOpenHandler {
 				ElementLocator.createLogContainer(dptr);
 				MPart part = ElementLocator.createLogFilePart(dptr.getName() + "[" + dptr.getHost() + "]");
 				part.setDirty(true);
+				part.setCloseable(false);
 			}
 		}
 	}

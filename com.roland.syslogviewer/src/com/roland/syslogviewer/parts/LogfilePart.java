@@ -5,6 +5,7 @@ import com.roland.syslog.model.*;
 import com.roland.syslogviewer.handlers.SaveHandler;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
@@ -31,7 +32,12 @@ public class LogfilePart {
 	@Persist
 	public void save(Shell shell, MPart part, MDirtyable dirty) {
 		SaveHandler.saveToFile(shell, part);
-	} 
+	}
+	
+	@PreDestroy
+	public void preDestroy(MPart part){
+		part.setDirty(false);
+	}
 
 	public ILogSet search(String str){
 		return logViewer.search(str);

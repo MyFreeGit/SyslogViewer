@@ -73,12 +73,16 @@ public class PythonScriptRunner {
 	private static final String SCRIPT_TEMPLATE = 
 		     "# Script can refer to current opened syslog via global variable SYSLOG\n"
 		   + "# The script result can be added into global variable RESULT. The \n"
-		   + "# content in RESULT are displayed in result table. Script also can\n"
-		   + "# use print function to print information to Output tab\n"
-		   + "# Here is template code to output \"Hello World!\" to Output tab.\n"
-		   + "# and just output the current opened syslog to Result tab.\n"
+		   + "# content in RESULT are displayed in result table. "
+		   + "# User can use SYSLOG's filterWithXXX routine to filter the syslogs.\n"
+		   + "#    RESULT.addALL(SYSLOG.filterWithSeverity(\"err\"))\n"
+		   + "# The above statement gets all error log from syslog.\n"
+		   + "# Script can use print function to print information to Output tab\n"
+		   + "# Here is template code to output whole opened syslog to Output tab \n"
+		   + "# and output the current opened syslog to Result tab.\n"
 		   + "RESULT.addAll(SYSLOG)\n"
-		   + "print \"Hello World!\"\n";
+		   + "for item in SYSLOG.getLogItemList():\n"
+		   + "\tprint item\n";
 
 	static {
 		scriptEngineMgr = new ScriptEngineManager();

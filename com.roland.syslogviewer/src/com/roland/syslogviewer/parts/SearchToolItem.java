@@ -28,7 +28,9 @@ public class SearchToolItem {
 	public String getText() {
 		String text = combo.getText();
 		if(!Arrays.asList(combo.getItems()).contains(text)){
-			combo.add(text);		
+			if(text.isEmpty() != true){
+				combo.add(text);
+			}
 		}
 		System.out.println();
 		ElementLocator.getPersistService().addSearchText(text);

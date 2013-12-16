@@ -42,6 +42,7 @@ public class RunScriptHandler {
 		ElementLocator.createLogContainer(logs);
 		MPart part = ElementLocator.createLogFilePart("Result of script");
 		part.setDirty(true);
+		part.setCloseable(true);
 	}
 
 	@CanExecute

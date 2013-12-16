@@ -10,6 +10,8 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 
+
+import com.roland.syslog.model.ILogItem;
 import com.roland.syslog.model.ILogSet;
 import com.roland.syslog.model.LogContainer;
 import com.roland.syslog.model.PythonScriptRunner;
@@ -64,13 +66,13 @@ public class JythonScriptTest {
 		result = PythonScriptRunner.runScript(logs, scriptString);
 		output = PythonScriptRunner.getOutput();
 		System.out.println(output);
-		assertTrue(output.equals("Hello World!\n"));
+		assertTrue(output.equals(getOutputString(logs)));
 		for(int i = 0; i < result.getLogItemList().size(); i++){
 			target_idx[i] = i+1;
 		}		
 		UTHelper.assertResult(result, target_idx);
 	}
-		
+	
 	@Test
 	public void testLogContainerReadOnly(){
 		ILogSet result;
@@ -106,6 +108,14 @@ public class JythonScriptTest {
 		System.out.println(output);
 	    assertTrue(output.contains(exception));
 		UTHelper.assertResult(logs, target_idx);
-
-}
+	}
+	
+	private String getOutputString(ILogSet logs){
+		StringBuffer sb = new StringBuffer();
+		for(ILogItem item : logs.getLogItemList()){
+			sb.append(item.toString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 }

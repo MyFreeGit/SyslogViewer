@@ -32,10 +32,8 @@ public class OpenRemoteFileDialog extends Dialog {
 	private Text txtRemoteFile;
 	private Text txtUser;
 	private Text txtPassword;
-	private Text txtLocalFile;
 	
 	private Button btnRemoveAccount;
-	private Button btnSaveToLocal;
 	private Button btnSaveAccount;
 	
 	private ListViewer lvDptr;
@@ -63,11 +61,6 @@ public class OpenRemoteFileDialog extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(null);
 		
-		btnSaveToLocal = new Button(container, SWT.CHECK);
-		btnSaveToLocal.setEnabled(false);
-		btnSaveToLocal.setBounds(222, 370, 99, 16);
-		btnSaveToLocal.setText("Save To Local");
-		
 		Button btnAddAccount = new Button(container, SWT.NONE);
 		btnAddAccount.addMouseListener(new MouseAdapter() {
 			@Override
@@ -75,7 +68,7 @@ public class OpenRemoteFileDialog extends Dialog {
 				addNewAccount();
 			}
 		});
-		btnAddAccount.setBounds(10, 367, 194, 23);
+		btnAddAccount.setBounds(10, 288, 194, 23);
 		btnAddAccount.setText("Add Account...");
 		
 		btnRemoveAccount = new Button(container, SWT.NONE);
@@ -86,7 +79,7 @@ public class OpenRemoteFileDialog extends Dialog {
 			}
 		});
 		btnRemoveAccount.setEnabled(false);
-		btnRemoveAccount.setBounds(10, 426, 194, 23);
+		btnRemoveAccount.setBounds(10, 346, 194, 23);
 		btnRemoveAccount.setText("Remove Account");
 		
 		Label lblAccount = new Label(container, SWT.NONE);
@@ -103,7 +96,7 @@ public class OpenRemoteFileDialog extends Dialog {
 		Combo cmbProtocol = new Combo(container, SWT.NONE);
 		cmbProtocol.setEnabled(false);
 		cmbProtocol.setItems(new String[] {"SFTP"});
-		cmbProtocol.setBounds(222, 90, 262, 21);
+		cmbProtocol.setBounds(222, 92, 262, 21);
 		cmbProtocol.select(0);
 		
 		Label lblHost = new Label(container, SWT.NONE);
@@ -111,28 +104,28 @@ public class OpenRemoteFileDialog extends Dialog {
 		lblHost.setText("Host:");
 		
 		txtHost = new Text(container, SWT.BORDER);
-		txtHost.setBounds(222, 153, 262, 19);
+		txtHost.setBounds(222, 156, 262, 19);
 		
 		Label lblRemoteFile = new Label(container, SWT.NONE);
 		lblRemoteFile.setBounds(222, 195, 72, 13);
 		lblRemoteFile.setText("Remote File:");
 		
 		txtRemoteFile = new Text(container, SWT.BORDER);
-		txtRemoteFile.setBounds(221, 214, 263, 19);
+		txtRemoteFile.setBounds(221, 219, 263, 19);
 		
 		Label lblUsername = new Label(container, SWT.NONE);
-		lblUsername.setBounds(222, 254, 49, 13);
+		lblUsername.setBounds(222, 258, 72, 13);
 		lblUsername.setText("Username:");
 		
 		txtUser = new Text(container, SWT.BORDER);
-		txtUser.setBounds(221, 273, 263, 19);
+		txtUser.setBounds(221, 282, 263, 19);
 		
 		Label lblPassword = new Label(container, SWT.NONE);
-		lblPassword.setBounds(222, 313, 49, 13);
+		lblPassword.setBounds(222, 322, 72, 13);
 		lblPassword.setText("Password:");
 		
 		txtPassword = new Text(container, SWT.BORDER);
-		txtPassword.setBounds(221, 332, 263, 19);
+		txtPassword.setBounds(221, 345, 263, 19);
 		
 		btnSaveAccount = new Button(container, SWT.NONE);
 		btnSaveAccount.addMouseListener(new MouseAdapter() {
@@ -142,23 +135,12 @@ public class OpenRemoteFileDialog extends Dialog {
 			}
 		});
 		btnSaveAccount.setEnabled(false);
-		btnSaveAccount.setBounds(10, 396, 194, 23);
+		btnSaveAccount.setBounds(10, 317, 194, 23);
 		btnSaveAccount.setText("Save Account");
-		
-		Group group = new Group(container, SWT.NONE);
-		group.setBounds(222, 374, 262, 79);
-		
-		Label lblLocalFile = new Label(group, SWT.NONE);
-		lblLocalFile.setBounds(10, 22, 78, 13);
-		lblLocalFile.setText("Local File:");
-		
-		txtLocalFile = new Text(group, SWT.BORDER);
-		txtLocalFile.setEnabled(false);
-		txtLocalFile.setBounds(10, 41, 242, 19);
 		
 		lvDptr = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
 		List listCtrl = lvDptr.getList();
-		listCtrl.setBounds(10, 6, 194, 356);
+		listCtrl.setBounds(10, 6, 194, 276);
 		initListViewer(lvDptr);
 		return container;
 	}
@@ -188,7 +170,7 @@ public class OpenRemoteFileDialog extends Dialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(500, 535);
+		return new Point(500, 450);
 	}
 	
 	@Override
@@ -226,18 +208,12 @@ public class OpenRemoteFileDialog extends Dialog {
 			txtRemoteFile.setText(descriptor.getRemoteFile());
 			txtUser.setText(descriptor.getUser());
 			txtPassword.setText(descriptor.getPassword());
-			btnSaveToLocal.setSelection(descriptor.needSaveToLocal());
-			if (descriptor.needSaveToLocal() == true) {
-				txtLocalFile.setText(descriptor.getLocalFile());
-			}
 		}else{
 			txtAccount.setText("");
 			txtHost.setText("");
 			txtRemoteFile.setText("");
 			txtUser.setText("");
 			txtPassword.setText("");
-			btnSaveToLocal.setSelection(false);
-			txtLocalFile.setText("");
 		}
 		lvDptr.refresh();
 	}
@@ -256,10 +232,6 @@ public class OpenRemoteFileDialog extends Dialog {
 			activeDescriptor.setRemoteFile(txtRemoteFile.getText());
 			activeDescriptor.setUser(txtUser.getText());
 			activeDescriptor.setPassword(txtPassword.getText());
-			activeDescriptor.setSaveToLocal(btnSaveToLocal.getSelection());		
-			if (activeDescriptor.needSaveToLocal() == true) {
-				activeDescriptor.setLocalFile(txtLocalFile.getText());
-			}
 		}else{
 			showErrorMsg("Error", "Can not save the remote syslog information!");
 		}

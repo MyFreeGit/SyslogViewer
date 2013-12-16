@@ -39,8 +39,6 @@ public class RemoteFileDescriptor implements Serializable{
 	private String user = null;
 	private String password = null;
 	private String remoteFile = null;
-	private Boolean isSaveToLocal = false;
-	private String localFile = null;
 	private String name = null;
 	private Protocol protocol;
 	
@@ -50,8 +48,6 @@ public class RemoteFileDescriptor implements Serializable{
 		this.user = user;
 		this.password = password;
 		this.remoteFile = remoteFile;
-		this.isSaveToLocal = false;
-		this.localFile = null;
 		this.protocol = protocol;
 	}
 	
@@ -104,26 +100,6 @@ public class RemoteFileDescriptor implements Serializable{
 		return remoteFile;
 	}
 	
-	public RemoteFileDescriptor setSaveToLocal(boolean isSaveToLocal){
-		this.isSaveToLocal = isSaveToLocal;
-		if(isSaveToLocal == false){
-			this.localFile = null;
-		}
-		return this;
-	}
-	
-	public boolean needSaveToLocal(){
-		return isSaveToLocal;
-	}
-	
-	public RemoteFileDescriptor setLocalFile(String localFile){
-		this.localFile = localFile;
-		return this;
-	}
-	
-	public String getLocalFile(){
-		return localFile;
-	}
 
 	public RemoteFileDescriptor setProtocol(Protocol protocol){
 		this.protocol = protocol;

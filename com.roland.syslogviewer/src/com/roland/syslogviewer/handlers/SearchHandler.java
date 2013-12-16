@@ -58,6 +58,7 @@ public class SearchHandler {
 		ElementLocator.createLogContainer(logs);
 		MPart part = ElementLocator.createLogFilePart("Result of searching '" + ElementLocator.getSearchTool().getText() + "'");
 		part.setDirty(true);
+		part.setCloseable(true);
 	}
 
 	@CanExecute

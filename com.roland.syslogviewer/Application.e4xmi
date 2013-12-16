@@ -14,6 +14,7 @@
     <mainMenu xmi:id="_2iCbqS-rEeORA68YRw1xzQ" elementId="menu:org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_2iCbqi-rEeORA68YRw1xzQ" label="File">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbqy-rEeORA68YRw1xzQ" label="Open" iconURI="platform:/plugin/com.roland.syslogviewer/icons/sample.gif" command="_2iCboC-rEeORA68YRw1xzQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_50TnQGZWEeOvorTsl5M2Ug" elementId="com.roland.syslogviewer.handledmenuitem.6" label="Open Remote Syslog" iconURI="platform:/plugin/com.roland.syslogviewer/icons/open_remote.gif" command="_0iX3AGDZEeOhO7ERQyxM5A"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrC-rEeORA68YRw1xzQ" label="Save" iconURI="platform:/plugin/com.roland.syslogviewer/icons/save_edit.gif" command="_2iCboy-rEeORA68YRw1xzQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_2iCbrS-rEeORA68YRw1xzQ" label="Quit" command="_2iCbnC-rEeORA68YRw1xzQ"/>
       </children>
