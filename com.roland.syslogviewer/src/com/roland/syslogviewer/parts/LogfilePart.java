@@ -2,12 +2,16 @@ package com.roland.syslogviewer.parts;
 
 
 import com.roland.syslog.model.*;
+import com.roland.syslogviewer.handlers.SaveHandler;
 
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 public class LogfilePart {
 	private ILogTable logViewer = new LogTableViewer();
@@ -24,6 +28,11 @@ public class LogfilePart {
 		ElementLocator.setActiveSyslog(logViewer.getSyslog());
 	}
 	
+	@Persist
+	public void save(Shell shell, MPart part, MDirtyable dirty) {
+		SaveHandler.saveToFile(shell, part);
+	} 
+
 	public ILogSet search(String str){
 		return logViewer.search(str);
 	}

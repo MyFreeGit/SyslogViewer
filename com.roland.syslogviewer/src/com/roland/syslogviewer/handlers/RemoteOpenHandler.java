@@ -22,7 +22,8 @@ public class RemoteOpenHandler {
 			RemoteFileDescriptor dptr = dialog.getActiveDescriptor();
 			if(dptr != null){
 				ElementLocator.createLogContainer(dptr);
-				ElementLocator.createLogFilePart(dptr.getName() + "[" + dptr.getHost() + "]");
+				MPart part = ElementLocator.createLogFilePart(dptr.getName() + "[" + dptr.getHost() + "]");
+				part.setDirty(true);
 			}
 		}
 	}

@@ -38,10 +38,19 @@ public class SaveHandler {
 	public void execute(
 			@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,
 			@Active MPart part) {
-		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
-		String fileName  = dialog.open();
-		LogfilePart logfile = (LogfilePart)part.getObject();
-		logfile.getSyslog().saveToFile(fileName);
-		part.setDirty(false);
+		saveToFile(shell, part);
+	}
+	
+	static public void saveToFile(Shell shell, MPart part){
+		if(part.isDirty()==true){
+			FileDialog dialog = new FileDialog(shell, SWT.SAVE);
+			dialog.setFileName(part.getLabel());
+			String fileName  = dialog.open();
+			if(fileName != null && fileName.isEmpty() != true){
+				LogfilePart logfile = (LogfilePart)part.getObject();
+				logfile.getSyslog().saveToFile(fileName);
+				part.setDirty(false);
+			}
+		}
 	}
 }

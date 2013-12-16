@@ -1,5 +1,11 @@
 package com.roland.syslog.model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 
 import com.roland.syslog.model.ILogItem.Field;
@@ -57,8 +63,26 @@ public class LogContainer extends AbstractLogSet implements ILogNavigator {
 	}
 	
 	public boolean saveToFile(String fileName){
-		
-		return true;
+		Writer file = null;
+		try {
+			file = new FileWriter(fileName);
+			BufferedWriter writer = new BufferedWriter(file);
+			for(ILogItem item : itemList){
+				writer.write(item.toString() + "\n");
+			}
+			writer.close();
+			return true;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (file != null) {
+				try {
+					file.close();
+				} catch (IOException e) {
+					// Ignore issues during closing
+				}
+			}
+		}
 	}
 
 	private enum Direction{

@@ -56,7 +56,7 @@ public class SearchHandler {
 			return;
 		}
 		ElementLocator.createLogContainer(logs);
-		MPart part = ElementLocator.createLogFilePart("Result of searching \"" + ElementLocator.getSearchTool().getText() + "\"");
+		MPart part = ElementLocator.createLogFilePart("Result of searching '" + ElementLocator.getSearchTool().getText() + "'");
 		part.setDirty(true);
 	}
 

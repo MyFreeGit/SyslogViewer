@@ -1,9 +1,11 @@
 package com.roland.syslog.model.utcases;
 
+import java.io.File;
 import java.util.*;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.BeforeClass;
 
@@ -15,6 +17,8 @@ import hirondelle.date4j.DateTime;
 public class LogItemTest {
 	private static LogContainer logContainer;
 	private static List<LogItemData> targetData;
+	private final static String targetFileName = System.getProperty("user.dir")
+			+ "\\src\\com\\roland\\syslog\\model\\utcases\\target_log.txt";
 
 	@BeforeClass
 	public static void testSetup() {
@@ -24,6 +28,14 @@ public class LogItemTest {
 		targetData = initTestSyslogFileReader();
 	}
 
+	@AfterClass
+	public static void testTearDown() {
+		File file = new File(targetFileName);
+		if(file.exists() == true){
+			file.delete();
+		}
+	}
+	
 	@Test
 	public void testSyslogFileReader() {
 		List<ILogItem> items = logContainer.getLogItemList();
@@ -32,6 +44,20 @@ public class LogItemTest {
 		for (int i = 0; i < targetData.size(); i++) {
 			assertLogItem(items.get(i), targetData.get(i));
 		}
+	}
+
+	@Test
+	public void testLogContainerWriter() {
+		logContainer.saveToFile(targetFileName);
+		LogContainer targetContainer =  SyslogFileReader.read(targetFileName);
+
+		List<ILogItem> items = targetContainer.getLogItemList();
+		assertTrue(items.size() == 12);
+
+		for (int i = 0; i < targetData.size(); i++) {
+			assertLogItem(items.get(i), targetData.get(i));
+		}
+
 	}
 
 	@Test
