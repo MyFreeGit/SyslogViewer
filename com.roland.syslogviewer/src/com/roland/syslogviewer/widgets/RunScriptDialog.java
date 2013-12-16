@@ -34,8 +34,11 @@ public class RunScriptDialog extends Dialog {
 	private Button btnRun;
 	private Button btnGoto;
 	private Button btnBookmark;
+	private Button btnNewViewer;
 	private SyslogListViewer listViewer;
 	public final static int BUTTON_ID_GOTO = 100;
+	public final static int BUTTON_ID_NEW_VIEWER = 110;
+	public final static int BUTTON_ID_BOOKMARK = 120;
 	private final static int BUTTON_ID_EXECUTE_SCRIPT = 101;
 	private final static int BUTTON_ID_OPEN_SCRIPT = 102;
 	private final static int BUTTON_ID_SAVE_SCRIPT = 103;
@@ -127,6 +130,15 @@ public class RunScriptDialog extends Dialog {
 				runPythonScript();
 			}
 		});
+		btnNewViewer = createButton(parent, BUTTON_ID_NEW_VIEWER, "New Viewer", false);
+		btnNewViewer.setEnabled(false);
+		btnNewViewer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				selection = listViewer.getAllListItem();
+			}
+		});
+		btnNewViewer.setText("New Viewer");
 
 		btnGoto = createButton(parent, BUTTON_ID_GOTO, "Goto", false);
 		btnGoto.setEnabled(false);
@@ -139,7 +151,7 @@ public class RunScriptDialog extends Dialog {
 			}
 		});
 
-		btnBookmark = createButton(parent, IDialogConstants.OK_ID, "Bookmark", 	false);
+		btnBookmark = createButton(parent, BUTTON_ID_BOOKMARK, "Bookmark", 	false);
 		btnBookmark.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
@@ -206,10 +218,11 @@ public class RunScriptDialog extends Dialog {
 		if(result.isEmpty()){
 			btnBookmark.setEnabled(false);
 			btnGoto.setEnabled(false);
-			
+			btnNewViewer.setEnabled(false);
 		}else{
 			btnBookmark.setEnabled(true);
 			btnGoto.setEnabled(true);
+			btnNewViewer.setEnabled(true);
 		}
 		listViewer.setInput(result);
 		listViewer.refresh();
@@ -230,6 +243,17 @@ public class RunScriptDialog extends Dialog {
 	@Override
 	protected Point getInitialSize() {
 		return new Point(800, 600);
+	}
+
+	@Override
+	protected void buttonPressed(int buttonId){
+		super.buttonPressed(buttonId);
+		if(buttonId == BUTTON_ID_OPEN_SCRIPT || buttonId == BUTTON_ID_SAVE_SCRIPT 
+				|| buttonId == BUTTON_ID_EXECUTE_SCRIPT){
+			return;
+		}
+		setReturnCode(buttonId);
+		close();
 	}
 
 }

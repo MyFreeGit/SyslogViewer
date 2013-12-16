@@ -16,6 +16,9 @@ import com.roland.syslogviewer.widgets.RunScriptDialog;
 public class RunScriptHandler {
 	@Execute
 	public void execute(@Optional @Active MPart part, Shell shell) {
+		if(part == null){	
+			return;
+		}
 		RunScriptDialog dlg = new RunScriptDialog(shell);
 		dlg.setLogContainer(ElementLocator.getActiveSysLog());
 		int result = dlg.open();
@@ -24,12 +27,23 @@ public class RunScriptHandler {
 			LogfilePart logfilePart = (LogfilePart)part.getObject();
 			if(result == RunScriptDialog.BUTTON_ID_GOTO){
 				logfilePart.gotoPosition(selection);
-			}else{
+			}else if(result == RunScriptDialog.BUTTON_ID_BOOKMARK){
 				logfilePart.setBookmark(selection);
+			}else if(result == RunScriptDialog.BUTTON_ID_NEW_VIEWER){
+				createLogfilePartViaLogSet(selection);
 			}
 		}
 	}
-	
+
+	private void createLogfilePartViaLogSet(ILogSet logs){
+		if(logs.isEmpty()){
+			return;
+		}
+		ElementLocator.createLogContainer(logs);
+		MPart part = ElementLocator.createLogFilePart("Result of script");
+		part.setDirty(true);
+	}
+
 	@CanExecute
 	public boolean canExecute(@Optional @Active MPart part) {
 		return (part != null);

@@ -51,6 +51,10 @@ public class SyslogListViewer {
 
 	}
 	
+	public ILogSet getAllListItem(){
+		return logs;
+	}
+	
 	public void setInput(ILogSet logs){
 		listViewer.setInput(logs);
 		this.logs = logs;
